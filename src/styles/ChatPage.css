@@ -29,7 +29,6 @@
     margin-bottom: 10px;
     max-width: 60%;
     align-self: flex-end;
-    position: relative;
   }
   
   /* Bot message styling (left-aligned, gray background) */
@@ -41,7 +40,6 @@
     margin-bottom: 10px;
     max-width: 60%;
     align-self: flex-start;
-    position: relative;
   }
   
   /* Timestamp styling for both user and bot messages */
@@ -51,6 +49,14 @@
     margin-top: 5px;
     display: block;
     text-align: right;
+  }
+  
+  /* Typing indicator styling */
+  .typing-indicator {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 10px;
+    align-self: flex-start; /* Ensure it aligns like bot messages */
   }
   
   /* Input field and send button container */

@@ -4,19 +4,23 @@ import '../styles/ChatPage.css';
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false); // New state for managing the typing indicator
 
   // Function to handle sending a message
   const handleSendMessage = () => {
     if (input.trim()) {
-      const timestamp = new Date().toLocaleTimeString(); // Get the current time as timestamp
-      const newMessages = [...messages, { text: input, sender: 'user', time: timestamp }]; // Add user message with timestamp
-      setMessages(newMessages); // Update messages state with the new message
-      setInput(''); // Clear input field
+      const timestamp = new Date().toLocaleTimeString(); 
+      const newMessages = [...messages, { text: input, sender: 'user', time: timestamp }]; 
+      setMessages(newMessages);
+      setInput('');
+
+      setIsTyping(true); // Show typing indicator
 
       // Simulate a bot response after 1 second
       setTimeout(() => {
-        const botTimestamp = new Date().toLocaleTimeString(); // Get timestamp for bot response
-        setMessages([...newMessages, { text: 'This is a bot response', sender: 'bot', time: botTimestamp }]); 
+        const botTimestamp = new Date().toLocaleTimeString(); 
+        setMessages([...newMessages, { text: 'This is a bot response', sender: 'bot', time: botTimestamp }]);
+        setIsTyping(false); // Hide typing indicator after bot sends response
       }, 1000);
     }
   };
@@ -33,6 +37,7 @@ const ChatPage = () => {
             <span className="timestamp">{message.time}</span>
           </div>
         ))}
+        {isTyping && <div className="typing-indicator">Bot is typing...</div>} {/* Show typing indicator when bot is typing */}
       </div>
       <div className="input-container">
         <input
