@@ -1,0 +1,53 @@
+/* Container for the chat interface */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Container for messages */
+  .messages-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  /* Basic message bubble styling */
+  .message-bubble {
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 60%;
+  }
+  
+  /* Input field and button container */
+  .input-container {
+    display: flex;
+  }
+  
+  /* Input field styling */
+  .input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  /* Send button styling */
+  .send-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
