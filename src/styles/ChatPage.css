@@ -8,7 +8,7 @@
     box-sizing: border-box;
   }
   
-  /* Container for messages */
+  /* Scrollable container for messages */
   .messages-container {
     flex: 1;
     overflow-y: auto;
@@ -16,18 +16,33 @@
     background-color: #f1f1f1;
     padding: 10px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Ensure messages stack vertically */
   }
   
-  /* Basic message bubble styling */
-  .message-bubble {
-    background-color: #ddd;
+  /* User message styling (right-aligned, blue background) */
+  .user-message {
+    background-color: #0084ff;
+    color: white;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
     max-width: 60%;
+    align-self: flex-end;
   }
   
-  /* Input field and button container */
+  /* Bot message styling (left-aligned, gray background) */
+  .bot-message {
+    background-color: #e5e5ea;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 60%;
+    align-self: flex-start;
+  }
+  
+  /* Input field and send button container */
   .input-container {
     display: flex;
   }
@@ -44,7 +59,7 @@
   /* Send button styling */
   .send-button {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
