@@ -17,7 +17,7 @@
     padding: 10px;
     border-radius: 10px;
     display: flex;
-    flex-direction: column; /* Ensure messages stack vertically */
+    flex-direction: column;
   }
   
   /* User message styling (right-aligned, blue background) */
@@ -29,6 +29,7 @@
     margin-bottom: 10px;
     max-width: 60%;
     align-self: flex-end;
+    position: relative;
   }
   
   /* Bot message styling (left-aligned, gray background) */
@@ -40,6 +41,16 @@
     margin-bottom: 10px;
     max-width: 60%;
     align-self: flex-start;
+    position: relative;
+  }
+  
+  /* Timestamp styling for both user and bot messages */
+  .timestamp {
+    font-size: 0.75em;
+    color: #666;
+    margin-top: 5px;
+    display: block;
+    text-align: right;
   }
   
   /* Input field and send button container */

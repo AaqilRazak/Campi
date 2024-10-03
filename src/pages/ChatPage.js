@@ -8,13 +8,15 @@ const ChatPage = () => {
   // Function to handle sending a message
   const handleSendMessage = () => {
     if (input.trim()) {
-      const newMessages = [...messages, { text: input, sender: 'user' }]; // Add user message
+      const timestamp = new Date().toLocaleTimeString(); // Get the current time as timestamp
+      const newMessages = [...messages, { text: input, sender: 'user', time: timestamp }]; // Add user message with timestamp
       setMessages(newMessages); // Update messages state with the new message
       setInput(''); // Clear input field
 
       // Simulate a bot response after 1 second
       setTimeout(() => {
-        setMessages([...newMessages, { text: 'This is a bot response', sender: 'bot' }]); 
+        const botTimestamp = new Date().toLocaleTimeString(); // Get timestamp for bot response
+        setMessages([...newMessages, { text: 'This is a bot response', sender: 'bot', time: botTimestamp }]); 
       }, 1000);
     }
   };
@@ -28,6 +30,7 @@ const ChatPage = () => {
             className={message.sender === 'user' ? 'user-message' : 'bot-message'}
           >
             <p>{message.text}</p>
+            <span className="timestamp">{message.time}</span>
           </div>
         ))}
       </div>
