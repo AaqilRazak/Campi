@@ -1,85 +1,163 @@
-/* Container for the chat interface */
 .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: space-between;
-    padding: 20px;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-message, .bot-message {
+  padding: 10px;
+  border-radius: 18px;
+  margin-bottom: 5px;
+  max-width: 60%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.timestamp {
+  font-size: 0.75em;
+  color: var(--timestamp-color);
+  margin-top: 5px;
+  display: block;
+  text-align: right;
+}
+
+.typing-indicator {
+  font-style: italic;
+  color: var(--timestamp-color);
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.input-container {
+  display: flex;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.send-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  opacity: 0.8; /* Simple hover effect */
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #1e1e1e;
+    --message-area-color: #2c2c2c;
+    --user-message-color: #3b82f6;
+    --bot-message-color: #3a3a3a;
+    --text-color: #f5f5f5;
+    --timestamp-color: #aaaaaa;
+    --input-bg-color: #3a3a3a;
+    --button-color: #4caf50;
   }
-  
-  /* Scrollable container for messages */
+
+  .chat-container {
+    background-color: var(--background-color);
+  }
+
   .messages-container {
-    flex: 1;
-    overflow-y: auto;
-    margin-bottom: 20px;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
+    background-color: var(--message-area-color);
   }
-  
-  /* User message styling (right-aligned, blue background) */
+
   .user-message {
-    background-color: #0084ff;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    max-width: 60%;
+    background-color: var(--user-message-color);
+    color: #ffffff;
     align-self: flex-end;
   }
-  
-  /* Bot message styling (left-aligned, gray background) */
+
   .bot-message {
-    background-color: #e5e5ea;
-    color: black;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    max-width: 60%;
+    background-color: var(--bot-message-color);
+    color: #d1d1d1;
     align-self: flex-start;
   }
-  
-  /* Timestamp styling for both user and bot messages */
-  .timestamp {
-    font-size: 0.75em;
-    color: #666;
-    margin-top: 5px;
-    display: block;
-    text-align: right;
-  }
-  
-  /* Typing indicator styling */
-  .typing-indicator {
-    font-style: italic;
-    color: #666;
-    margin-bottom: 10px;
-    align-self: flex-start; /* Ensure it aligns like bot messages */
-  }
-  
-  /* Input field and send button container */
+
   .input-container {
-    display: flex;
+    background-color: var(--message-area-color);
   }
-  
-  /* Input field styling */
+
   .input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+    background-color: var(--input-bg-color);
+    color: #ffffff;
   }
-  
-  /* Send button styling */
+
   .send-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: var(--button-color);
+    color: #ffffff;
   }
-  
+}
+
+/* Light mode styles */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #ffffff;
+    --message-area-color: #f0f0f0;
+    --user-message-color: #007aff;
+    --bot-message-color: #e0e0e0;
+    --text-color: #000000;
+    --timestamp-color: #666666;
+    --input-bg-color: #e0e0e0;
+    --button-color: #007aff;
+  }
+
+  .chat-container {
+    background-color: var(--background-color);
+  }
+
+  .messages-container {
+    background-color: var(--message-area-color);
+  }
+
+  .user-message {
+    background-color: var(--user-message-color);
+    color: #ffffff;
+    align-self: flex-end;
+  }
+
+  .bot-message {
+    background-color: var(--bot-message-color);
+    color: #000000;
+    align-self: flex-start;
+  }
+
+  .input-container {
+    background-color: var(--message-area-color);
+  }
+
+  .input {
+    background-color: var(--input-bg-color);
+    color: #000000;
+  }
+
+  .send-button {
+    background-color: var(--button-color);
+    color: #ffffff;
+  }
+}
