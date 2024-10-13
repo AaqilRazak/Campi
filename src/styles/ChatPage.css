@@ -135,7 +135,7 @@
   border-radius: 5px;
 }
 
-.send-button, .new-session-button {
+.send-button {
   padding: 10px 20px;
   background-color: #4caf50;
   color: white;
@@ -143,6 +143,15 @@
   border-radius: 5px;
   cursor: pointer;
   margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.send-button:active {
+  transform: scale(0.95);
+}
+
+.send-button:hover {
+  background-color: #45a049;
 }
 
 .send-button:hover, .new-session-button:hover {

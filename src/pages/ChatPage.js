@@ -10,7 +10,7 @@ const ChatPage = () => {
   const [hideScrollToBottom, setHideScrollToBottom] = useState(true);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
-  const delayTimeout = useRef(null); // Reference for timeout to manage delay
+  const delayTimeout = useRef(null);
 
   const defaultUserAvatar = 'https://via.placeholder.com/40/007aff/ffffff?text=U';
   const defaultBotAvatar = 'https://via.placeholder.com/40/4e4e4e/ffffff?text=B';
@@ -41,7 +41,7 @@ const ChatPage = () => {
 
       setTimeout(() => {
         const botResponse = {
-          text: 'This is a bot response',
+          text: 'This is a bot response.',
           sender: 'bot',
           time: new Date().toLocaleTimeString(),
           avatar: defaultBotAvatar,
@@ -73,13 +73,11 @@ const ChatPage = () => {
     const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
 
-    // Clear any existing timeout to prevent multiple timeouts from stacking
     if (delayTimeout.current) {
       clearTimeout(delayTimeout.current);
     }
 
     if (!isAtBottom) {
-      // Set a timeout to delay the display of the button by 1 second
       delayTimeout.current = setTimeout(() => {
         setHideScrollToBottom(false);
       }, 1000);
@@ -97,7 +95,7 @@ const ChatPage = () => {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    setHideScrollToBottom(true); // Hide the button after scrolling
+    setHideScrollToBottom(true);
   };
 
   useEffect(() => {
@@ -105,7 +103,6 @@ const ChatPage = () => {
   }, [sessions, currentSessionId, isTyping]);
 
   useEffect(() => {
-    // Cleanup timeout when component unmounts or when re-rendered
     return () => clearTimeout(delayTimeout.current);
   }, []);
 
@@ -159,6 +156,7 @@ const ChatPage = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
           className="input"
+          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
         />
         <button onClick={handleSendMessage} className="send-button">Send</button>
         <button onClick={startNewChat} className="new-session-button">New Chat</button>
