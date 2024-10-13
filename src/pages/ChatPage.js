@@ -6,7 +6,11 @@ const ChatPage = () => {
   const [currentSessionId, setCurrentSessionId] = useState(1);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+  const [hideScrollToBottom, setHideScrollToBottom] = useState(true);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
+  const delayTimeout = useRef(null); // Reference for timeout to manage delay
 
   const defaultUserAvatar = 'https://via.placeholder.com/40/007aff/ffffff?text=U';
   const defaultBotAvatar = 'https://via.placeholder.com/40/4e4e4e/ffffff?text=B';
@@ -57,8 +61,6 @@ const ChatPage = () => {
 
   const handleFeedback = (index, feedback) => {
     console.log(`Feedback for message ${index} in session ${currentSessionId}: ${feedback}`);
-    // Placeholder for backend integration: link this to your backend analytics
-    // Example: fetch(`/api/feedback?session=${currentSessionId}&message=${index}&feedback=${feedback}`, { method: 'POST' })
   };
 
   const startNewChat = () => {
@@ -67,15 +69,56 @@ const ChatPage = () => {
     setCurrentSessionId(newSessionId);
   };
 
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+
+    // Clear any existing timeout to prevent multiple timeouts from stacking
+    if (delayTimeout.current) {
+      clearTimeout(delayTimeout.current);
+    }
+
+    if (!isAtBottom) {
+      // Set a timeout to delay the display of the button by 1 second
+      delayTimeout.current = setTimeout(() => {
+        setHideScrollToBottom(false);
+      }, 1000);
+    } else {
+      setHideScrollToBottom(true);
+    }
+
+    if (scrollTop === 0 && !loadingHistory) {
+      setLoadingHistory(true);
+      setTimeout(() => {
+        setLoadingHistory(false);
+      }, 1000);
+    }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setHideScrollToBottom(true); // Hide the button after scrolling
+  };
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [sessions, currentSessionId]);
+  }, [sessions, currentSessionId, isTyping]);
+
+  useEffect(() => {
+    // Cleanup timeout when component unmounts or when re-rendered
+    return () => clearTimeout(delayTimeout.current);
+  }, []);
 
   const currentSession = getCurrentSession();
 
   return (
     <div className="chat-container">
-      <div className="messages-container">
+      <div 
+        className="messages-container" 
+        onScroll={handleScroll} 
+        ref={messagesContainerRef}
+      >
+        {loadingHistory && <div className="loading-history">Loading previous messages...</div>}
         {currentSession.messages.map((message, index) => (
           <div key={index} className={`${message.sender}-message-row fade-in`}>
             {message.sender !== 'system' && (
@@ -101,6 +144,14 @@ const ChatPage = () => {
         {isTyping && <div className="typing-indicator">Bot is typing...</div>}
         <div ref={messagesEndRef} />
       </div>
+      
+      <button 
+        onClick={scrollToBottom} 
+        className={`scroll-to-bottom-button ${hideScrollToBottom ? 'hidden' : ''}`}
+      >
+        ⬇️
+      </button>
+      
       <div className="input-container">
         <input
           type="text"

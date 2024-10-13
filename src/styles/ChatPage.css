@@ -28,6 +28,15 @@
   background-color: var(--message-area-color);
   display: flex;
   flex-direction: column;
+  scroll-behavior: smooth;
+}
+
+.loading-history {
+  text-align: center;
+  color: #888;
+  padding: 10px;
+  font-size: 0.9em;
+  font-style: italic;
 }
 
 .avatar {
@@ -70,7 +79,7 @@
   font-size: 0.7em;
   color: var(--timestamp-color);
   position: absolute;
-  top: 100%; /* Positioned directly below the message bubble */
+  top: 100%;
   right: 10px;
   opacity: 0;
   transition: opacity 0.3s;
@@ -137,6 +146,38 @@
 }
 
 .send-button:hover, .new-session-button:hover {
+  background-color: #45a049;
+}
+
+.scroll-to-bottom-button {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  z-index: 100;
+}
+
+.scroll-to-bottom-button.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scroll-to-bottom-button:hover {
+  transform: translateX(-50%) scale(1.1);
   background-color: #45a049;
 }
 
