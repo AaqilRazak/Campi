@@ -1,3 +1,4 @@
+// src/pages/ChatPage.js
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/ChatPage.css';
 
@@ -42,9 +43,18 @@ const ChatPage = () => {
       setInput('');
       setIsTyping(true);
 
-      setTimeout(() => {
+      // Send request to the backend
+      fetch("http://127.0.0.1:8000/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt: input })
+      })
+      .then(response => response.json())
+      .then(data => {
         const botResponse = {
-          text: 'This is a bot response.',
+          text: data.response,
           sender: 'bot',
           time: new Date().toLocaleTimeString(),
           avatar: defaultBotAvatar,
@@ -58,7 +68,11 @@ const ChatPage = () => {
           )
         );
         setIsTyping(false);
-      }, 2000);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setIsTyping(false);
+      });
     }
   };
 
