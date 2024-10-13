@@ -1,3 +1,39 @@
+:root {
+  --background-color: #1e1e1e;
+  --message-area-color: #2b2b2b;
+  --user-message-color: #007aff;
+  --bot-message-color: #4e4e4e;
+  --text-color: #f5f5f5;
+  --timestamp-color: #aaaaaa;
+}
+
+[data-theme='university-blue'] {
+  --background-color: #002147;
+  --message-area-color: #1b2e4b;
+  --user-message-color: #005cbf;
+  --bot-message-color: #1f3b57;
+  --text-color: #ffffff;
+  --timestamp-color: #cccccc;
+}
+
+[data-theme='university-red'] {
+  --background-color: #B31B1B;
+  --message-area-color: #7F1F1F;
+  --user-message-color: #ff5c5c;
+  --bot-message-color: #9b2c2c;
+  --text-color: #ffffff;
+  --timestamp-color: #ffcccc;
+}
+
+[data-theme='university-green'] {
+  --background-color: #006400;
+  --message-area-color: #004b23;
+  --user-message-color: #00b37e;
+  --bot-message-color: #005d36;
+  --text-color: #ffffff;
+  --timestamp-color: #b3ffcc;
+}
+
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -63,6 +99,7 @@
   margin-right: 10px;
   align-self: flex-end;
   position: relative;
+  animation: slide-in-user 0.3s ease-out;
 }
 
 .bot-message {
@@ -73,6 +110,7 @@
   margin-left: 10px;
   align-self: flex-start;
   position: relative;
+  animation: slide-in-bot 0.3s ease-out;
 }
 
 .hover-timestamp {
@@ -135,7 +173,7 @@
   border-radius: 5px;
 }
 
-.send-button {
+.send-button, .new-session-button {
   padding: 10px 20px;
   background-color: #4caf50;
   color: white;
@@ -146,12 +184,8 @@
   transition: transform 0.2s ease;
 }
 
-.send-button:active {
+.send-button:active, .new-session-button:active {
   transform: scale(0.95);
-}
-
-.send-button:hover {
-  background-color: #45a049;
 }
 
 .send-button:hover, .new-session-button:hover {
@@ -175,14 +209,14 @@
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  visibility: visible;
+  opacity: 0;
+  visibility: hidden;
   z-index: 100;
 }
 
-.scroll-to-bottom-button.hidden {
-  opacity: 0;
-  visibility: hidden;
+.scroll-to-bottom-button.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 .scroll-to-bottom-button:hover {
@@ -193,6 +227,16 @@
 @keyframes typing-blink {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
+}
+
+@keyframes slide-in-user {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-bot {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 @media (prefers-color-scheme: dark) {

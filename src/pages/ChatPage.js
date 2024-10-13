@@ -8,6 +8,7 @@ const ChatPage = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [hideScrollToBottom, setHideScrollToBottom] = useState(true);
+  const [theme, setTheme] = useState('default');
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const delayTimeout = useRef(null);
@@ -17,11 +18,13 @@ const ChatPage = () => {
 
   const getCurrentSession = () => sessions.find((session) => session.id === currentSessionId);
 
+  const handleThemeChange = (e) => setTheme(e.target.value);
+
   const handleSendMessage = () => {
     if (input.trim()) {
       const timestamp = new Date().toLocaleTimeString();
       const currentSession = getCurrentSession();
-
+      
       const newMessages = currentSession.messages.length === 0 
         ? [{ text: `Session started at ${timestamp}`, sender: 'system' }]
         : [];
@@ -109,7 +112,14 @@ const ChatPage = () => {
   const currentSession = getCurrentSession();
 
   return (
-    <div className="chat-container">
+    <div className={`chat-container`} data-theme={theme}>
+      <select className="theme-selector" value={theme} onChange={handleThemeChange}>
+        <option value="default">Default</option>
+        <option value="university-blue">University Blue</option>
+        <option value="university-red">University Red</option>
+        <option value="university-green">University Green</option>
+      </select>
+
       <div 
         className="messages-container" 
         onScroll={handleScroll} 
