@@ -5,7 +5,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "For first-year students at Texas State University, the application deadlines are: Fall semester - March 1st (priority), May 1st (regular); Spring semester - December 1st; Summer semester - May 1st. Early Action deadline is October 15th. To ensure scholarship consideration, apply by the priority deadline. Submit both your application and all required documents by these dates."
     },
     {
         "role": "user",
@@ -13,7 +13,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State University is currently test-optional through 2024. While SAT/ACT scores are not required for admission, submitting them may qualify you for additional scholarship opportunities and can strengthen your application. If you choose not to submit test scores, your admission will be based on your high school rank, GPA, and academic course rigor."
     },
     {
         "role": "user",
@@ -21,7 +21,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State University offers Early Action (non-binding) rather than Early Decision. The Early Action deadline is October 15th. By applying Early Action, you'll receive an admission decision by late November/early December. This option allows you to apply early while still keeping your options open, as it's not binding like Early Decision programs at other universities."
     },
     {
         "role": "user",
@@ -29,7 +29,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, there is a non-refundable application fee of $75 for domestic students and $90 for international students when applying to Texas State University. This fee must be paid when submitting your application through ApplyTexas. If you need assistance with the fee, you may be eligible for an application fee waiver."
     },
     {
         "role": "user",
@@ -37,7 +37,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, fee waivers are available for eligible students who demonstrate financial need. You may qualify if you: receive a SAT/ACT fee waiver, participate in the Free/Reduced Lunch program, are a Pell Grant recipient, or participate in other qualifying federal/state assistance programs. Submit your fee waiver request through your high school counselor or through the admissions office before applying."
     },
     {
         "role": "user",
@@ -45,7 +45,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "For a complete application to Texas State, you need to submit: 1) Completed ApplyTexas application, 2) Official high school transcript showing class rank and GPA, 3) SAT/ACT scores (optional through 2024), 4) Application fee or fee waiver, 5) Official college transcripts if you have dual credit. International students must also submit TOEFL/IELTS scores and foreign credential evaluation."
     },
     {
         "role": "user",
@@ -53,7 +53,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State requires completion of the Texas Foundation High School Program or equivalent. Required courses include: 4 years of English, 3-4 years of Mathematics (including Algebra I, Geometry, and Algebra II), 3-4 years of Science (including Biology and Chemistry/Physics), 3-4 years of Social Studies, and 2 years of the same Foreign Language. Your high school counselor can help verify if your courses meet these requirements."
     },
     {
         "role": "user",
@@ -61,7 +61,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State uses a sliding scale that combines class rank/GPA with standardized test scores. Generally, students in the top 10% of their class are automatically admitted. For others, the minimum GPA requirement varies: students with a 3.3+ GPA may be admitted without test scores, while those with lower GPAs need to meet specific SAT/ACT score requirements. The university recommends a minimum 2.5 GPA for consideration."
     },
     {
         "role": "user",
@@ -69,7 +69,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, international students can apply as undergraduates to Texas State University. Requirements include: completed ApplyTexas application, official secondary school transcripts with English translation, proof of English proficiency (TOEFL/IELTS scores), financial documentation showing ability to pay for studies, copy of passport, and a $90 application fee. Additional requirements may apply based on your country of origin."
     },
     {
         "role": "user",
@@ -77,7 +77,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State accepts several English proficiency tests: TOEFL (minimum 78 iBT/550 PBT), IELTS (minimum 6.5), Duolingo English Test (minimum 110), PTE Academic (minimum 52), or Cambridge C1 Advanced (minimum 176). Exemptions are available for students from English-speaking countries or those who completed high school in the U.S. Some academic programs may require higher scores."
     },
     {
         "role": "user",
@@ -85,7 +85,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers conditional admission through the PACE (Personalized Academic and Career Exploration) program for students who don't meet regular admission requirements. Conditionally admitted students must maintain specific GPA requirements, meet regularly with academic advisors, and complete certain first-year requirements. International students may receive conditional admission pending completion of English language requirements."
     },
     {
         "role": "user",
@@ -93,7 +93,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State typically provides admissions decisions within 2-4 weeks after receiving all required application materials. Early Action applicants receive decisions by late November/early December. Regular admission decisions are rolling, meaning they're sent out as applications are reviewed. You can check your application status online through your applicant portal. Processing times may be longer during peak application periods."
     },
     {
         "role": "user",
@@ -101,7 +101,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State accepts applications from students with a GED (General Educational Development) certificate. GED holders must submit their official GED test scores and may need to meet additional requirements, such as minimum test scores or completion of college preparatory courses. SAT/ACT scores are recommended but not required through 2024. Contact the admissions office for specific requirements based on your situation."
     },
     {
         "role": "user",
@@ -109,7 +109,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Transfer students with 30 or more transferable college credit hours are not required to submit high school transcripts. However, if you have fewer than 30 transferable hours, you must submit both high school and college transcripts. All transfer students must submit official transcripts from every college or university previously attended, regardless of whether credits were earned."
     },
     {
         "role": "user",
@@ -117,7 +117,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Transfer students must have a minimum cumulative GPA of 2.0 in all transferable college coursework. Some competitive programs may require higher GPAs for admission. Students with fewer than 30 transferable hours must also meet freshman admission requirements. All grades from previous college coursework, including repeated courses, are calculated in the transfer GPA."
     },
     {
         "role": "user",
@@ -125,7 +125,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, the Honors College has additional requirements. First-year applicants typically need: minimum 3.5 high school GPA, competitive SAT/ACT scores if submitted, and a completed Honors College application with essay. Current and transfer students need a minimum 3.5 college GPA. All applicants must submit a separate Honors College application after being admitted to Texas State. The program looks for students who demonstrate intellectual curiosity and community engagement."
     },
     {
         "role": "user",
@@ -133,7 +133,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can apply with dual-credit coursework. Submit both your high school transcript and official college transcripts for all dual-credit courses. Dual credits from accredited institutions may count toward your degree if you earn a grade of C or better. These credits may also affect your classification and registration priority, but admission decisions for first-year students are still primarily based on your high school record."
     },
     {
         "role": "user",
@@ -141,7 +141,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "No, Texas State University does not require interviews as part of the general admission process. However, some specific programs or scholarships may require interviews after admission. International students may be asked to complete an online video interview to demonstrate English proficiency. The admissions office welcomes meetings with prospective students, but these are optional and informational only."
     },
     {
         "role": "user",
@@ -149,7 +149,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Official transcripts must be sent directly from your school either electronically through approved services (TREx, Parchment, National Student Clearinghouse) or by mail in a sealed envelope. SAT scores should be sent using code 6667, and ACT scores using code 4178. International transcripts must be evaluated by a recognized credential evaluation service. Electronic submissions are preferred and typically process faster than mailed documents."
     },
     {
         "role": "user",
@@ -157,7 +157,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can submit your application before taking or submitting SAT/ACT scores. Texas State is test-optional through 2024, so scores are not required for admission. If you plan to submit scores later, you can update your application by having official scores sent directly from the testing agency. Remember that while scores aren't required for admission, they may be needed for certain scholarships or programs."
     },
     {
         "role": "user",
@@ -165,7 +165,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, homeschooled students are eligible for admission to Texas State. You must submit a home school transcript with courses, grades, and completion date. The transcript should be signed by the primary teacher/administrator. SAT/ACT scores are recommended but optional through 2024. Homeschooled students should complete the Texas Foundation High School Program requirements or equivalent. Contact the admissions office for specific documentation requirements for your situation."
     },
     {
         "role": "user",
@@ -173,7 +173,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State doesn't have a strict minimum age requirement for undergraduate admission. However, applicants must have completed high school or earned a GED. Students younger than 16 seeking early admission should contact the Office of Undergraduate Admissions for special requirements and considerations. All applicants must meet the standard admission requirements regardless of age."
     },
     {
         "role": "user",
@@ -181,7 +181,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State accepts AP credits for scores of 3 or higher on most AP exams. Credit hours awarded vary by subject and score. Submit official AP scores through College Board using code 6667. The university also accepts IB, CLEP, and DSST exam credits. Check the university's credit by examination webpage for specific score requirements and credit equivalencies for each exam type."
     },
     {
         "role": "user",
@@ -189,7 +189,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "You can track your application status through your Self-Service Student Center portal at my.txstate.edu. After applying, you'll receive login credentials via email. The portal shows which documents have been received, which are still pending, and your admission decision when available. For additional questions about your application status, contact the Office of Undergraduate Admissions directly."
     },
     {
         "role": "user",
@@ -197,7 +197,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "No, letters of recommendation are not required for general undergraduate admission to Texas State University. However, some specific programs, scholarships, or special circumstances may require letters of recommendation after admission. If you feel letters would strengthen your application, you may submit them, but they are not part of the standard admission review process."
     },
     {
         "role": "user",
@@ -205,7 +205,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "If you missed the deadline, contact the Office of Undergraduate Admissions immediately. Late applications may be considered on a case-by-case basis if space is available. You might be able to apply for the next available semester, or in some cases, submit a late application with an explanation letter. Remember that meeting scholarship deadlines is crucial, as late applicants typically aren't considered for merit-based awards."
     },
     {
         "role": "user",
@@ -213,7 +213,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State uses a rolling admissions process for regular admission. This means applications are reviewed as they are completed, and decisions are sent out continuously rather than on a single date. However, there are still specific priority deadlines (March 1st for Fall) and regular deadlines (May 1st for Fall) to keep in mind. Early Action has a fixed deadline of October 15th with decisions by late November."
     },
     {
         "role": "user",
@@ -221,7 +221,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State welcomes non-traditional students who have been out of school. You'll need to submit transcripts from high school and any previous college coursework, regardless of when you attended. If accessing old transcripts is difficult, the admissions office can provide guidance. Adult learners may also be interested in the Office of Student Development's resources specifically designed for non-traditional students."
     },
     {
         "role": "user",
@@ -229,7 +229,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, some majors have additional admission requirements beyond university standards. Programs in areas like Business, Nursing, Engineering, and Music often have specific prerequisites, higher GPA requirements, or additional application materials. For example, the McCoy College of Business requires a higher GPA, and Fine Arts programs may require auditions or portfolio reviews. Check your intended major's department website for specific requirements."
     },
     {
         "role": "user",
@@ -237,7 +237,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Former Texas State students who haven't enrolled for one or more long semesters must apply for readmission. Submit the ApplyTexas application, selecting 'readmission' as your application type. You'll need to provide transcripts from any colleges attended during your absence. Academic standing at the time you left Texas State may affect readmission. Some students may need to appeal or meet with academic advisors before being readmitted."
     },
     {
         "role": "user",
@@ -245,7 +245,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, to qualify for in-state tuition, you must be a Texas resident for at least 12 months before the semester starts. Requirements include: living in Texas for purposes other than education, financial independence or parental support from a Texas resident, and documentation like Texas driver's license, voter registration, or employment records. Military members, veterans, and their families may qualify for special residency considerations. The university's residency questionnaire determines your status."
     },
     {
         "role": "user",
@@ -253,7 +253,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Graduate program applications are processed through The Graduate College. Submit your application through ApplyTexas or GradCAS (depending on program), along with official transcripts from all colleges attended, application fee ($55 domestic/$75 international), and program-specific requirements. Most programs require GRE/GMAT scores, letters of recommendation, statement of purpose, and resume. Check your specific program's requirements as they vary by department."
     },
     {
         "role": "user",
@@ -261,7 +261,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Transfer applicants need a minimum 2.0 GPA in all transferable college coursework. Submit official transcripts from every college attended, even if credits don't transfer. With fewer than 30 transferable hours, you must also meet freshman admission requirements and submit high school transcripts. Some programs have higher GPA requirements or prerequisite courses. Use the transfer course equivalency tool on the university website to see how your credits will transfer."
     },
     {
         "role": "user",
@@ -269,7 +269,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To defer your admission to a future semester, submit a written request to the Office of Undergraduate Admissions before the start of your original admission term. Deferrals are typically granted for one semester. Include your Texas State ID, reason for deferral, and desired semester in your request. Note that scholarships and financial aid packages don't automatically transfer to deferred terms - you'll need to reapply for these separately."
     },
     {
         "role": "user",
@@ -277,7 +277,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can apply as an Exploratory Professional (formerly called undecided) major at Texas State. The University College provides academic advising and career exploration resources to help you choose a major. However, you must declare a major before completing 45 credit hours. The PACE program offers structured guidance for exploring different fields of study and career paths while completing core requirements."
     },
     {
         "role": "user",
@@ -285,7 +285,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "You can verify transferable credits using Texas State's Transfer Course Equivalency System (TES) online. For Texas community colleges, use the Texas Common Course Numbering System (TCCNS) for direct equivalencies. The Transfer Planning Guides show recommended courses by major. For courses not listed, contact the Transfer Credit Office for evaluation. Only courses with grades of C or better from regionally accredited institutions are eligible for transfer."
     },
     {
         "role": "user",
@@ -293,7 +293,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, students pursuing a double major must submit the Second Major Request Form through the academic advising office of their intended second major. This form requires approval signatures from both department chairs. Students should have completed at least one semester at Texas State and be in good academic standing before applying. Each major may have specific GPA requirements and prerequisites. The form must be submitted before the final semester of coursework."
     },
     {
         "role": "user",
@@ -301,7 +301,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can apply as a post-baccalaureate student if you already have a bachelor's degree. Submit the ApplyTexas application, selecting 'post-baccalaureate' as your application type, along with official transcripts from all previous institutions. Post-baccalaureate students can pursue a second bachelor's degree, teacher certification, or prerequisites for graduate programs. Different admission criteria and tuition rates may apply."
     },
     {
         "role": "user",
@@ -309,7 +309,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides support for non-traditional students through the Office of Student Development. While not a formal bridge program, services include academic coaching, study skills workshops, and peer mentoring. The Student Learning Assistance Center (SLAC) offers additional resources like tutoring and time management workshops. Non-traditional students also have access to specialized orientation programs and academic advising tailored to their needs."
     },
     {
         "role": "user",
@@ -317,7 +317,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "If denied admission, you have several options: 1) Submit an admission appeal with new information or extenuating circumstances not included in your original application, 2) Apply for the PACE program if eligible, 3) Attend a community college and reapply as a transfer student after completing 30 transferable hours, 4) Consider summer admission. Contact the Office of Undergraduate Admissions for guidance on the appeals process and alternative pathways to admission."
     },
     {
         "role": "user",
@@ -325,7 +325,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State University offers support services for students with disabilities through the Office of Disability Services. Services include academic accommodations, assistive technology, and disability awareness training for faculty and staff. Students must provide documentation of their disability and meet with a disability specialist to discuss individual needs and accommodations. The university is committed to providing reasonable accommodations to ensure equal access to education for all students."
     },
     {
         "role": "user",
@@ -333,7 +333,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can appeal a denial decision within 30 days of receiving your notification. Submit an appeal letter to the Office of Undergraduate Admissions explaining any extenuating circumstances or providing new information not included in your original application. Include supporting documentation like updated test scores, new grades, or letters of recommendation. The Admission Appeal Committee typically reviews appeals within 2-3 weeks, and all decisions are final."
     },
     {
         "role": "user",
@@ -341,7 +341,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "No, Texas State University does not use the Common Application. All undergraduate applications must be submitted through ApplyTexas (www.applytexas.org), which is the centralized application system for Texas public universities. This includes applications for freshman, transfer, and international students. Create an ApplyTexas account and use Texas State's school code 003615 to begin your application process."
     },
     {
         "role": "user",
@@ -349,7 +349,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "After acceptance, complete these steps: 1) Accept your admission offer and pay the $150 enrollment deposit, 2) Submit bacterial meningitis vaccination documentation, 3) Complete housing application if planning to live on campus, 4) Register for mandatory New Student Orientation (NSO), 5) Complete online pre-orientation modules, 6) Submit final transcripts, 7) Attend orientation for academic advising and course registration, 8) Set up your Texas State email and NetID."
     },
     {
         "role": "user",
@@ -357,7 +357,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, New Student Orientation (NSO) is mandatory for all incoming freshmen and transfer students. The program includes academic advising, course registration, campus tours, and information sessions about university resources. Students must complete online pre-orientation modules before attending their in-person session. Multiple NSO dates are offered throughout summer for fall enrollment. Spring admits attend orientation in January. Register early as sessions fill quickly."
     },
     {
         "role": "user",
@@ -365,7 +365,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can apply to transfer after one semester, but you must have completed at least 12 transferable credit hours with a minimum 2.0 GPA. Students with fewer than 30 transferable hours must also meet freshman admission requirements and submit high school transcripts. All transfer credits must be from regionally accredited institutions with grades of C or better. Meet with an admission counselor to discuss your specific situation."
     },
     {
         "role": "user",
@@ -373,7 +373,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The Office of Student Diversity and Inclusion (SDI) coordinates diversity programs and resources. Programs include the Bobcat Unity Program, multicultural organizations, diversity dialogue series, cultural heritage celebrations, and mentoring initiatives. Visit the SDI office in LBJ Student Center or their website to learn about upcoming events, student organizations, and support services. They also offer diversity training workshops and leadership development opportunities for underrepresented students."
     },
     {
         "role": "user",
@@ -381,7 +381,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Out-of-state students follow the same basic application process through ApplyTexas. Requirements include: official high school transcripts, optional SAT/ACT scores (through 2024), and a $75 application fee. Out-of-state students pay higher tuition rates unless they qualify for specific scholarships or tuition reduction programs. Some states have reciprocity agreements with Texas. Academic requirements remain the same as for in-state students."
     },
     {
         "role": "user",
@@ -389,7 +389,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Key admission dates include: Early Action - October 15th (decision by November); Fall Priority - March 1st (for scholarships); Fall Regular - May 1st; Spring - December 1st; Summer - May 1st. Housing priority deadline is March 1st. FAFSA priority deadline is January 15th. New Student Orientation registration opens in April for fall semester. Check the admissions calendar for specific program deadlines."
     },
     {
         "role": "user",
@@ -397,7 +397,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The Office of Undergraduate Admissions can be reached multiple ways: Phone: 512-245-2364; Email: admissions@txstate.edu; In-person: Richard A. Castro Undergraduate Admissions Center, 429 N. Guadalupe St. Virtual appointments are available through video chat. Office hours are Monday-Friday, 8am-5pm. You can also connect through social media or schedule a campus tour through the admissions website."
     },
     {
         "role": "user",
@@ -405,7 +405,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple types of financial aid: 1) Federal grants (Pell, SEOG), 2) State grants (TEXAS Grant, Texas Public Educational Grant), 3) Scholarships (merit-based, departmental, competitive), 4) Federal loans (Direct, PLUS), 5) Work-study programs, 6) The Bobcat Promise program for eligible Texas residents. Submit FAFSA by January 15th priority deadline. Emergency assistance and payment plans are also available through the Financial Aid Office."
     },
     {
         "role": "user",
@@ -413,7 +413,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To apply for financial aid: 1) Submit FAFSA at fafsa.gov using Texas State school code 003615 by January 15th priority deadline, 2) Create a Texas State student account, 3) Monitor your email for requests for additional documentation, 4) Accept/decline aid offers through the student portal, 5) Complete loan entrance counseling and sign MPN if accepting loans. Texas residents ineligible for FAFSA should complete TASFA instead."
     },
     {
         "role": "user",
@@ -421,7 +421,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The Free Application for Federal Student Aid (FAFSA) is required to receive federal and state financial aid. Submit it starting October 1st for the following academic year, with Texas State's priority deadline of January 15th. Use school code 003615. The FAFSA determines eligibility for grants, loans, work-study, and some scholarships. Submit it annually to maintain aid. Financial aid workshops and FAFSA completion assistance are available through the Financial Aid Office."
     },
     {
         "role": "user",
@@ -429,15 +429,15 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "International students aren't eligible for federal financial aid, but can access other funding options: merit-based scholarships, departmental scholarships, graduate assistantships (for graduate students), and private loans with a U.S. co-signer. The International Student and Scholar Services office provides information about available funding opportunities. F-1 visa students may also be eligible for on-campus employment and Curricular Practical Training (CPT)."
     },
     {
         "role": "user",
-        "content": "Are scholarships available for first-year students?"
+        "content": "What scholarships are available for incoming freshmen?"
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Incoming freshmen can apply for various scholarships: 1) Academic Achievement Scholarships based on class rank/GPA and test scores, 2) Terry Foundation Scholarships for Texas residents, 3) Departmental scholarships in specific fields, 4) Competitive scholarships like National Merit and Presidential scholarships, 5) Bobcat Promise for eligible Texas residents. Apply by March 1st priority deadline. Complete both admissions and scholarship applications early for best consideration."
     },
     {
         "role": "user",
@@ -445,7 +445,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Required documents include: 1) Completed FAFSA or TASFA with Texas State school code 003615, 2) Tax returns and W-2 forms for student and parents if dependent, 3) Social Security numbers and birth dates for family members, 4) Bank statements and asset information, 5) Records of untaxed income. Additional verification documents may be requested through your student portal. Submit all documents by January 15th priority deadline for fall/spring or March 1st for summer aid."
     },
     {
         "role": "user",
@@ -453,7 +453,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Financial aid eligibility is determined by several factors: 1) Demonstrated financial need based on FAFSA/TASFA results, 2) Enrollment status (minimum half-time: 6 hours undergraduate, 3 hours graduate), 3) Satisfactory Academic Progress (minimum GPA, 67% completion rate, not exceeding maximum attempted hours), 4) U.S. citizenship or eligible non-citizen status, 5) Valid Social Security number, 6) Registration with Selective Service if required, 7) Enrollment in degree-seeking program with courses that count toward your degree."
     },
     {
         "role": "user",
@@ -461,7 +461,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas residents have access to several state-specific aid programs: 1) TEXAS Grant for eligible students with financial need, 2) Texas State Tuition Grant, 3) Texas Public Educational Grant, 4) Bobcat Promise program (covers tuition and fees for eligible students with family incomes under $50,000), 5) Texas College Work Study program. Additional merit-based and departmental scholarships are available. Submit FAFSA/TASFA by January 15th priority deadline and check scholarship portal for specific program deadlines."
     },
     {
         "role": "user",
@@ -469,7 +469,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Work-study is a financial aid program where students earn money by working part-time at university jobs. To qualify: 1) Submit FAFSA by priority deadline, 2) Demonstrate financial need through FAFSA results, 3) Accept work-study offer in financial aid package, 4) Apply for positions through Jobs4Cats. Students typically work 10-20 hours weekly at minimum wage or higher. Both on-campus and approved off-campus positions are available. Must maintain satisfactory academic progress to keep eligibility."
     },
     {
         "role": "user",
@@ -477,7 +477,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "After submitting your FAFSA (priority deadline January 15th), you'll receive award notifications through your student portal. The timing depends on when you submit all required documents and complete verification if selected. For fall/spring aid, awards are typically announced by early summer if you met the priority deadline. Monitor your student email for requests for additional documentation, as incomplete files may delay award notifications. You must accept or decline aid offers through the student portal."
     },
     {
         "role": "user",
@@ -485,7 +485,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several federal and state grants for students with financial need: 1) Federal Pell Grant, 2) Federal Supplemental Educational Opportunity Grant (SEOG), 3) TEACH Grant, 4) Iraq-Afghanistan Service Grant, 5) TEXAS Grant, 6) Texas State Tuition Grant, 7) Texas Public Educational Grant. Grants are gift aid that doesn't need to be repaid. Submit FAFSA by January 15th priority deadline to be considered. Award amounts vary based on financial need and program requirements."
     },
     {
         "role": "user",
@@ -493,7 +493,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can receive both scholarships and grants simultaneously. Many students combine multiple forms of aid including: 1) Merit-based scholarships, 2) Need-based grants like Pell Grant and TEXAS Grant, 3) Departmental scholarships, 4) Outside scholarships. There's no limit to scholarship amounts, but total aid cannot exceed your cost of attendance. The Financial Aid Office will help coordinate your aid package to maximize your benefits while staying within federal and state guidelines."
     },
     {
         "role": "user",
@@ -501,7 +501,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To estimate your financial aid: 1) Use the Net Price Calculator on Texas State's website to get a preliminary estimate, 2) Submit FAFSA early to receive your official Expected Family Contribution (EFC), 3) Review your Student Aid Report (SAR) after FAFSA submission, 4) Check scholarship eligibility based on your academic profile, 5) Contact Financial Aid Office for personalized estimates. Final packages are typically announced by early summer if you meet the January 15th priority deadline."
     },
     {
         "role": "user",
@@ -509,7 +509,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you must reapply for financial aid each academic year by submitting a new FAFSA or TASFA by the January 15th priority deadline. This annual renewal is required to: 1) Maintain eligibility for federal/state grants, 2) Continue work-study participation, 3) Receive need-based scholarships, 4) Keep Bobcat Promise benefits. Your aid package may change yearly based on updated financial information, academic performance, and maintaining satisfactory academic progress requirements."
     },
     {
         "role": "user",
@@ -517,7 +517,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "You can check your financial aid application status through several methods: 1) Log into your Texas State student portal and check the Financial Aid tab, 2) Monitor your Texas State email for notifications and requests for additional documentation, 3) Contact the Financial Aid Office directly at 512-245-2315 or financialaid@txstate.edu. Remember to check regularly as additional documentation may be requested. Your aid won't be processed until all required documents are received."
     },
     {
         "role": "user",
@@ -525,7 +525,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, undergraduate students have access to several loan options: 1) Federal Direct Subsidized Loans (need-based, government pays interest while in school), 2) Federal Direct Unsubsidized Loans (available regardless of need), 3) Parent PLUS loans (taken by parents for dependent students), 4) Private loans through banks or credit unions. To apply for federal loans, submit FAFSA by January 15th priority deadline. All federal loans require entrance counseling and signing a Master Promissory Note (MPN)."
     },
     {
         "role": "user",
@@ -533,7 +533,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, part-time students can receive financial aid if enrolled in at least 6 credit hours per semester for undergraduates or 3 hours for graduates. However, aid amounts are typically reduced proportionally to enrollment status. Pell Grants, student loans, and some state grants are available for part-time students. Some scholarships may require full-time enrollment, so check specific requirements. Submit FAFSA by the priority deadline regardless of enrollment status."
     },
     {
         "role": "user",
@@ -541,7 +541,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "If financial aid doesn't cover all costs, you have several options: 1) Set up an installment payment plan to spread remaining costs over the semester, 2) Apply for additional private loans with a co-signer, 3) Consider Parent PLUS loans if you're a dependent student, 4) Apply for departmental or external scholarships, 5) Check eligibility for work-study or student employment. The Student Business Services office can help evaluate payment options and set up payment plans before payment deadlines."
     },
     {
         "role": "user",
@@ -549,7 +549,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers emergency assistance through several programs: 1) Emergency grant funding for unexpected financial hardships, 2) Bobcat Cares emergency grants for COVID-19 related expenses, 3) Short-term emergency loans for immediate educational expenses, 4) Emergency housing and food assistance through Student Emergency Services, 5) Technology assistance for academic needs. Contact the Financial Aid Office or Student Emergency Services to apply for emergency aid."
     },
     {
         "role": "user",
@@ -557,7 +557,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Scholarships are awarded based on various criteria: 1) Academic merit (GPA, test scores, class rank), 2) Financial need from FAFSA/TASFA results, 3) Specific major or department requirements, 4) Special talents or achievements, 5) First-generation student status. Most university scholarships require the general scholarship application through the scholarship portal by March 1st priority deadline. Departmental scholarships may have separate applications and deadlines. Competitive scholarships often require essays, recommendations, or interviews."
     },
     {
         "role": "user",
@@ -565,7 +565,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you must maintain Satisfactory Academic Progress (SAP) to keep financial aid: 1) Minimum cumulative GPA of 2.0 for undergraduates, 3.0 for graduates, 2) Complete 67% of all attempted credit hours, 3) Not exceed 150% of your degree program's required hours. If you fail to meet SAP requirements, you'll be placed on financial aid warning. You may appeal if extenuating circumstances affected your academic performance. The Financial Aid Office offers SAP workshops and academic planning assistance."
     },
     {
         "role": "user",
@@ -573,7 +573,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To qualify for merit-based scholarships: 1) Meet minimum GPA requirements (typically 3.0+), 2) Submit test scores if available (can strengthen application), 3) Apply by March 1st priority deadline, 4) Complete the general scholarship application through the scholarship portal, 5) Maintain strong academic performance. Additional requirements may include leadership experience, extracurricular activities, or specific major enrollment. Competitive scholarships may require essays or interviews. Check departmental scholarships for major-specific opportunities."
     },
     {
         "role": "user",
@@ -581,7 +581,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The main differences are: Subsidized loans are need-based with government paying interest while you're in school, during grace period, and deferment. Unsubsidized loans are available regardless of financial need, but interest accrues from disbursement date. Both require at least half-time enrollment and FAFSA completion. Subsidized loans have lower borrowing limits and are only for undergraduates, while unsubsidized loans are available to both undergraduate and graduate students with higher limits."
     },
     {
         "role": "user",
@@ -589,7 +589,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers departmental scholarships for specific majors and fields of study. Each academic department manages their own scholarship programs with unique eligibility requirements and deadlines. Contact your department's main office or check their website for available opportunities. Additionally, the College of Science and Engineering, McCoy College of Business, and College of Fine Arts and Communication offer college-level scholarships. Apply through the general scholarship application portal and check departmental websites for any supplemental applications."
     },
     {
         "role": "user",
@@ -597,7 +597,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you are encouraged to apply for multiple scholarships to maximize your funding opportunities. The general scholarship application automatically considers you for all university-wide scholarships you qualify for. You can also apply for: 1) Departmental scholarships, 2) College-specific awards, 3) Competitive scholarships, 4) External/private scholarships. There's no limit to the number of scholarships you can receive, but total aid cannot exceed your cost of attendance. Submit all applications by respective deadlines and monitor your email for additional requirements."
     },
     {
         "role": "user",
@@ -605,7 +605,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To appeal a financial aid decision: 1) Submit a written appeal letter explaining special circumstances affecting your financial situation, 2) Provide supporting documentation (medical bills, proof of job loss, etc.), 3) Complete the Special Circumstances Appeal Form from the Financial Aid Office, 4) Submit all materials to the Financial Aid Office for review. Appeals are reviewed case-by-case and typically take 2-3 weeks. Common appeal reasons include: loss of income, medical expenses, or other significant changes in financial circumstances not reflected on FAFSA."
     },
     {
         "role": "user",
@@ -613,7 +613,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, graduate students can apply for financial aid by submitting the FAFSA with Texas State's school code (003615). Graduate students are eligible for: 1) Federal Direct Unsubsidized Loans, 2) Graduate PLUS loans, 3) Work-study opportunities, 4) Departmental scholarships and fellowships, 5) Graduate assistantships. Full-time status requires 6 credit hours for master's students and 5 hours for doctoral students. The March 15th FAFSA priority deadline applies to graduate students."
     },
     {
         "role": "user",
@@ -621,7 +621,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Satisfactory Academic Progress (SAP) requirements for financial aid include: 1) Maintaining minimum cumulative Texas State GPA (2.0 undergraduate, 3.0 graduate), 2) Completing at least 67% of all attempted coursework, 3) Not exceeding maximum attempted hours toward degree (150% of program length). Students who don't meet SAP standards are placed on financial aid warning. Additional program-specific requirements may apply. SAP status is reviewed each semester and affects eligibility for all types of financial aid."
     },
     {
         "role": "user",
@@ -629,7 +629,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To maximize your financial aid: 1) Submit FAFSA by January 15th priority deadline, 2) Apply for scholarships through the general scholarship application by March 1st, 3) Check departmental scholarships in your field of study, 4) Maintain satisfactory academic progress, 5) Consider work-study opportunities, 6) Submit all requested verification documents promptly, 7) Appeal if you have special circumstances affecting your financial situation, 8) Meet with a financial aid advisor for personalized guidance. Contact the Financial Aid Office at 512-245-2315 for assistance."
     },
     {
         "role": "user",
@@ -637,7 +637,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, students with disabilities have several financial aid options: 1) Regular federal aid programs (grants, loans, work-study), 2) State vocational rehabilitation funding through Texas Workforce Commission, 3) Supplemental Security Income (SSI) benefits that don't count against aid eligibility, 4) Disability-specific scholarships, 5) Additional cost allowances for disability-related expenses in financial aid packages. The Office of Disability Services can help coordinate with Financial Aid to ensure appropriate accommodations and support."
     },
     {
         "role": "user",
@@ -645,7 +645,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can use financial aid for summer courses if you: 1) Have remaining aid eligibility from the academic year, 2) Enroll in at least 6 credit hours for undergraduate or 3 hours for graduate students, 3) Submit a Summer Aid Application through your student portal, 4) Meet Satisfactory Academic Progress requirements. The priority deadline for summer aid is March 1st. Available summer aid includes Pell Grants, student loans, and work-study. Note that using aid in summer may affect your fall/spring aid amounts."
     },
     {
         "role": "user",
@@ -653,7 +653,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The Texas Public Educational Grant (TPEG) is a need-based state grant program that provides aid to eligible Texas residents, non-residents, and international students. Eligibility requirements include: 1) Demonstrated financial need through FAFSA/TASFA, 2) Enrollment in at least 6 credit hours, 3) Maintaining satisfactory academic progress. Award amounts vary based on need and available funding. The grant does not need to be repaid. Priority consideration is given to students who submit FAFSA/TASFA by the January 15th deadline."
     },
     {
         "role": "user",
@@ -661,7 +661,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The university calculates cost of attendance (COA) by combining: 1) Direct costs: tuition, fees, on-campus housing and meal plans, 2) Indirect costs: books, supplies, transportation, personal expenses, off-campus housing allowance. COA varies based on residency status, housing choice, and enrollment level. The Financial Aid Office reviews and updates COA annually to reflect current expenses. This total represents the maximum financial aid you can receive from all sources combined."
     },
     {
         "role": "user",
@@ -669,7 +669,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, financial aid can be used for approved study abroad programs if you: 1) Enroll in a Texas State-sponsored program or approved affiliated program, 2) Maintain satisfactory academic progress, 3) Take courses that count toward your degree, 4) Are enrolled at least half-time. The Study Abroad Office will provide a program-specific cost sheet to Financial Aid to adjust your aid package. Additional scholarships specifically for study abroad are available through the Study Abroad Office."
     },
     {
         "role": "user",
@@ -677,7 +677,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Parent income directly impacts need-based financial aid for dependent students through the FAFSA's Expected Family Contribution (EFC) calculation. Factors considered include: 1) Parents' taxed/untaxed income, 2) Assets and investments, 3) Household size, 4) Number of family members in college. Higher parent income generally means higher EFC and less need-based aid eligibility. However, merit-based scholarships and unsubsidized loans are available regardless of parent income. Independent students are evaluated based on their own income."
     },
     {
         "role": "user",
@@ -685,7 +685,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several scholarship opportunities for transfer students: 1) Assured Transfer Scholarships based on GPA, 2) Competitive transfer scholarships through the BOSS scholarship portal, 3) Departmental scholarships in your field of study. The priority deadline for transfer scholarships is March 1st. To be considered, you must be admitted to Texas State and complete the scholarship application through BOSS. Awards are based on academic achievement, leadership, and other criteria specified by donors."
     },
     {
         "role": "user",
@@ -693,7 +693,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, federal student loans typically offer several deferment options after graduation: 1) Automatic 6-month grace period after graduation, 2) Economic hardship deferment, 3) Graduate school enrollment deferment, 4) Military service deferment, 5) Unemployment deferment. Interest may still accrue during deferment periods on unsubsidized loans. Contact your loan servicer to discuss specific deferment options and requirements. Alternative repayment plans like income-based repayment are also available."
     },
     {
         "role": "user",
@@ -701,7 +701,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "If you withdraw from classes, several things happen: 1) If withdrawal is before the 60% point of the semester, you must repay unearned portions of federal Title IV aid, 2) Unofficial withdrawals (all U's, W's, or I's) require federal withdrawal calculations, 3) Your future aid eligibility may be affected if you don't meet Satisfactory Academic Progress requirements, 4) You must complete an Official Withdrawal Request form and speak with Financial Aid before withdrawing. Contact Financial Aid for a personalized review of how withdrawal will affect your specific aid package."
     },
     {
         "role": "user",
@@ -709,7 +709,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several grant opportunities for minority students: 1) Texas Educational Opportunity Grant (TEOG) for underrepresented students, 2) First-generation student grants, 3) Hispanic Serving Institution (HSI) grants, 4) Diversity advancement grants through academic departments. Additionally, the Multicultural Student Affairs office can help identify scholarship opportunities. Submit FAFSA/TASFA by priority deadline for maximum consideration."
     },
     {
         "role": "user",
@@ -717,7 +717,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To apply for Bobcat Promise: 1) Submit FAFSA/TASFA by January 15th priority deadline, 2) Be an incoming freshman Texas resident, 3) Have family adjusted gross income of $50,000 or less, 4) Be admitted to Texas State as a first-time freshman, 5) Enroll full-time (12+ credit hours). No separate application is needed - eligible students are automatically considered when FAFSA/TASFA is submitted. The program covers tuition and mandatory fees for up to 4 years."
     },
     {
         "role": "user",
@@ -725,7 +725,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Key financial aid deadlines at Texas State: 1) January 15th - Priority FAFSA/TASFA deadline for maximum aid consideration, 2) March 1st - General scholarship application deadline, 3) March 15th - Summer aid application deadline, 4) June 1st - Fall verification document deadline, 5) November 1st - Spring verification document deadline. While applications are accepted after these dates, funding may be limited. The FAFSA school code for Texas State is 003615."
     },
     {
         "role": "user",
@@ -733,7 +733,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can receive financial aid for online courses if they count toward your degree program. To be eligible: 1) Must be enrolled at least half-time (6 hours undergraduate, 3 hours graduate), 2) Courses must be required for your degree plan, 3) Must maintain satisfactory academic progress, 4) Must meet all other federal and state aid eligibility requirements. The same types of aid (grants, loans, work-study) are available for qualifying online courses as traditional courses."
     },
     {
         "role": "user",
@@ -741,7 +741,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Financial aid can be used for off-campus housing as part of your total cost of attendance (COA). The Financial Aid Office includes an off-campus housing allowance when calculating your COA. Aid disbursement first covers direct costs (tuition and fees), then remaining funds are released to you for indirect costs like off-campus housing. The amount available for housing depends on your total aid package and cannot exceed the housing allowance in your COA."
     },
     {
         "role": "user",
@@ -749,7 +749,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To maintain scholarship eligibility, you must: 1) Meet Satisfactory Academic Progress requirements including minimum GPA (typically 2.0 for undergrad, 3.0 for graduate), 2) Complete at least 67% of attempted credit hours, 3) Not exceed maximum attempted hours for your degree program, 4) Maintain full-time enrollment status if required by specific scholarship, 5) Meet any additional criteria specified by your scholarship donor or department. Review your scholarship terms carefully as requirements may vary by program."
     },
     {
         "role": "user",
@@ -757,7 +757,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, you can receive financial aid with a prior bachelor's degree, but with some limitations: 1) You're no longer eligible for Federal Pell Grants, 2) You can still receive Federal Direct Unsubsidized Loans, 3) Graduate PLUS loans are available for graduate programs, 4) Departmental scholarships and fellowships may be available, 5) Work-study opportunities remain available. Submit FAFSA to be considered for available aid programs. Contact Financial Aid Office for guidance on graduate student aid options."
     },
     {
         "role": "user",
@@ -765,7 +765,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Single parents have several financial aid options: 1) Federal Pell Grants with increased eligibility due to household size, 2) Texas Public Educational Grant (TPEG), 3) Additional cost of attendance allowances for childcare expenses, 4) Priority consideration for work-study positions, 5) Specialized scholarships through the BOSS scholarship portal, 6) Emergency aid programs for unexpected expenses. Include dependent information on FAFSA for accurate aid calculation. Contact Financial Aid Office to discuss your specific situation."
     },
     {
         "role": "user",
@@ -773,7 +773,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Marital status affects financial aid in several ways: 1) If married, both student and spouse's income/assets are considered on FAFSA, 2) Marriage may change dependency status to independent student, 3) Household size changes may increase aid eligibility, 4) Cost of attendance adjustments may be made for family living expenses, 5) Special circumstances reviews available for recent marital status changes. Report any marital status changes to Financial Aid Office as this may affect current and future aid eligibility."
     },
     {
         "role": "user",
@@ -781,7 +781,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, financial aid can help cover health insurance costs as part of your total cost of attendance (COA). The Student Health Insurance Plan (SHIP) charges can be paid using: 1) Financial aid refunds after tuition/fees are paid, 2) Scholarship funds if allowed by terms, 3) Student loans within COA limits. International students are required to have health insurance. Contact Student Business Services or Financial Aid Office to understand how insurance costs affect your aid package."
     },
     {
         "role": "user",
@@ -789,7 +789,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "If you're over-awarded financial aid (total aid exceeds cost of attendance): 1) The Financial Aid Office must reduce your aid package to comply with federal regulations, 2) Aid will be reduced in a specific order, usually starting with loans before grants, 3) You may need to repay funds already disbursed, 4) Future disbursements will be adjusted, 5) Over-awards often occur when receiving additional scholarships after initial aid package. Report all outside scholarships to prevent over-awards."
     },
     {
         "role": "user",
@@ -797,7 +797,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Several resources are available for financial aid application help: 1) Contact Financial Aid Office at 512-245-2315 or financialaid@txstate.edu, 2) Visit their office in JCK 240 for in-person assistance, 3) Attend FAFSA workshops offered throughout the year, 4) Use online guides and tutorials on the Financial Aid website, 5) Schedule a one-on-one appointment with a financial aid advisor. Staff can help with FAFSA completion, verification documents, and understanding aid options."
     },
     {
         "role": "user",
@@ -805,7 +805,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple tutoring options: 1) SLAC (Student Learning Assistance Center) provides free tutoring in most subjects, 2) Math Lab for math course assistance, 3) Writing Center for paper reviews and writing help, 4) Departmental tutoring through specific academic departments, 5) Online tutoring through Tutor.com, 6) Supplemental Instruction (SI) for historically difficult courses. Most services are available both in-person and online. Schedule appointments through the TXST Tutoring Portal."
     },
     {
         "role": "user",
@@ -813,7 +813,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Math help is available through several resources: 1) Math Lab in Derrick Hall provides free walk-in tutoring for all math courses, 2) SLAC offers individual and small group math tutoring by appointment, 3) Supplemental Instruction (SI) for specific math courses, 4) Online math tutoring through Tutor.com, 5) Math faculty office hours for course-specific help. The Math Lab also provides graphing calculators and computers with mathematical software."
     },
     {
         "role": "user",
@@ -821,7 +821,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, the University Writing Center offers comprehensive writing support: 1) One-on-one consultations for papers, essays, and writing assignments, 2) Help at any stage of writing process from brainstorming to final drafts, 3) Online and in-person appointments available, 4) Assistance with citation styles (APA, MLA, Chicago), 5) Writing workshops throughout semester, 6) ESL/ELL support services. Schedule appointments through the online booking system or visit their location in Alkek Library."
     },
     {
         "role": "user",
@@ -829,7 +829,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "SLAC (Student Learning Assistance Center) is Texas State's comprehensive tutoring center that provides free academic support services: 1) One-on-one tutoring in most subjects, 2) Small group tutoring sessions, 3) Online tutoring through Tutor.com, 4) Writing assistance for papers and essays, 5) Math Lab support for all math courses. SLAC services are available both in-person and online. You can schedule appointments through the TXST Tutoring Portal to get help with challenging courses."
     },
     {
         "role": "user",
@@ -837,7 +837,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several study group options: 1) Supplemental Instruction (SI) for historically difficult courses, 2) Small group tutoring sessions through SLAC, 3) Departmental study groups led by faculty or teaching assistants, 4) Math Lab group study sessions, 5) Writing Center group workshops. These study groups provide structured learning environments where students can collaborate with peers and receive guidance from experienced tutors or instructors."
     },
     {
         "role": "user",
@@ -845,7 +845,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers free one-on-one tutoring through multiple services: 1) SLAC provides individual tutoring for most subjects, 2) The Math Lab offers personalized math course assistance, 3) The Writing Center provides one-on-one consultations for papers and writing assignments, 4) Online individual tutoring through Tutor.com, 5) Departmental tutoring for specific courses. Schedule appointments through the TXST Tutoring Portal for in-person or online sessions."
     },
     {
         "role": "user",
@@ -853,7 +853,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "You can access tutoring services in several ways: 1) Walk-in tutoring at The STUDY in Alkek Library 4th floor or Falls & Sayers residence hall, 2) Schedule small group tutoring appointments (max 5 students) through the TXST Tutoring Portal for chemistry, accounting, and math courses, 3) Visit the Math Lab in Derrick Hall for walk-in math help, 4) Make Writing Center appointments online for paper reviews, 5) Access 24/7 online tutoring through Tutor.com in Canvas. Most services offer both in-person and online options."
     },
     {
         "role": "user",
@@ -861,7 +861,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "No, most academic support services at Texas State are FREE for enrolled students. This includes: 1) The STUDY tutoring services (fee-funded through student fees), 2) Math Lab assistance, 3) Writing Center consultations, 4) Supplemental Instruction (SI) sessions, 5) Success Coaching, 6) Online tutoring through Tutor.com. The only exception is private tutoring, which can be arranged for a fee through The STUDY or individual departments. All walk-in services and group study sessions are provided at no additional cost."
     },
     {
         "role": "user",
@@ -869,7 +869,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides multiple online tutoring options: 1) 24/7 access to Tutor.com through Canvas for all courses, 2) Online Writing Center appointments with real-time document sharing and chat/microphone communication, 3) Virtual tutoring sessions through The STUDY, 4) Online small group tutoring appointments for specific subjects, 5) Distance learning students have access to all online tutoring resources. These services are free for enrolled students and can be accessed through the TXST Tutoring Portal or Canvas."
     },
     {
         "role": "user",
@@ -877,7 +877,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Academic coaching at Texas State provides personalized support through: 1) One-on-one meetings with Success Coaches to develop study strategies, 2) Time management and organization skills development, 3) Goal-setting and academic planning assistance, 4) Help with test-taking strategies and note-taking techniques, 5) Referrals to other campus resources. Schedule appointments through SLAC or visit The STUDY in Alkek Library. Services are free for all enrolled students."
     },
     {
         "role": "user",
@@ -885,7 +885,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers multiple exam preparation resources: 1) SLAC provides test-taking strategy workshops, 2) One-on-one tutoring for specific course content, 3) Study groups and Supplemental Instruction (SI) for historically difficult courses, 4) Math Lab assistance for math exams, 5) Academic coaches can help develop personalized study plans, 6) Online practice tests and study materials through Tutor.com. Schedule appointments early, especially during midterms and finals."
     },
     {
         "role": "user",
@@ -893,7 +893,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers various study skills workshops through SLAC and The STUDY including: 1) Time management and organization, 2) Note-taking strategies, 3) Test preparation techniques, 4) Reading comprehension skills, 5) Research and writing strategies. Workshops are offered both in-person and online throughout the semester. Check the SLAC website or visit The STUDY in Alkek Library for current workshop schedule. All workshops are free for enrolled students."
     },
     {
         "role": "user",
@@ -901,7 +901,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The Alkek Library provides extensive research resources including: 1) Online databases and journals accessible 24/7, 2) Research librarians available for one-on-one consultations, 3) Research guides for specific subjects, 4) Interlibrary loan services to request materials from other libraries, 5) Special Collections and University Archives, 6) Computer labs and study spaces, 7) Research workshops throughout the semester. Visit the library's website or speak with a librarian for assistance with your research needs."
     },
     {
         "role": "user",
@@ -909,7 +909,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers comprehensive time management support through: 1) One-on-one sessions with Academic Coaches at SLAC to develop personalized time management strategies, 2) Time management workshops offered throughout the semester, 3) Online resources and planning tools through The STUDY, 4) Success Coaches who help create study schedules and set goals, 5) PACE Mentors who assist with balancing academic and personal commitments. All services are free for enrolled students."
     },
     {
         "role": "user",
@@ -917,7 +917,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides multiple resources to improve note-taking skills: 1) Note-taking workshops through SLAC and The STUDY, 2) One-on-one consultations with Academic Coaches to learn different note-taking methods, 3) Online tutorials and handouts about effective note-taking strategies, 4) Study skills courses that cover advanced note-taking techniques, 5) Supplemental Instruction (SI) sessions that model good note-taking practices. Schedule an appointment with an Academic Coach or attend a workshop to learn more."
     },
     {
         "role": "user",
@@ -925,7 +925,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers peer mentoring through several programs: 1) PACE Mentors who help first-year students transition to college life, 2) Department-specific peer mentoring programs within your major, 3) Academic coaching through SLAC (Student Learning Assistance Center), 4) Supplemental Instruction (SI) leaders for challenging courses, 5) Writing Center peer tutors. Contact your academic department or SLAC to connect with a peer mentor in your field of study."
     },
     {
         "role": "user",
@@ -933,7 +933,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, the Office of Disability Services (ODS) provides academic accommodations including: 1) Extended test time and alternative testing environments, 2) Note-taking assistance and recorded lectures, 3) Sign language interpreters, 4) Accessible formats for course materials, 5) Assistive technology and software, 6) Priority registration, 7) Housing accommodations. Students must register with ODS and provide documentation to receive services. Contact ODS early to ensure accommodations are in place when classes begin."
     },
     {
         "role": "user",
@@ -941,7 +941,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The University Writing Center offers comprehensive support for research papers: 1) One-on-one consultations at any stage of writing process, 2) Help with thesis development and organization, 3) Citation assistance (APA, MLA, Chicago styles), 4) Research strategy guidance, 5) Grammar and style review, 6) ESL/ELL support. Located in Alkek Library, they offer both in-person and online appointments. Schedule through their online booking system. Additional research help available from Alkek Library research librarians."
     },
     {
         "role": "user",
@@ -949,7 +949,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides comprehensive ESL support through: 1) The Writing Center's ESL specialists for writing assistance, 2) One-on-one tutoring with ESL-trained tutors at SLAC, 3) Conversation partners program for speaking practice, 4) English language workshops and study groups, 5) Academic coaching for ESL students, 6) Online resources and study materials. The Writing Center and SLAC staff are specially trained to work with multilingual learners."
     },
     {
         "role": "user",
@@ -957,7 +957,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several GRE preparation resources: 1) GRE prep workshops through SLAC, 2) Practice test materials and study guides at Alkek Library, 3) One-on-one tutoring for GRE math and verbal sections, 4) Online practice tests and study materials through The STUDY, 5) Academic coaching for test-taking strategies, 6) Graduate school application workshops. Contact SLAC or The STUDY to access these resources and develop a study plan."
     },
     {
         "role": "user",
@@ -965,7 +965,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Access online academic resources through: 1) Alkek Library's digital databases and e-journals using your NetID, 2) Canvas for course materials and online tutoring through Tutor.com, 3) The STUDY's virtual tutoring platform, 4) Writing Center's online consultation system, 5) SLAC's virtual appointment scheduling, 6) Online research guides and tutorials through the library website. Most services are available 24/7 with your Texas State credentials."
     },
     {
         "role": "user",
@@ -973,7 +973,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers multiple study spaces: 1) Alkek Library with individual and group study rooms, quiet floors, and computer labs, 2) The STUDY in Alkek Library 4th floor with tutoring and study areas, 3) Residence hall study lounges, 4) Math Lab in Derrick Hall, 5) Writing Center study spaces, 6) Department-specific study areas, 7) Outdoor study spaces across campus. Many spaces offer whiteboards, power outlets, and WiFi access."
     },
     {
         "role": "user",
@@ -981,7 +981,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides several resources for group projects: 1) Reservable group study rooms in Alkek Library, 2) Collaborative workspaces in The STUDY with whiteboards and technology, 3) Computer labs with group workstations, 4) Project mentoring through SLAC, 5) Writing Center group consultations for written assignments, 6) Media production resources in Alkek Library, 7) Online collaboration tools through university accounts. Contact specific locations to reserve spaces."
     },
     {
         "role": "user",
@@ -989,7 +989,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers comprehensive stress management support: 1) Counseling Center provides individual and group counseling for academic stress, 2) Academic coaching through SLAC for time management and study skills, 3) Stress management workshops throughout the semester, 4) Mindfulness and relaxation resources at the Student Recreation Center, 5) Success coaching for work-life balance, 6) Online stress management tools and resources. All services are free for enrolled students."
     },
     {
         "role": "user",
@@ -997,7 +997,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, academic advisors are available through multiple channels: 1) Schedule appointments through the online scheduling system for your college/department, 2) Virtual advising sessions via video chat, 3) Walk-in hours during peak registration times, 4) Email advising for quick questions, 5) Mandatory advising for certain majors and first-year students. Contact your college's advising center or department advisor to schedule an appointment."
     },
     {
         "role": "user",
@@ -1005,7 +1005,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers comprehensive time management support through: 1) SLAC's Academic Coaching program for personalized strategies, 2) Time management workshops throughout the semester, 3) One-on-one consultations with Success Coaches, 4) Online resources and planning tools through The STUDY, 5) PACE peer mentors who help with scheduling and organization. All services are free for enrolled students. Schedule an appointment through the TXST Tutoring Portal."
     },
     {
         "role": "user",
@@ -1013,7 +1013,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides multiple software learning resources: 1) Free access to LinkedIn Learning with thousands of software tutorials, 2) ITAC technology training workshops, 3) Software-specific tutoring through The STUDY, 4) Computer labs with specialized software and support staff, 5) Department-specific software training for major-related programs. Access LinkedIn Learning through your Texas State account, or contact ITAC for workshop schedules."
     },
     {
         "role": "user",
@@ -1021,7 +1021,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Online academic workshops can be accessed through multiple channels: 1) SLAC's virtual workshop schedule available through their website, 2) The Writing Center's online workshops for writing and research skills, 3) Library's research skills workshops through Canvas, 4) Academic Success workshops through The STUDY, 5) Time management and study skills webinars. Most workshops can be accessed through your Texas State login credentials and are free for enrolled students."
     },
     {
         "role": "user",
@@ -1029,7 +1029,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several resources for public speaking improvement: 1) Speech Lab provides one-on-one coaching for presentations, 2) Communication tutoring through SLAC, 3) Public speaking workshops offered throughout the semester, 4) Practice presentation rooms in Alkek Library, 5) Recording equipment for self-evaluation, 6) Individual coaching from Communication Studies faculty during office hours. Most services are free and available both in-person and online."
     },
     {
         "role": "user",
@@ -1037,7 +1037,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To receive disability accommodations: 1) Register with the Office of Disability Services (ODS), 2) Submit documentation of your disability, 3) Schedule an intake appointment with an ODS coordinator, 4) Discuss and receive approved accommodations, 5) Present accommodation letters to your professors each semester. Common accommodations include extended test time, note-taking assistance, sign language interpreters, and accessible formats for course materials. Contact ODS early to ensure accommodations are in place when classes begin."
     },
     {
         "role": "user",
@@ -1045,7 +1045,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several reading comprehension resources: 1) SLAC provides one-on-one reading strategy consultations, 2) Reading comprehension workshops throughout the semester, 3) Academic coaching for developing effective reading techniques, 4) Online tutorials and study materials through The STUDY, 5) Reading groups for specific courses. Schedule an appointment with SLAC or visit The STUDY in Alkek Library to access these free services."
     },
     {
         "role": "user",
@@ -1053,7 +1053,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "You can join study groups through multiple channels: 1) Contact your academic department for major-specific study groups, 2) Join Supplemental Instruction (SI) sessions for challenging courses in your major, 3) Form study groups through SLAC's small group tutoring program, 4) Connect with classmates through The STUDY's group study spaces, 5) Check with your professors or TAs about department-organized study sessions. Most services are free and available both in-person and online."
     },
     {
         "role": "user",
@@ -1061,7 +1061,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides internship resources through several offices: 1) Career Services offers internship listings and search assistance, 2) Your academic department's internship coordinator can help find program-specific opportunities, 3) Handshake platform for browsing and applying to internships, 4) Career fairs throughout the year featuring internship opportunities, 5) Academic advisors can guide you to internship requirements and options for your major. Schedule an appointment with Career Services or your department advisor to explore opportunities."
     },
     {
         "role": "user",
@@ -1069,7 +1069,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides comprehensive test-taking support through: 1) SLAC's Academic Coaching program offers individualized test-taking strategy sessions, 2) The STUDY provides workshops on exam preparation and anxiety management, 3) Academic advisors can help develop test preparation plans, 4) Online resources and study materials available through university portals, 5) Supplemental Instruction (SI) sessions for specific courses include test preparation guidance. Contact SLAC or visit The STUDY in Alkek Library to access these free services."
     },
     {
         "role": "user",
@@ -1077,7 +1077,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "You can connect with faculty mentors through several channels: 1) Meet with your academic advisor to discuss faculty mentorship opportunities in your department, 2) Attend faculty office hours to build relationships with professors in your field, 3) Participate in departmental events and activities, 4) Join academic organizations related to your major, 5) Seek research or project opportunities with faculty members. Your college's advising center can help facilitate these connections and provide guidance on approaching potential mentors."
     },
     {
         "role": "user",
@@ -1085,7 +1085,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several exam review options: 1) Supplemental Instruction (SI) sessions provide structured review for historically challenging courses, 2) SLAC organizes group review sessions for common core courses, 3) Departmental review sessions led by faculty or teaching assistants, 4) The STUDY offers exam preparation workshops, 5) Math Lab hosts review sessions for math courses. Check with your professor, department, or SLAC for specific review session schedules."
     },
     {
         "role": "user",
@@ -1093,7 +1093,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers several resources to help maintain motivation: 1) Academic coaching through SLAC for personalized success strategies, 2) Success Coaches who help with goal-setting and motivation, 3) Study groups and peer mentoring programs, 4) Counseling Center services for academic stress management, 5) PACE mentors who provide encouragement and support, 6) Faculty office hours for course-specific guidance. All services are free for enrolled students."
     },
     {
         "role": "user",
@@ -1101,7 +1101,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To improve your GPA, utilize these campus resources: 1) Meet with Academic Advisors to develop a strategic course plan, 2) Access free tutoring through SLAC for challenging courses, 3) Attend Supplemental Instruction (SI) sessions for historically difficult classes, 4) Use The STUDY's academic coaching services for study skills improvement, 5) Visit the Writing Center for paper assistance, 6) Join study groups in your major, 7) Meet with professors during office hours for extra help."
     },
     {
         "role": "user",
@@ -1109,7 +1109,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides major-specific support through: 1) Departmental study groups and peer mentoring programs, 2) Academic organizations within your major, 3) Faculty-led review sessions and workshops, 4) Major-specific tutoring through department resources, 5) Professional development groups within colleges, 6) Peer mentors who share your academic focus. Contact your department advisor or visit your college's student services office for available support groups."
     },
     {
         "role": "user",
@@ -1117,7 +1117,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides multiple resources for final exam preparation: 1) SLAC offers exam prep workshops and one-on-one tutoring sessions, 2) The STUDY provides dedicated final exam study spaces and review materials, 3) Supplemental Instruction (SI) sessions offer targeted review for challenging courses, 4) Academic coaches can help develop personalized study plans, 5) Math Lab provides extended hours during finals week, 6) Writing Center assists with final papers and projects. Schedule appointments early as services fill up quickly during finals."
     },
     {
         "role": "user",
@@ -1125,7 +1125,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Research methodology support is available through several resources: 1) Alkek Library's research librarians provide one-on-one consultations, 2) Research methodology workshops offered throughout the semester, 3) Writing Center helps with research paper organization and citations, 4) SLAC offers research skills tutoring, 5) Online research guides and tutorials through the library website, 6) Department-specific research methodology support through faculty office hours. Contact Alkek Library or your department for specialized research assistance."
     },
     {
         "role": "user",
@@ -1133,7 +1133,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, graduate students can access various academic support services: 1) Writing Center provides graduate-level writing consultations, 2) Alkek Library offers advanced research support and workshops, 3) SLAC provides graduate student tutoring and academic coaching, 4) Department-specific graduate student resources and mentoring, 5) Online research tools and databases through the library, 6) Graduate College workshops on academic skills and professional development. Most services are free for enrolled graduate students."
     },
     {
         "role": "user",
@@ -1141,7 +1141,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple support options for struggling students: 1) Free tutoring through SLAC for most subjects, 2) The STUDY's academic coaching for study strategies and time management, 3) Writing Center consultations for papers and writing assignments, 4) Math Lab for math course assistance, 5) Supplemental Instruction (SI) for historically difficult courses, 6) Department-specific tutoring resources, 7) Professor office hours for one-on-one help. All services are free for enrolled students."
     },
     {
         "role": "user",
@@ -1149,7 +1149,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Alkek Library's databases and digital resources can be accessed remotely: 1) Use your Texas State NetID and password to log in, 2) Access electronic journals, e-books, and research databases 24/7, 3) Use the library's virtual chat service for research help, 4) Access course reserves and digital materials online, 5) Request electronic delivery of articles and book chapters through Interlibrary Loan. Visit the library website and sign in with your credentials to begin."
     },
     {
         "role": "user",
@@ -1157,7 +1157,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides multiple quiet study locations: 1) Alkek Library's designated quiet floors and silent study areas, 2) Individual study carrels throughout the library, 3) Quiet study lounges in academic buildings, 4) Reserved study rooms in residence halls, 5) Outdoor study spaces in less trafficked areas of campus, 6) Department-specific study areas. The library maintains strict quiet zones on certain floors for focused individual study."
     },
     {
         "role": "user",
@@ -1165,7 +1165,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple research opportunities: 1) Connect with faculty members conducting research in your field of interest, 2) STAR Park collaborations for innovation and entrepreneurship projects, 3) The Meadows Center for water research, 4) Forensic Anthropology Research Facility for specialized studies, 5) Departmental research programs and labs, 6) Undergraduate research assistant positions. Contact your department advisor or visit the university research office to explore opportunities."
     },
     {
         "role": "user",
@@ -1173,7 +1173,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides tutoring for upper-level courses through: 1) SLAC offers advanced subject tutoring, 2) Departmental tutoring programs for major-specific courses, 3) The Writing Center assists with advanced papers and research projects, 4) Math Lab support for upper-level math courses, 5) Graduate student tutors specializing in advanced subjects, 6) One-on-one faculty assistance during office hours. Schedule appointments through the TXST Tutoring Portal or your academic department."
     },
     {
         "role": "user",
@@ -1181,7 +1181,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides software support through multiple resources: 1) Free access to LinkedIn Learning for software tutorials, 2) ITAC technology training workshops, 3) Library computer labs with specialized software assistance, 4) Department-specific software training for program-related tools, 5) One-on-one tech support through IT Services, 6) Online tutorials and resources through Canvas. Most services are free for enrolled students with your Texas State credentials."
     },
     {
         "role": "user",
@@ -1189,7 +1189,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides several resources for students considering major changes: 1) Academic advisors can discuss major options and requirements, 2) Career Services offers career counseling and major exploration, 3) Academic coaching through SLAC to evaluate study interests and strengths, 4) Faculty mentors can provide insight into specific fields, 5) The STUDY offers workshops on academic planning and major selection. Schedule an appointment with your advisor or Career Services to explore your options."
     },
     {
         "role": "user",
@@ -1197,7 +1197,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides multiple resources for independent learning: 1) Alkek Library's online databases, e-books, and research materials accessible 24/7 with your NetID, 2) LinkedIn Learning access for software and skill development, 3) Online tutoring through Tutor.com in Canvas, 4) The STUDY's digital learning resources and study materials, 5) Writing Center's online writing guides and resources, 6) Department-specific study materials through Canvas. Most resources can be accessed remotely through the university portal."
     },
     {
         "role": "user",
@@ -1205,7 +1205,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers several housing options for first-year students: 1) Traditional residence halls with study lounges and community spaces, 2) Living-Learning Communities that group students by academic interests, 3) Themed housing communities for shared interests, 4) Both San Marcos and Round Rock campus housing available, 5) All residence halls include WiFi, laundry facilities, and academic support resources. First-time freshmen are required to live on campus unless they qualify for an exemption."
     },
     {
         "role": "user",
@@ -1213,7 +1213,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, students can live off-campus with some conditions: 1) First-year students are required to live on campus unless they qualify for an exemption, 2) Upper-class students can choose to live off-campus, 3) Students at the Round Rock campus typically live off-campus, 4) Commuter students from nearby areas can live at home, 5) Transfer students with sufficient credit hours can live off-campus. Check with Housing and Residential Life for specific exemption requirements."
     },
     {
         "role": "user",
@@ -1221,7 +1221,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To apply for on-campus housing at Texas State: 1) Submit your housing application through the student portal after being admitted, 2) Pay the required housing deposit, 3) Select your preferred residence hall and room type, 4) Choose a meal plan, 5) Complete the housing contract, 6) Submit any special accommodation requests if needed. Housing assignments are made on a first-come, first-served basis, so apply early for the best options."
     },
     {
         "role": "user",
@@ -1229,7 +1229,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several meal plan options: 1) Residential meal plans for students living on campus, 2) Commuter meal plans for off-campus students, 3) Dining dollars that can be used at campus retail locations, 4) Flexible meal periods throughout the day, 5) Access to multiple dining halls across both San Marcos and Round Rock campuses. First-year students living on campus are required to purchase a meal plan. Plans can be selected during the housing application process or through the dining services website."
     },
     {
         "role": "user",
@@ -1237,7 +1237,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers numerous student organizations including: 1) Academic and professional organizations like the Hispanic Business Student Association, 2) Cultural groups through the Multicultural Greek Council, 3) Performance groups through Theatre & Dance department, 4) Special interest clubs and organizations, 5) Student government opportunities, 6) Honor societies within your major. Visit Student Involvement and Engagement or your academic department to learn about joining organizations that match your interests."
     },
     {
         "role": "user",
@@ -1245,7 +1245,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State has the Student Recreation Center that offers: 1) Modern fitness equipment and weight rooms, 2) Group exercise classes and personal training, 3) Indoor track and basketball courts, 4) Swimming pools and aquatic programs, 5) Rock climbing wall, 6) Intramural sports programs. The facility is available to all enrolled students and offers various wellness programs and fitness assessments."
     },
     {
         "role": "user",
@@ -1253,7 +1253,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State has many cultural organizations including: 1) Hispanic Business Student Association and other Hispanic/Latino organizations, 2) Multicultural Greek Council chapters, 3) Cultural performance groups through the Department of Theatre and Dance, 4) International student organizations, 5) Cultural celebration committees that organize events like Hispanic Heritage Month and HSI Week activities. Contact Student Involvement and Engagement to connect with these organizations."
     },
     {
         "role": "user",
@@ -1261,7 +1261,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple ways to discover campus events: 1) University Events Calendar on the TXST website, 2) Student Involvement and Engagement office announcements, 3) Department-specific event listings, 4) Campus-wide celebrations like HSI Week and Hispanic Heritage Month, 5) Social media channels including Facebook, Instagram, and Twitter, 6) Email newsletters and announcements. Visit the university website's Events section or follow TXST social media for current event listings."
     },
     {
         "role": "user",
@@ -1269,7 +1269,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides several transportation options: 1) Bobcat Shuttle service between campuses and popular off-campus locations, 2) Campus bus routes connecting key buildings and parking lots, 3) Bike racks and cycling paths throughout campus, 4) Accessible transportation services for students with disabilities, 5) Parking permits for various lots and garages, 6) Evening safety escort service. Download the TXST mobile app for real-time shuttle tracking."
     },
     {
         "role": "user",
@@ -1277,7 +1277,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State has a comprehensive Student Health Center that provides: 1) Primary healthcare services, 2) Women's health services, 3) Laboratory and x-ray services, 4) Pharmacy services, 5) Immunizations and allergy shots, 6) Mental health resources and counseling, 7) Health education programs. Most services are free or low-cost for enrolled students. The health center is staffed by licensed healthcare professionals and accepts appointments and walk-ins."
     },
     {
         "role": "user",
@@ -1285,7 +1285,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, freshmen can bring cars to campus. You'll need to: 1) Purchase a parking permit through the Parking Services portal, 2) Park in designated freshman parking lots and garages, 3) Follow campus parking regulations and restrictions, 4) Consider using the Bobcat Shuttle service as an alternative to driving between classes, 5) Note that some prime parking areas may be restricted to upperclassmen or faculty/staff. Visit the Parking Services website to purchase permits and learn about parking zones."
     },
     {
         "role": "user",
@@ -1293,7 +1293,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers multiple Greek life opportunities including: 1) Multicultural Greek Council chapters that celebrate diversity and culture, 2) Traditional social fraternities and sororities, 3) Professional and academic Greek organizations, 4) Service-focused Greek organizations, 5) Cultural interest groups like those highlighted during Hispanic Heritage Month events. The Multicultural Greek Council hosts events like MGC Convocation and MGC Showcase to help students learn about and connect with different organizations."
     },
     {
         "role": "user",
@@ -1301,7 +1301,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides several ways to find roommates: 1) Housing portal roommate matching system based on lifestyle preferences, 2) Roommate mixers and meet-and-greet events during orientation, 3) Living-Learning Communities that group students with similar academic interests, 4) Social media groups and housing forums for connecting with potential roommates, 5) Housing office assistance with roommate selection and placement. Contact Housing and Residential Life for help with the roommate matching process."
     },
     {
         "role": "user",
@@ -1309,7 +1309,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides comprehensive shuttle services: 1) Bobcat Shuttle connects San Marcos and Round Rock campuses, 2) Campus bus routes linking academic buildings, residence halls, and parking lots, 3) Evening safety shuttle service, 4) Routes to popular off-campus locations and apartment complexes, 5) Real-time shuttle tracking through the TXST mobile app, 6) ADA-accessible transportation options. All shuttle services are free for students with valid Texas State ID."
     },
     {
         "role": "user",
@@ -1317,7 +1317,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers diverse dining options across both campuses: 1) Multiple dining halls with all-you-care-to-eat service, 2) Retail food locations featuring national brands, 3) Campus cafes and coffee shops, 4) Convenience stores and grab-and-go options, 5) Food trucks at special events like HSI Week celebrations, 6) Dining dollars accepted at all campus locations. Meal plans are required for first-year residents and optional for other students."
     },
     {
         "role": "user",
@@ -1325,7 +1325,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Textbooks can be purchased through several channels: 1) University Bookstore in LBJ Student Center for new and used textbooks, 2) Online ordering through the bookstore website with campus pickup or delivery, 3) Digital textbook options through the bookstore platform, 4) Rental options for many required texts, 5) Price comparison tools to find the best deals, 6) Book buyback service at the end of each semester. The bookstore also carries school supplies and TXST merchandise."
     },
     {
         "role": "user",
@@ -1333,7 +1333,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers extensive study abroad opportunities through: 1) Faculty-led programs in multiple countries, 2) Exchange partnerships with international universities, 3) Semester and year-long study options, 4) International internship programs, 5) Research opportunities abroad, 6) Study abroad scholarships and financial aid options. The university's Hispanic-Serving Institution status also provides unique opportunities for cultural exchange programs."
     },
     {
         "role": "user",
@@ -1341,7 +1341,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides LGBTQ+ support through: 1) Student organizations focused on LGBTQ+ community and allies, 2) Counseling Center services with LGBTQ+-affirming counselors, 3) Safe space training programs, 4) Gender-inclusive housing options, 5) LGBTQ+ social and educational events throughout the year, 6) Health center services with LGBTQ+-inclusive healthcare providers."
     },
     {
         "role": "user",
@@ -1349,7 +1349,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State supports diverse religious organizations including: 1) Multiple faith-based student organizations, 2) Religious study groups and prayer spaces, 3) Interfaith dialogue programs and events, 4) Spiritual counseling services, 5) Religious holiday accommodations, 6) Campus ministry programs representing various faiths. Contact Student Involvement and Engagement for a complete list of registered religious organizations."
     },
     {
         "role": "user",
@@ -1357,7 +1357,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To join student government at Texas State: 1) Contact Student Involvement and Engagement office for information about positions and elections, 2) Attend Student Government Association meetings to learn about opportunities, 3) Run for elected positions during campus elections, 4) Apply for appointed positions within student government committees, 5) Participate in student government initiatives and events. All enrolled students are eligible to participate."
     },
     {
         "role": "user",
@@ -1365,7 +1365,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State has several student publications: 1) The University Star, the official student-run newspaper covering campus news and events, 2) Digital content through the University Star website and social media, 3) Student-produced magazines and journals through various academic departments, 4) Opportunities to contribute articles, photography, and multimedia content, 5) Practical journalism experience through student media organizations."
     },
     {
         "role": "user",
@@ -1373,7 +1373,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers numerous activities for international students: 1) Cultural celebrations and events throughout the year including Hispanic Heritage Month and HSI Week, 2) International student organizations and cultural clubs, 3) Multicultural Greek Council events like MGC Convocation and Showcase, 4) Cultural performances through the Department of Theatre and Dance, 5) International student support services and social gatherings. Visit Student Involvement and Engagement or check [hsi.txst.edu](https://hsi.txst.edu/) for upcoming events."
     },
     {
         "role": "user",
@@ -1381,7 +1381,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers intramural sports through the Student Recreation Center. According to [txst.edu](https://www.txst.edu), students can: 1) Participate in various intramural sports programs, 2) Access indoor basketball courts and facilities, 3) Join team sports or individual competitions, 4) Use the indoor track for training, 5) Access modern fitness equipment and weight rooms, 6) Participate in group exercise classes. All enrolled students can participate in intramural programs through the Recreation Center."
     },
     {
         "role": "user",
@@ -1389,7 +1389,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State hosts numerous Welcome Week events including: 1) HSI Community Day celebrations with food and music, 2) Cultural performances and showcases like those during Hispanic Heritage Month, 3) Student organization fairs featuring groups like the Hispanic Business Student Association, 4) Multicultural Greek Council events like MGC Convocation and Showcase, 5) Department-specific welcome events and orientations, 6) Campus resource fairs and information sessions. Check the [University Events Calendar](https://www.txst.edu) for specific dates and activities."
     },
     {
         "role": "user",
@@ -1397,7 +1397,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides multiple volunteering opportunities through: 1) Student organizations focused on community service, 2) Cultural celebration committees for events like Hispanic Heritage Month, 3) Department-specific service projects and initiatives, 4) Campus-wide volunteer programs and events, 5) Service-learning courses that combine academics with community engagement, 6) Greek organizations with service requirements. Contact Student Involvement and Engagement or visit [hsi.txst.edu](https://hsi.txst.edu/) to learn about upcoming volunteer opportunities."
     },
     {
         "role": "user",
@@ -1405,7 +1405,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides comprehensive mental health support through: 1) Counseling Center offering individual and group counseling, 2) Mental health resources and crisis services available 24/7, 3) Online mental health screening tools, 4) Stress management workshops and programs, 5) Support groups for specific concerns, 6) Consultation services for students, faculty and staff. Most services are free and confidential for enrolled students."
     },
     {
         "role": "user",
@@ -1413,7 +1413,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers many weekend activities including: 1) Campus Recreation programs and facilities open on weekends, 2) Student organization events and cultural celebrations, 3) Performing arts shows and exhibitions, 4) Weekend movie screenings and entertainment events, 5) Multicultural Greek Council events like MGC Showcase, 6) Special campus-wide celebrations like Hispanic Heritage Month activities. Check the University Events Calendar for current weekend programming."
     },
     {
         "role": "user",
@@ -1421,7 +1421,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To obtain a parking permit at Texas State: 1) Visit the Parking Services website through your student portal, 2) Select from available permit types based on your status and needs, 3) Purchase your permit online with credit/debit card, 4) Choose between various lots and garage options, 5) Follow instructions for proper display of permit, 6) Review parking regulations and zone restrictions. Permits are required for both San Marcos and Round Rock campuses."
     },
     {
         "role": "user",
@@ -1429,7 +1429,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State maintains comprehensive safety measures including: 1) University Police Department providing 24/7 campus security, 2) Emergency blue light phones located across campus, 3) Evening safety escort service for students, 4) Emergency notification system for campus alerts, 5) Mental health crisis services available 24/7, 6) Title IX reporting system for safety concerns. Contact UPD or visit [txst.edu](https://www.txst.edu) for emergency procedures and resources."
     },
     {
         "role": "user",
@@ -1437,7 +1437,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State has specific pet policies for campus housing: 1) Service animals are permitted with proper documentation, 2) Emotional support animals require approval through Office of Disability Services, 3) Fish in small aquariums (10 gallons or less) are allowed in residence halls, 4) All other pets are not permitted in campus housing, 5) Violations may result in removal of the pet and possible disciplinary action. Contact Housing and Residential Life for specific policy details."
     },
     {
         "role": "user",
@@ -1445,7 +1445,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides extensive support for first-generation students through: 1) Dedicated mentoring programs and peer support groups, 2) First-gen student organizations and cultural celebrations like Hispanic Heritage Month events, 3) Academic coaching through SLAC for college transition support, 4) Financial aid guidance and scholarship opportunities, 5) Special workshops and programs through the Hispanic-Serving Institution initiatives. Visit [hsi.txst.edu](https://hsi.txst.edu/) for additional resources and support services."
     },
     {
         "role": "user",
@@ -1453,7 +1453,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple ways to join sports clubs: 1) Visit the Student Recreation Center to learn about available club sports, 2) Contact team captains or club officers for specific sports, 3) Attend club sports interest meetings at the beginning of each semester, 4) Participate in tryouts for competitive teams, 5) Register through the Campus Recreation portal, 6) Complete required safety training and paperwork. Most clubs welcome students of all skill levels."
     },
     {
         "role": "user",
@@ -1461,7 +1461,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State hosts several career fairs throughout the year: 1) Major-specific career fairs through academic departments, 2) Hispanic Association of Colleges and Universities (HACU) career events, 3) University-wide job fairs each semester, 4) Graduate school fairs, 5) Internship fairs connecting students with employers, 6) Virtual career events and networking opportunities. Check with Career Services for upcoming fair dates and preparation resources."
     },
     {
         "role": "user",
@@ -1469,7 +1469,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State provides numerous outdoor activities: 1) Campus Recreation outdoor adventure programs, 2) Access to the San Marcos River for swimming and water activities, 3) Outdoor fitness areas and walking trails, 4) Intramural sports on outdoor fields, 5) Student organization outdoor events and activities, 6) Nearby hiking and biking trails. Many activities are free or discounted for enrolled students with a valid Texas State ID."
     },
     {
         "role": "user",
@@ -1477,7 +1477,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several mentoring programs: 1) Peer mentoring through academic departments and colleges, 2) Hispanic-Serving Institution mentoring initiatives for student success, 3) Cultural organization mentoring like those through the Hispanic Business Student Association, 4) Faculty mentoring programs for research and academic guidance, 5) Career Services mentoring connections with industry professionals, 6) Graduate student mentoring opportunities. Visit [hsi.txst.edu](https://hsi.txst.edu/) for specific program information."
     },
     {
         "role": "user",
@@ -1485,7 +1485,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To report maintenance issues in residence halls: 1) Submit a maintenance request through the Housing portal, 2) Contact your Resident Assistant (RA) for assistance, 3) Report emergency maintenance issues to the front desk staff 24/7, 4) Follow up with Housing and Residential Life staff if needed, 5) Document any ongoing concerns, 6) For after-hours emergencies, contact the on-call maintenance staff through your hall's front desk."
     },
     {
         "role": "user",
@@ -1493,7 +1493,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State has numerous academic organizations by major including: 1) Professional organizations like the Hispanic Business Student Association, 2) Honor societies within specific disciplines, 3) Department-sponsored student groups, 4) Research-focused organizations, 5) Career-oriented clubs connecting students with industry professionals, 6) Cultural academic organizations celebrating diversity in different fields. Contact your department or Student Involvement and Engagement for specific organizations in your major."
     },
     {
         "role": "user",
@@ -1501,7 +1501,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers various student employment opportunities: 1) On-campus student worker positions in departments and offices, 2) Federal Work-Study program for eligible students, 3) Graduate assistant positions, 4) Student positions at campus dining locations, 5) Employment at the Student Recreation Center, 6) Library student worker positions. Visit [Career Services](https://www.txst.edu/) or the student employment portal to search available positions."
     },
     {
         "role": "user",
@@ -1509,7 +1509,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The Student Recreation Center is accessible to all enrolled students: 1) Use your Texas State ID card for entry, 2) Access to modern fitness equipment and weight rooms, 3) Group exercise classes included with membership, 4) Indoor track and basketball courts available, 5) Swimming pools and aquatic programs, 6) Rock climbing wall access. Your student ID and current enrollment are all you need to start using the facilities."
     },
     {
         "role": "user",
@@ -1517,7 +1517,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple volunteer opportunities: 1) Cultural celebration committees for events like Hispanic Heritage Month and HSI Week, 2) Student organization service projects, 3) Community engagement programs through Student Involvement and Engagement, 4) Volunteer opportunities at campus events like HSI Community Day, 5) Service-learning courses combining academics with volunteering, 6) Department-specific volunteer programs. Visit [hsi.txst.edu](https://hsi.txst.edu/) or Student Involvement for current opportunities."
     },
     {
         "role": "user",
@@ -1525,7 +1525,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers several leadership development opportunities: 1) Student Government Association positions and committees, 2) Leadership roles in cultural organizations like the Hispanic Business Student Association, 3) Multicultural Greek Council leadership positions, 4) Student organization officer positions through Student Involvement and Engagement, 5) Department-specific leadership programs, 6) Campus-wide leadership events and workshops."
     },
     {
         "role": "user",
@@ -1533,7 +1533,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Campus maps are available in multiple formats according to [txst.edu/current-students](https://www.txst.edu/current-students.html): 1) Interactive campus map online, 2) Downloadable parking maps, 3) Bobcat Shuttle route maps, 4) Building directories and locations, 5) Maps for both San Marcos and Round Rock campuses, 6) Specialized maps for accessibility routes and construction updates. Access maps through the university website or pick up printed versions at key campus locations."
     },
     {
         "role": "user",
@@ -1541,7 +1541,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides comprehensive wellness programs including: 1) Student Health Center medical services, 2) Counseling Center mental health support, 3) Campus Recreation fitness programs and facilities, 4) Wellness education workshops and events, 5) Group exercise classes at the Student Recreation Center, 6) Mental health resources and support services. Most services are free or low-cost for enrolled students with a valid Texas State ID."
     },
     {
         "role": "user",
@@ -1549,7 +1549,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "To become a Resident Assistant (RA) at Texas State: 1) Meet minimum GPA requirements and be in good academic standing, 2) Have completed at least one semester of on-campus living, 3) Submit an application through Housing and Residential Life when positions are posted, 4) Participate in the interview process, 5) Complete required training if selected, 6) Maintain full-time enrollment status. Contact Housing and Residential Life for application deadlines and specific requirements."
     },
     {
         "role": "user",
@@ -1557,7 +1557,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State maintains several lost and found locations: 1) University Police Department's central lost and found, 2) LBJ Student Center information desk, 3) Alkek Library service desk, 4) Student Recreation Center front desk, 5) Individual academic buildings may have temporary lost and found collections, 6) Campus bus service maintains lost items from shuttles. Contact the location where the item was lost or the UPD for assistance."
     },
     {
         "role": "user",
@@ -1565,7 +1565,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Texas State offers multiple ways to book study spaces: 1) Reserve Alkek Library study rooms through the online booking system, 2) Book departmental study spaces through your academic department, 3) Access Living-Learning Community study areas in residence halls, 4) Reserve group study rooms in the Student Learning Assistance Center (SLAC), 5) Use the Student Recreation Center's study lounges on a first-come basis, 6) Book collaborative spaces in academic buildings through department offices."
     },
     {
         "role": "user",
@@ -1573,7 +1573,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State provides childcare services through: 1) Child Development Center for students, faculty and staff, 2) Early childhood education programs, 3) Flexible scheduling options to accommodate parent schedules, 4) Professional childcare staff and early childhood educators, 5) Programs that follow educational best practices, 6) Priority enrollment for student parents. Contact the Child Development Center for availability and registration information."
     },
     {
         "role": "user",
@@ -1581,7 +1581,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers legal resources including: 1) Attorney consultations for enrolled students, 2) Legal document review services, 3) Notary services through various campus offices, 4) Educational workshops on common legal issues, 5) Referrals to local legal aid organizations, 6) Online legal information resources. Most basic legal services are available at low or no cost to currently enrolled students."
     },
     {
         "role": "user",
@@ -1589,7 +1589,7 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "The LBJ Student Center is centrally located on campus at 601 University Drive. According to [txst.edu](https://www.txst.edu), it houses: 1) Student organization offices and meeting spaces, 2) The University Bookstore, 3) Dining facilities and food courts, 4) The Grand Ballroom for events like HSI Community Day, 5) Information desk and student services, 6) Multicultural lounge spaces and study areas. The Student Center serves as a central hub for student life and campus activities."
     },
     {
         "role": "user",
@@ -1597,6 +1597,22 @@
     },
     {
         "role": "assistant",
-        "content": ""
+        "content": "Yes, Texas State offers several alumni-connected events for current students including: 1) CELEBRATE 125 events connecting students with alumni, 2) Homecoming Week activities from November 11-16, 2024, 3) Hispanic Business Student Association networking events with alumni, 4) Career fairs featuring TXST alumni employers, 5) Department-specific alumni speaker series and mentoring programs, 6) Cultural celebrations like Hispanic Heritage Month that bring together current students and alumni. Visit [txst.edu](https://www.txst.edu) for upcoming events."
+    },
+    {
+        "role": "user",
+        "content": "What bus routes connect to Texas State's San Marcos campus?"
+    },
+    {
+        "role": "assistant", 
+        "content": "According to [transportation.txst.edu/alternative.html](https://www.transportation.txst.edu/alternative.html), several bus options connect to campus: 1) Bobcat Shuttle provides free campus routes with real-time tracking, 2) THE BUS offers free local San Marcos transit service with Texas State ID, 3) CARTS Interurban Gold Route connects downtown Austin to Texas State and San Marcos Station, 4) CARTS Yellow Route connects Georgetown to San Marcos with stops in Round Rock & Austin, 5) Paratransit services available for students with disabilities, 6) All CARTS vehicles include bike racks for cyclists."
+    },
+    {
+        "role": "user",
+        "content": "How can I track the Bobcat Shuttle in real-time?"
+    },
+    {
+        "role": "assistant",
+        "content": "According to [shuttle.txst.edu/about.html](https://www.shuttle.txst.edu/about.html), you can track Bobcat Shuttles through: 1) Real-time tracking available through the TXST mobile app, 2) Live shuttle locations and arrival times on the Bobcat Shuttle website, 3) General Transit Feed Specification (GTFS) data for third-party transit apps, 4) Route maps and schedules available online, 5) Service alerts and updates posted to social media, 6) Contact Bobcat Shuttle at 512.245.5555 for current route information."
     }
 ]
