@@ -4,12 +4,14 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background-color: #1e1e1e;
   padding: 20px;
 }
 
 h1 {
   font-size: 2rem;
   margin-bottom: 2rem;
+  color: white;
 }
 
 input {
@@ -18,8 +20,14 @@ input {
   padding: 12px;
   margin-bottom: 1rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  background-color: #2d2d2d;
+  border: 1px solid #404040;
   border-radius: 4px;
+  color: white;
+}
+
+input::placeholder {
+  color: #808080;
 }
 
 button {
@@ -33,6 +41,6 @@ button {
 }
 
 .error {
-  color: red;
+  color: #ff6b6b;
   margin-top: 1rem;
 } 

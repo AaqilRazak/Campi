@@ -15,18 +15,12 @@ const LoginPage = () => {
     
     if (username === 'student' && password === 'password') {
       login({ username, role: 'student' });
-      navigate('/chat');
+      navigate('/chat', { replace: true });
     } else if (username === 'admin' && password === 'adminpass') {
       login({ username, role: 'admin' });
-      navigate('/admin');
+      navigate('/admin', { replace: true });
     } else {
       setError('Invalid username or password');
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleLogin();
     }
   };
 
@@ -38,14 +32,12 @@ const LoginPage = () => {
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        onKeyPress={handleKeyPress}
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        onKeyPress={handleKeyPress}
       />
       <button type="submit">Login</button>
       {error && <p className="error">{error}</p>}

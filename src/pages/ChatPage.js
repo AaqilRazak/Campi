@@ -1,3 +1,4 @@
+// src/pages/ChatPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -6,12 +7,12 @@ import '../styles/ChatPage.css';
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const { logout } = useAuth();
   const navigate = useNavigate();
+  const { logout, user } = useAuth();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/login', { replace: true });
   };
 
   const handleSendMessage = () => {
@@ -23,9 +24,18 @@ const ChatPage = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
+      <div className="header">
         <h1>Welcome to Campi Chatbot</h1>
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
+        <div className="header-buttons">
+          {user?.role === 'admin' && (
+            <button onClick={() => navigate('/admin')} className="admin-button">
+              Admin Panel
+            </button>
+          )}
+          <button onClick={handleLogout} className="logout-button">
+            Logout
+          </button>
+        </div>
       </div>
       <div className="messages-container">
         {messages.map((message, index) => (
@@ -40,9 +50,9 @@ const ChatPage = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
-          className="message-input"
+          className="input"
         />
-        <button onClick={handleSendMessage} className="send-button">Send</button>
+        <button onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );
