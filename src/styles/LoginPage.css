@@ -135,3 +135,53 @@ input:disabled {
   border-color: #808080;
   color: #808080;
 }
+
+/* Add these new styles */
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.login-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px; /* Prevent button size change when spinner appears */
+}
+
+.remember-me {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.remember-me label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  cursor: pointer;
+}
+
+.remember-me span {
+  font-size: 0.9rem;
+}
