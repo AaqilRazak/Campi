@@ -43,4 +43,21 @@ button {
 .error {
   color: #ff6b6b;
   margin-top: 1rem;
+}
+
+.input-group {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+}
+
+.error-input {
+  border-color: #ff6b6b !important;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 } 
