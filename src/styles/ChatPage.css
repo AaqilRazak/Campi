@@ -3,51 +3,72 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    justify-content: space-between;
     padding: 20px;
-    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logout-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   }
   
   /* Container for messages */
   .messages-container {
-    flex: 1;
+    flex-grow: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
     overflow-y: auto;
     margin-bottom: 20px;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 10px;
   }
   
   /* Basic message bubble styling */
   .message-bubble {
-    background-color: #ddd;
-    padding: 10px;
-    border-radius: 10px;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
     margin-bottom: 10px;
-    max-width: 60%;
+    max-width: 70%;
+  }
+  
+  .message-bubble p {
+    margin: 0;
   }
   
   /* Input field and button container */
   .input-container {
     display: flex;
+    gap: 10px;
   }
   
   /* Input field styling */
-  .input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
+  .message-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
   }
   
   /* Send button styling */
   .send-button {
-    padding: 10px 20px;
-    background-color: #4caf50;
+    padding: 12px 24px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
   }
   

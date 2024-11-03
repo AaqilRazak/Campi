@@ -1,43 +1,35 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import '../styles/ChatPage.css';
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSendMessage = (e) => {
-    e.preventDefault(); // Prevent form submission refresh
-    if (input.trim()) {
-      // Add user message
-      setMessages([...messages, { text: input, sender: 'user' }]);
-      
-      // Simulate bot response (we'll replace this with actual API call later)
-      setTimeout(() => {
-        setMessages(prevMessages => [...prevMessages, {
-          text: "I'm here to help! What would you like to know about Texas State University?",
-          sender: 'bot'
-        }]);
-      }, 1000);
-      
-      setInput('');
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage(e);
+  const handleSendMessage = () => {
+    if (input.trim()) {
+      setMessages([...messages, { text: input, sender: 'user' }]);
+      setInput('');
     }
   };
 
   return (
     <div className="chat-container">
+      <div className="chat-header">
+        <h1>Welcome to Campi Chatbot</h1>
+        <button className="logout-button" onClick={handleLogout}>Logout</button>
+      </div>
       <div className="messages-container">
         {messages.map((message, index) => (
-          <div 
-            key={index} 
-            className={`message-bubble ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
-          >
+          <div key={index} className="message-bubble">
             <p>{message.text}</p>
           </div>
         ))}
@@ -47,13 +39,10 @@ const ChatPage = () => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
           placeholder="Type your message..."
-          className="input"
+          className="message-input"
         />
-        <button onClick={handleSendMessage} className="send-button">
-          Send
-        </button>
+        <button onClick={handleSendMessage} className="send-button">Send</button>
       </div>
     </div>
   );

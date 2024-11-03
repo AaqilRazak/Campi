@@ -1,12 +1,55 @@
-import React from 'react';
-import LoginForm from '../components/LoginForm';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import '../styles/LoginPage.css';
 
 const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLogin = (e) => {
+    if (e) e.preventDefault();
+    
+    if (username === 'student' && password === 'password') {
+      login({ username, role: 'student' });
+      navigate('/chat');
+    } else if (username === 'admin' && password === 'adminpass') {
+      login({ username, role: 'admin' });
+      navigate('/admin');
+    } else {
+      setError('Invalid username or password');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
   return (
-    <div>
+    <form onSubmit={handleLogin} className="login-page">
       <h1>Login to Campi</h1>
-      <LoginForm />
-    </div>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        onKeyPress={handleKeyPress}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={handleKeyPress}
+      />
+      <button type="submit">Login</button>
+      {error && <p className="error">{error}</p>}
+    </form>
   );
 };
 
