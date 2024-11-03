@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import './App.css';
+import '../styles/admin_interface.css';
 
 const AdminInterface = () => {
   const [dashboardData, setDashboardData] = useState({
@@ -153,7 +153,7 @@ const AdminInterface = () => {
             <div className="info-box"><h3>System Uptime</h3><p>{dashboardData.systemUptime}</p></div>
           </div>
         </section>
-        
+
         <section id="user-management">
           <h2>User Management</h2>
           <div className="user-management-form">
@@ -169,21 +169,21 @@ const AdminInterface = () => {
             </tbody>
           </table>
         </section>
-        
+
         <section id="chatbot-configuration">
           <h2>Chatbot Configuration</h2>
           <div><label>Greeting Message:</label><input type="text" id="greeting-message" placeholder="Enter greeting message" /><button onClick={handleGreetingSave}>Save Greeting</button></div>
           <h3>Manage FAQ</h3>
           <input type="text" id="new-faq-question" placeholder="New FAQ Question" /><textarea id="new-faq-answer" placeholder="New FAQ Answer"></textarea><button onClick={handleAddFaq}>Add FAQ</button>
         </section>
-        
+
         <section id="analytics-dashboard">
           <h2>Analytics Dashboard</h2>
           <div className="chart-container"><canvas id="interactionVolumeChart"></canvas></div>
           <div className="chart-container"><canvas id="commonQuestionsChart"></canvas></div>
           <div className="chart-container"><canvas id="responseTimeChart"></canvas></div>
         </section>
-        
+
         <section id="logs-history">
           <h2>Conversation Logs</h2>
           {selectedLog ? (
@@ -210,7 +210,7 @@ const AdminInterface = () => {
             </table>
           )}
         </section>
-        
+
         <section id="apikeys">
           <h2>API Key Management</h2>
           <div>
