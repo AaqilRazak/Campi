@@ -1,43 +1,33 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Check for stored user data when app loads
-    const storedUser = localStorage.getItem('user');
-    const sessionUser = sessionStorage.getItem('user');
-    
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else if (sessionUser) {
-      setUser(JSON.parse(sessionUser));
-    }
-  }, []);
+    useEffect(() => {
+        // Check for stored user data on mount
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+        setLoading(false);
+    }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    // Store in localStorage if rememberMe is true, otherwise use sessionStorage
-    if (userData.rememberMe) {
-      localStorage.setItem('user', JSON.stringify(userData));
-    } else {
-      sessionStorage.setItem('user', JSON.stringify(userData));
-    }
-  };
+    const login = (userData) => {
+        setUser(userData);
+    };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    sessionStorage.removeItem('user');
-  };
+    const logout = () => {
+        setUser(null);
+    };
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ user, login, logout, loading }}>
+            {!loading && children}
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => useContext(AuthContext);

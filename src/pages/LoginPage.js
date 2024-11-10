@@ -1,135 +1,126 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { login } from '../api/auth';
 import '../styles/LoginPage.css';
 
 const LoadingSpinner = () => (
-  <div className="spinner"></div>
+    <div className="spinner"></div>
 );
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const navigate = useNavigate();
-  const { login } = useAuth();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { login: authLogin } = useAuth();
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!username.trim()) {
-      newErrors.username = 'Username is required';
-    }
-    if (!password.trim()) {
-      newErrors.password = 'Password is required';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+        setIsLoading(true);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    
-    setIsLoading(true);
-    
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      if (username === 'student' && password === 'password') {
-        login({ username, role: 'student', rememberMe });
-        navigate('/chat', { replace: true });
-      } else if (username === 'admin' && password === 'adminpass') {
-        login({ username, role: 'admin', rememberMe });
-        navigate('/admin', { replace: true });
-      } else {
-        setErrors({ auth: 'Invalid username or password' });
-      }
-    } catch (error) {
-      setErrors({ auth: 'Login failed. Please try again.' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        try {
+            const response = await login(username, password);
+            
+            // Handle remember me
+            if (rememberMe) {
+                localStorage.setItem('rememberMe', 'true');
+                localStorage.setItem('savedUsername', username);
+            } else {
+                localStorage.removeItem('rememberMe');
+                localStorage.removeItem('savedUsername');
+            }
 
-  const handleGuestLogin = () => {
-    login({ username: 'Guest', role: 'guest' });
-    navigate('/chat', { replace: true });
-  };
+            authLogin(response.user);
 
-  return (
-    <div className="login-page">
-      <h1>Login to Campi</h1>
-      <form onSubmit={handleLogin} className="login-form">
-        <div className="input-group">
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              if (errors.username) {
-                setErrors(prev => ({ ...prev, username: '' }));
-              }
-            }}
-            className={errors.username ? 'error-input' : ''}
-            disabled={isLoading}
-          />
-          {errors.username && <span className="error-message">{errors.username}</span>}
+            // Navigate based on user role
+            switch (response.user.role) {
+                case 'admin':
+                    navigate('/admin');
+                    break;
+                case 'student':
+                    navigate('/chat');
+                    break;
+                default:
+                    navigate('/chat');
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleGuestLogin = () => {
+        authLogin({ 
+            id: 0,
+            username: 'guest',
+            role: 'guest',
+            firstName: 'Guest',
+            lastName: 'User'
+        });
+        navigate('/chat');
+    };
+
+    return (
+        <div className="login-container">
+            <h1>Login to Campi</h1>
+            <form onSubmit={handleLogin}>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Username"
+                        disabled={isLoading}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                        disabled={isLoading}
+                    />
+                </div>
+
+                <div className="remember-me">
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        disabled={isLoading}
+                    />
+                    <label htmlFor="rememberMe">Remember me</label>
+                </div>
+
+                {error && <div className="error-message">{error}</div>}
+
+                <button type="submit" className="login-button" disabled={isLoading}>
+                    {isLoading ? <LoadingSpinner /> : 'Login'}
+                </button>
+
+                <div className="divider">
+                    <span>or</span>
+                </div>
+
+                <button
+                    type="button"
+                    onClick={handleGuestLogin}
+                    className="guest-button"
+                    disabled={isLoading}
+                >
+                    Continue as Guest
+                </button>
+            </form>
         </div>
-        
-        <div className="input-group">
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              if (errors.password) {
-                setErrors(prev => ({ ...prev, password: '' }));
-              }
-            }}
-            className={errors.password ? 'error-input' : ''}
-            disabled={isLoading}
-          />
-          {errors.password && <span className="error-message">{errors.password}</span>}
-        </div>
-
-        <div className="remember-me">
-          <label>
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              disabled={isLoading}
-            />
-            <span>Remember me</span>
-          </label>
-        </div>
-        
-        <button 
-          type="submit" 
-          className="login-button"
-          disabled={isLoading}
-        >
-          {isLoading ? <LoadingSpinner /> : 'Login'}
-        </button>
-        {errors.auth && <p className="error-message">{errors.auth}</p>}
-      </form>
-
-      <div className="guest-section">
-        <p className="or-divider">or</p>
-        <button 
-          onClick={handleGuestLogin} 
-          className="guest-button"
-          disabled={isLoading}
-        >
-          Continue as Guest
-        </button>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default LoginPage;
