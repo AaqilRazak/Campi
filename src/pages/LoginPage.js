@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { login } from '../api/auth';
+import AuthService from '../services/auth.service';
 import '../styles/LoginPage.css';
 
 const LoadingSpinner = () => (
@@ -9,44 +9,29 @@ const LoadingSpinner = () => (
 );
 
 const LoginPage = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: ''
+    });
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { login: authLogin } = useAuth();
 
-    const handleLogin = async (e) => {
+    const handleChange = (e) => {
+        setCredentials({
+            ...credentials,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
         setIsLoading(true);
-
         try {
-            const response = await login(username, password);
-            
-            // Handle remember me
-            if (rememberMe) {
-                localStorage.setItem('rememberMe', 'true');
-                localStorage.setItem('savedUsername', username);
-            } else {
-                localStorage.removeItem('rememberMe');
-                localStorage.removeItem('savedUsername');
-            }
-
+            const response = await AuthService.login(credentials.username, credentials.password);
             authLogin(response.user);
-
-            // Navigate based on user role
-            switch (response.user.role) {
-                case 'admin':
-                    navigate('/admin');
-                    break;
-                case 'student':
-                    navigate('/chat');
-                    break;
-                default:
-                    navigate('/chat');
-            }
+            navigate(response.user.role === 'admin' ? '/admin' : '/chat');
         } catch (err) {
             setError(err.message);
         } finally {
@@ -68,12 +53,13 @@ const LoginPage = () => {
     return (
         <div className="login-container">
             <h1>Login to Campi</h1>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input
                         type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        name="username"
+                        value={credentials.username}
+                        onChange={handleChange}
                         placeholder="Username"
                         disabled={isLoading}
                     />
@@ -82,22 +68,12 @@ const LoginPage = () => {
                 <div className="form-group">
                     <input
                         type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        value={credentials.password}
+                        onChange={handleChange}
                         placeholder="Password"
                         disabled={isLoading}
                     />
-                </div>
-
-                <div className="remember-me">
-                    <input
-                        type="checkbox"
-                        id="rememberMe"
-                        checked={rememberMe}
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                        disabled={isLoading}
-                    />
-                    <label htmlFor="rememberMe">Remember me</label>
                 </div>
 
                 {error && <div className="error-message">{error}</div>}
