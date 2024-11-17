@@ -8,34 +8,9 @@ const AdminInterface = () => {
     averageResponseTime: "Loading...",
     systemUptime: "Loading...",
   });
-
-  const [usersData] = useState([
-    { user: "Student A", role: "Student", status: "Active" },
-    { user: "Staff B", role: "Staff", status: "Blocked" },
-  ]);
-
-  const [logsData] = useState([
-    {
-      date: "2024-10-08",
-      user: "Student A",
-      topic: "Financial Aid Deadlines",
-      conversation: [
-        { sender: "user", message: "What are the financial aid deadlines?" },
-        { sender: "bot", message: "The financial aid deadline is November 1st." },
-      ],
-    },
-    {
-      date: "2024-10-07",
-      user: "Student B",
-      topic: "Course Registration",
-      conversation: [
-        { sender: "user", message: "How do I register for courses?" },
-        { sender: "bot", message: "You can register for courses through the Student Portal." },
-      ],
-    },
-  ]);
-
-  const [apiKeysData, setApiKeysData] = useState([{ key: "*************abcd" }]);
+  const [usersData, setUsersData] = useState([]);
+  const [logsData, setLogsData] = useState([]);
+  const [apiKeysData, setApiKeysData] = useState([]);
   const [selectedLog, setSelectedLog] = useState(null);
 
   const interactionVolumeChartRef = useRef(null);
@@ -43,7 +18,10 @@ const AdminInterface = () => {
   const commonQuestionsChartRef = useRef(null);
 
   useEffect(() => {
-    init();
+    fetchDashboardData();
+    fetchUsersData();
+    fetchLogsData();
+    fetchApiKeys();
 
     return () => {
       if (interactionVolumeChartRef.current) interactionVolumeChartRef.current.destroy();
@@ -52,16 +30,47 @@ const AdminInterface = () => {
     };
   }, []);
 
-  const updateDashboard = () => {
-    setDashboardData({
-      totalInteractions: 1500,
-      averageResponseTime: "1.2s",
-      systemUptime: "99.9%",
-    });
+  const fetchDashboardData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/dashboard");
+      const data = await response.json();
+      setDashboardData(data);
+    } catch (error) {
+      console.error("Failed to fetch dashboard data", error);
+    }
   };
 
-  const init = () => {
-    updateDashboard();
+  const fetchUsersData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/users");
+      const data = await response.json();
+      setUsersData(data);
+    } catch (error) {
+      console.error("Failed to fetch users data", error);
+    }
+  };
+
+  const fetchLogsData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/logs");
+      const data = await response.json();
+      setLogsData(data);
+    } catch (error) {
+      console.error("Failed to fetch logs data", error);
+    }
+  };
+
+  const fetchApiKeys = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/apikeys");
+      const data = await response.json();
+      setApiKeysData(data);
+    } catch (error) {
+      console.error("Failed to fetch API keys", error);
+    }
+  };
+
+  const createCharts = () => {
     createInteractionVolumeChart();
     createResponseTimeChart();
     createCommonQuestionsChart();
@@ -117,18 +126,19 @@ const AdminInterface = () => {
     alert(`FAQ added: ${faqQuestion} - ${faqAnswer}`);
   };
 
-  const handleAddApiKey = () => {
+  const handleAddApiKey = async () => {
     const newKey = document.getElementById("new-key").value;
-    setApiKeysData([...apiKeysData, { key: newKey }]);
-    alert("New API Key added.");
-  };
-
-  const showConversationDetails = (log) => {
-    setSelectedLog(log);
-  };
-
-  const backToLogs = () => {
-    setSelectedLog(null);
+    try {
+      await fetch("http://localhost:5000/api/apikeys", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: newKey }),
+      });
+      setApiKeysData([...apiKeysData, { key: newKey }]);
+      alert("New API Key added.");
+    } catch (error) {
+      console.error("Failed to add API key", error);
+    }
   };
 
   return (
@@ -152,38 +162,47 @@ const AdminInterface = () => {
             <div className="info-box"><h3>Average Response Time</h3><p>{dashboardData.averageResponseTime}</p></div>
             <div className="info-box"><h3>System Uptime</h3><p>{dashboardData.systemUptime}</p></div>
           </div>
+          <canvas id="interactionVolumeChart"></canvas>
         </section>
-
         <section id="user-management">
           <h2>User Management</h2>
-          <div className="user-management-form">
-            <label>Filter by Role:</label>
-            <select><option value="all">All</option><option value="student">Student</option><option value="staff">Staff</option></select>
-          </div>
-          <h3>Manage Users</h3>
-          <table><thead><tr><th>User</th><th>Role</th><th>Status</th></tr></thead>
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Status</th>
+              </tr>
+            </thead>
             <tbody>
               {usersData.map((user, index) => (
-                <tr key={index}><td>{user.user}</td><td>{user.role}</td><td>{user.status}</td></tr>
+                <tr key={index}>
+                  <td>{user.username}</td>
+                  <td>{user.role}</td>
+                  <td>{user.status}</td>
+                </tr>
               ))}
             </tbody>
           </table>
         </section>
-
         <section id="chatbot-configuration">
           <h2>Chatbot Configuration</h2>
-          <div><label>Greeting Message:</label><input type="text" id="greeting-message" placeholder="Enter greeting message" /><button onClick={handleGreetingSave}>Save Greeting</button></div>
+          <div>
+            <label>Greeting Message:</label>
+            <input type="text" id="greeting-message" placeholder="Enter greeting message" />
+            <button onClick={handleGreetingSave}>Save Greeting</button>
+          </div>
           <h3>Manage FAQ</h3>
-          <input type="text" id="new-faq-question" placeholder="New FAQ Question" /><textarea id="new-faq-answer" placeholder="New FAQ Answer"></textarea><button onClick={handleAddFaq}>Add FAQ</button>
+          <input type="text" id="new-faq-question" placeholder="New FAQ Question" />
+          <textarea id="new-faq-answer" placeholder="New FAQ Answer"></textarea>
+          <button onClick={handleAddFaq}>Add FAQ</button>
         </section>
-
         <section id="analytics-dashboard">
           <h2>Analytics Dashboard</h2>
           <div className="chart-container"><canvas id="interactionVolumeChart"></canvas></div>
           <div className="chart-container"><canvas id="commonQuestionsChart"></canvas></div>
           <div className="chart-container"><canvas id="responseTimeChart"></canvas></div>
         </section>
-
         <section id="logs-history">
           <h2>Conversation Logs</h2>
           {selectedLog ? (
@@ -191,26 +210,34 @@ const AdminInterface = () => {
               <h3>Conversation Details</h3>
               <div className="chat-history">
                 {selectedLog.conversation.map((message, index) => (
-                  <p key={index} className={message.sender === "user" ? "chat-user" : "chat-bot"}>
-                    {message.sender === "user" ? "User: " : "Bot: "}{message.message}
+                  <p key={index} className={message.sender === "User" ? "chat-user" : "chat-bot"}>
+                    {message.sender === "User" ? "User: " : "Bot: "}{message.message}
                   </p>
                 ))}
               </div>
-              <button onClick={backToLogs}>Back to Logs</button>
+              <button onClick={() => setSelectedLog(null)}>Back to Logs</button>
             </div>
           ) : (
-            <table><thead><tr><th>Date</th><th>User</th><th>Topic</th></tr></thead>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>User</th>
+                  <th>Topic</th>
+                </tr>
+              </thead>
               <tbody>
                 {logsData.map((log, index) => (
-                  <tr key={index} onClick={() => showConversationDetails(log)}>
-                    <td>{log.date}</td><td>{log.user}</td><td>{log.topic}</td>
+                  <tr key={index} onClick={() => setSelectedLog(log)}>
+                    <td>{log.date}</td>
+                    <td>{log.user}</td>
+                    <td>{log.topic}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )}
         </section>
-
         <section id="apikeys">
           <h2>API Key Management</h2>
           <div>
@@ -219,10 +246,17 @@ const AdminInterface = () => {
             <button onClick={handleAddApiKey}>Add Key</button>
           </div>
           <h3>Existing Keys</h3>
-          <table><thead><tr><th>Key</th></tr></thead>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+              </tr>
+            </thead>
             <tbody>
               {apiKeysData.map((keyData, index) => (
-                <tr key={index}><td>{keyData.key}</td></tr>
+                <tr key={index}>
+                  <td>{keyData.key}</td>
+                </tr>
               ))}
             </tbody>
           </table>
@@ -232,12 +266,4 @@ const AdminInterface = () => {
   );
 };
 
-function App() {
-  return (
-    <div className="App">
-      <AdminInterface />
-    </div>
-  );
-}
-
-export default App;
+export default AdminInterface;
