@@ -50,8 +50,22 @@ const LoginPage = () => {
         navigate('/chat');
     };
 
+    const handleApiSwitch = (event) => {
+        AuthService.switchApi(event.target.checked);
+    };
+
     return (
         <div className="login-container">
+            <div className="api-switch">
+                <label>
+                    <input
+                        type="checkbox"
+                        onChange={handleApiSwitch}
+                        checked={localStorage.getItem('useTeammateApi') === 'true'}
+                    />
+                    Use Teammate's API
+                </label>
+            </div>
             <h1>Login to Campi</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">

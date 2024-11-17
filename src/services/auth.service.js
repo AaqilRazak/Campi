@@ -1,5 +1,12 @@
-// Direct URL to teammate's API
-const API_URL = 'http://69.215.107.194/campi-api/api';
+const USE_TEAMMATE_API = true;  // Set to false for your local API
+
+const getApiUrl = () => {
+    return USE_TEAMMATE_API 
+        ? 'http://69.215.107.194/campi-api/api'
+        : 'http://localhost:3000/api';
+};
+
+const API_URL = getApiUrl();
 
 // Handles all authentication-related API calls
 class AuthService {
@@ -37,6 +44,12 @@ class AuthService {
 
     isLoggedIn() {
         return !!localStorage.getItem('user');
+    }
+
+    // Add this new method to switch APIs
+    switchApi(useTeammate) {
+        localStorage.setItem('useTeammateApi', useTeammate);
+        window.location.reload(); // Reload to apply changes
     }
 }
 
