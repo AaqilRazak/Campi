@@ -30,9 +30,23 @@ const LoginPage = () => {
         setIsLoading(true);
         try {
             const response = await AuthService.login(credentials.username, credentials.password);
-            authLogin(response.user);
-            navigate(response.user.role === 'admin' ? '/admin' : '/chat');
+            console.log('Login response:', response);
+            
+            if (response.success) {
+                const userData = {
+                    id: response.debug?.received_data?.username || 0,
+                    username: credentials.username,
+                    role: credentials.username === 'admin' ? 'admin' : 'student',
+                    firstName: response.debug?.received_data?.username || 'Test',
+                    lastName: 'User'
+                };
+                authLogin(userData);
+                navigate(userData.role === 'admin' ? '/admin' : '/chat');
+            } else {
+                setError(response.message || 'Login failed');
+            }
         } catch (err) {
+            console.error('Login error:', err);
             setError(err.message);
         } finally {
             setIsLoading(false);
