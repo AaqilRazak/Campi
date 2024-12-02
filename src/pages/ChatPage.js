@@ -231,7 +231,7 @@ const ChatPage = () => {
     await saveMessage(currentSessionId, userMessage);
 
     try {
-      const response = await fetch("https://aaqilrazak-campi.hf.space/generate", {
+      const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
