@@ -4,58 +4,68 @@ import { useAuth } from '../context/AuthContext';
 import AuthService from '../services/auth.service';
 import '../styles/LoginPage.css';
 
-const LoadingSpinner = () => (
-    <div className="spinner"></div>
-);
-
 const LoginPage = () => {
     const [credentials, setCredentials] = useState({
         username: '',
-        password: ''
+        password: '',
+        rememberMe: false
     });
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { login: authLogin } = useAuth();
 
     const handleChange = (e) => {
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setCredentials({
             ...credentials,
-            [e.target.name]: e.target.value
+            [e.target.name]: value
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        try {
-            const response = await AuthService.login(credentials.username, credentials.password);
-            console.log('Login response:', response);
-            
-            if (response.success) {
-                const userData = {
-                    id: response.debug?.received_data?.username || 0,
-                    username: credentials.username,
-                    role: credentials.username === 'admin' ? 'admin' : 'student',
-                    firstName: response.debug?.received_data?.username || 'Test',
+        let userData;
+
+        switch (credentials.password) {
+            case 'studentpass':
+                userData = {
+                    id: 1,
+                    username: credentials.username || 'student',
+                    role: 'student',
+                    firstName: 'Student',
                     lastName: 'User'
                 };
-                authLogin(userData);
-                navigate(userData.role === 'admin' ? '/admin' : '/chat');
-            } else {
-                setError(response.message || 'Login failed');
-            }
-        } catch (err) {
-            console.error('Login error:', err);
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
+                break;
+            case 'adminpass':
+                userData = {
+                    id: 2,
+                    username: credentials.username || 'admin',
+                    role: 'admin',
+                    firstName: 'Admin',
+                    lastName: 'User'
+                };
+                break;
+            case 'pass':
+                userData = {
+                    id: 3,
+                    username: 'guest',
+                    role: 'guest',
+                    firstName: 'Guest',
+                    lastName: 'User'
+                };
+                break;
+            default:
+                setError('Invalid password');
+                return;
         }
+
+        authLogin(userData);
+        navigate(userData.role === 'admin' ? '/admin' : '/chat');
     };
 
     const handleGuestLogin = () => {
         authLogin({ 
-            id: 0,
+            id: 3,
             username: 'guest',
             role: 'guest',
             firstName: 'Guest',
@@ -75,7 +85,6 @@ const LoginPage = () => {
                         value={credentials.username}
                         onChange={handleChange}
                         placeholder="Username"
-                        disabled={isLoading}
                     />
                 </div>
 
@@ -86,14 +95,23 @@ const LoginPage = () => {
                         value={credentials.password}
                         onChange={handleChange}
                         placeholder="Password"
-                        disabled={isLoading}
                     />
                 </div>
 
                 {error && <div className="error-message">{error}</div>}
 
-                <button type="submit" className="login-button" disabled={isLoading}>
-                    {isLoading ? <LoadingSpinner /> : 'Login'}
+                <div className="remember-me">
+                    <input
+                        type="checkbox"
+                        name="rememberMe"
+                        checked={credentials.rememberMe}
+                        onChange={handleChange}
+                    />
+                    <label>Remember me</label>
+                </div>
+
+                <button type="submit" className="login-button">
+                    Login
                 </button>
 
                 <div className="divider">
@@ -104,7 +122,6 @@ const LoginPage = () => {
                     type="button"
                     onClick={handleGuestLogin}
                     className="guest-button"
-                    disabled={isLoading}
                 >
                     Continue as Guest
                 </button>
