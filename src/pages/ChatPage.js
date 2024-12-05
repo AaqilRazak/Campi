@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../context/AuthContext';
 import '../styles/ChatPage.css';
 
-const ChevronDownIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="6 9 12 15 18 9"></polyline>
-  </svg>
-);
-
+// SVG Icons
 const MenuIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -22,90 +18,138 @@ const PlusIcon = () => (
   </svg>
 );
 
-const RotateCcwIcon = () => (
+const TrashIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-    <path d="M3 3v5h5"></path>
-  </svg>
-);
-const SendIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="22" y1="2" x2="11" y2="13"></line>
-    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    <path d="M3 6h18"></path>
+    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
   </svg>
 );
 
-
+// Template questions organized by category
+const TEMPLATE_QUESTIONS = {
+  "Quick Info": [
+    { icon: "🔍", text: "What's happening right now?" },
+    { icon: "🍽️", text: "I'm hungry - where can I eat?" },
+    { icon: "☕", text: "I need coffee!" },
+  ],
+  "Study & Workspace": [
+    { icon: "📚", text: "Where's the best place to study?" },
+    { icon: "🤫", text: "I need a quiet place to study" },
+    { icon: "👥", text: "Where can I study with a group?" },
+    { icon: "🔌", text: "Where can I charge my laptop?" },
+    { icon: "🖨️", text: "Help with printing" }
+  ],
+  "Social & Entertainment": [
+    { icon: "🎉", text: "What's fun happening today?" },
+    { icon: "👋", text: "Where do students hang out?" },
+    { icon: "🤝", text: "Good places to meet friends?" },
+    { icon: "📅", text: "What clubs are meeting today?" }
+  ],
+  "Food & Drinks": [
+    { icon: "🍳", text: "What's good for breakfast?" },
+    { icon: "🥪", text: "What's good for lunch?" },
+    { icon: "🍕", text: "What's good for dinner?" },
+    { icon: "🌙", text: "Where can I get food late?" },
+    { icon: "🆓", text: "Any free food today?" }
+  ],
+  "Campus Facilities": [
+    { icon: "🚽", text: "Where's the nearest bathroom?" },
+    { icon: "🖨️", text: "Where's the nearest printer?" },
+    { icon: "💧", text: "Where's the nearest water fountain?" },
+    { icon: "🏢", text: "Where can I have a meeting?" }
+  ],
+  "Events & Activities": [
+    { icon: "🎯", text: "Any events today?" },
+    { icon: "💰", text: "Anything free this week?" },
+    { icon: "🎪", text: "What should I do this weekend?" },
+    { icon: "📚", text: "What clubs are meeting this week?" }
+  ]
+};
 
 const ChatPage = () => {
+  const { user } = useAuth();
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [sessions, setSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
-  const suggestions = [
-    {
-        title: "Admissions Information",
-        items: [
-            { icon: "📅", text: "What is the application deadline for first-year students?" },
-            { icon: "🎓", text: "Are SAT or ACT scores required for admission?" },
-            { icon: "📝", text: "How can I apply for Early Action, and when is the deadline?" }
-        ]
-    },
-    {
-        title: "Application and Fees",
-        items: [
-            { icon: "💵", text: "Is there an application fee, and how much is it?" },
-            { icon: "🏷️", text: "Can I get a fee waiver for the application fee?" },
-            { icon: "📄", text: "What documents are required for the application?" }
-        ]
-    },
-    {
-        title: "Campus Life & Housing",
-        items: [
-            { icon: "🏠", text: "What housing options are available for first-year students?" },
-            { icon: "👥", text: "How can I get involved in campus organizations?" },
-            { icon: "🍽️", text: "What dining options are available on campus?" }
-        ]
-    }
-  ];
-
-
+  // Fetch sessions on component mount
   useEffect(() => {
-    fetchSessions();
+    fetchSessions().catch(err => {
+      console.error('Error fetching sessions:', err);
+      setError('Failed to load chat history');
+    });
+  }, []);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Scroll listener effect
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   const fetchSessions = async () => {
     try {
-      const response = await fetch("https://aaqilrazak-campi.hf.space/sessions");
+      const response = await fetch("http://localhost:8000/sessions");
+      if (!response.ok) throw new Error('Failed to fetch sessions');
       const data = await response.json();
-      console.log('Fetched sessions:', data);
-
-      const sessionsWithPreview = data.sessions.map(session => {
-        const lastMessage = session.messages?.[0]?.MessageText || "New Chat";
-        return {
-          ...session,
-          preview: lastMessage.length > 60 ? lastMessage.substring(0, 57) + "..." : lastMessage 
-        };
-      });
-
       setSessions(data.sessions || []);
     } catch (error) {
       console.error('Error fetching sessions:', error);
+      throw error;
+    }
+  };
+
+  const createNewSession = async () => {
+    try {
+      setMessages([]);
+      setIsTyping(false);
+      setCurrentSessionId(null);
+      setSelectedCategory(null);
+
+      const response = await fetch("http://localhost:8000/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          device_type: navigator.platform,
+          browser_agent: navigator.userAgent
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to create session');
+      const data = await response.json();
+      setCurrentSessionId(data.sessionId);
+      await fetchSessions();
+    } catch (error) {
+      console.error('Error creating session:', error);
+      setError('Failed to start new chat');
+    }
+  };
+
+  const deleteSession = async (sessionId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/sessions/${sessionId}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete session');
+      }
+      await fetchSessions();
+    } catch (error) {
+      console.error('Error deleting session:', error);
     }
   };
 
@@ -114,14 +158,9 @@ const ChatPage = () => {
 
     try {
       setIsTyping(false);
-      if (currentSessionId && messages.length > 0) {
-        const lastMessage = messages[messages.length - 1];
-        await saveMessage(currentSessionId, lastMessage);
-      }
-
-      const response = await fetch(`https://aaqilrazak-campi.hf.space/sessions/${sessionId}/messages`);
+      const response = await fetch(`http://localhost:8000/sessions/${sessionId}/messages`);
+      if (!response.ok) throw new Error('Failed to fetch session messages');
       const data = await response.json();
-      console.log('Loaded session messages:', data);
 
       if (data.messages) {
         setMessages(data.messages.map(msg => ({
@@ -136,108 +175,57 @@ const ChatPage = () => {
       setCurrentSessionId(sessionId);
     } catch (error) {
       console.error('Error switching sessions:', error);
-    }
-  };
-
-  const createNewSession = async () => {
-    try {
-      setMessages([]);
-      setIsTyping(false);
-      setCurrentSessionId(null);
-
-      const response = await fetch("https://aaqilrazak-campi.hf.space/sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          device_type: navigator.platform,
-          browser_agent: navigator.userAgent
-        })
-      });
-      const data = await response.json();
-      console.log('Created new session:', data);
-      setCurrentSessionId(data.sessionId);
-      await fetchSessions();
-    } catch (error) {
-      console.error('Error creating session:', error);
+      setError('Failed to load chat messages');
     }
   };
 
   const saveMessage = async (sessionId, message) => {
     try {
-      const response = await fetch(`https://aaqilrazak-campi.hf.space/sessions/${sessionId}/messages`, {
+      const response = await fetch(`http://localhost:8000/sessions/${sessionId}/messages`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: message.text,
           sender: message.sender === 'user' ? 'User' : 'Bot',
           timestamp: message.timestamp
         })
       });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log('Saved message:', data);
+      if (!response.ok) throw new Error('Failed to save message');
     } catch (error) {
       console.error('Error saving message:', error);
+      throw error;
     }
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleScroll = () => {
-    if (!messagesContainerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
-    const bottomTolerance = 100;
-    setShowScrollButton(scrollHeight - scrollTop - clientHeight > bottomTolerance);
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    const container = messagesContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
-
-  const handleSend = async () => {
-    if (!input.trim()) return;
-
-    if (!currentSessionId) {
-      await createNewSession();
-    }
-
-    const userMessage = {
-      id: Date.now(),
-      text: input,
-      sender: 'user',
-      timestamp: new Date().toISOString()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setIsTyping(true);
-
-    await saveMessage(currentSessionId, userMessage);
-
+  const handleQuestionClick = async (question) => {
     try {
+      if (!currentSessionId) {
+        await createNewSession();
+      }
+
+      const userMessage = {
+        id: Date.now(),
+        text: question,
+        sender: 'user',
+        timestamp: new Date().toISOString()
+      };
+
+      setMessages(prev => [...prev, userMessage]);
+      setIsTyping(true);
+      setSelectedCategory(null);
+
+      await saveMessage(currentSessionId, userMessage);
+
       const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ prompt: input })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: question })
       });
+
+      if (!response.ok) {
+        throw new Error(`Failed to generate response: ${response.status}`);
+      }
+
       const data = await response.json();
 
       const botResponse = {
@@ -249,25 +237,123 @@ const ChatPage = () => {
 
       setMessages(prev => [...prev, botResponse]);
       await saveMessage(currentSessionId, botResponse);
+      await fetchSessions();
+
     } catch (error) {
       console.error('Error:', error);
-      const errorMessage = {
-        id: Date.now(),
-        text: "Sorry, I encountered an error. Please try again.",
-        sender: 'bot',
-        timestamp: new Date().toISOString()
-      };
-      setMessages(prev => [...prev, errorMessage]);
-      await saveMessage(currentSessionId, errorMessage);
+
+      // Only add error message to chat if we've started the conversation
+      if (error.message.includes('Failed to generate response')) {
+        const errorMessage = {
+          id: Date.now(),
+          text: "Sorry, I encountered an error. Please try again.",
+          sender: 'bot',
+          timestamp: new Date().toISOString()
+        };
+        setMessages(prev => [...prev, errorMessage]);
+
+        // Only save error message if we have a current session
+        if (currentSessionId) {
+          await saveMessage(currentSessionId, errorMessage);
+        }
+      }
+    } finally {
+      setIsTyping(false);
     }
-    setIsTyping(false);
-    await fetchSessions();
   };
 
-  const handleSuggestionClick = (text) => {
-    setInput(text);
-    handleSend();
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const handleScroll = () => {
+    if (!messagesContainerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+    setShowScrollButton(scrollHeight - scrollTop - clientHeight > 100);
+  };
+
+  const renderWelcomeScreen = () => (
+    <div className="welcome-screen">
+      <h1 className="welcome-title">How can I help you today?</h1>
+      {selectedCategory ? (
+        <div className="question-grid">
+          {TEMPLATE_QUESTIONS[selectedCategory].map((item, index) => (
+            <button
+              key={index}
+              className="question-card"
+              onClick={() => handleQuestionClick(item.text)}
+            >
+              <span className="question-icon">{item.icon}</span>
+              <span>{item.text}</span>
+            </button>
+          ))}
+          <button
+            className="back-button"
+            onClick={() => setSelectedCategory(null)}
+          >
+            ← Back to Categories
+          </button>
+        </div>
+      ) : (
+        <div className="categories-grid">
+          {Object.entries(TEMPLATE_QUESTIONS).map(([category, questions]) => (
+            <button
+              key={category}
+              className="category-card"
+              onClick={() => setSelectedCategory(category)}
+            >
+              <span className="category-icon">
+                {questions[0].icon}
+              </span>
+              <span className="category-title">{category}</span>
+              <span className="category-count">
+                {questions.length} questions
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderChatMessages = () => (
+    <>
+      {messages.map((message) => (
+        <div key={message.id} className="message-group">
+          <div className="message">
+            <div className={`avatar ${message.sender}-avatar`}>
+              {message.sender === 'user' ? 'U' : 'A'}
+            </div>
+            <div className="message-content">
+              {message.text}
+            </div>
+          </div>
+          {message.sender === 'bot' && (
+            <div className="message-actions">
+              <button className="action-button" onClick={() => setSelectedCategory(null)}>
+                Ask Another Question
+              </button>
+              <button className="action-button" onClick={createNewSession}>
+                Start New Chat
+              </button>
+            </div>
+          )}
+        </div>
+      ))}
+      {isTyping && (
+        <div className="message-group">
+          <div className="message">
+            <div className="avatar bot-avatar">A</div>
+            <div className="typing-indicator">
+              <div className="typing-dot"></div>
+              <div className="typing-dot"></div>
+              <div className="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 
   return (
     <div className="chat-container">
@@ -281,118 +367,50 @@ const ChatPage = () => {
         </button>
         <div className="chat-history-list">
           {sessions.map((session) => (
-            <button
-              key={session.SessionID}
-              className={`chat-history-item ${currentSessionId === session.SessionID ? 'active' : ''}`}
-              onClick={() => handleSessionClick(session.SessionID)}
-            >
-              <div className="chat-icon">💬</div> {/* Chat icon or placeholder */}
-              <div className="chat-preview">
-                {session.preview} {/* Display the preview */}
-              </div>
-              <div className="chat-time">
-                {new Date(session.SessionStartTime).toLocaleString(undefined, {
-                  month: 'short',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </div>
-            </button>
+            <div key={session.SessionID} className="chat-history-item-wrapper">
+              <button
+                className={`chat-history-item ${currentSessionId === session.SessionID ? 'active' : ''}`}
+                onClick={() => handleSessionClick(session.SessionID)}
+              >
+                <div className="chat-icon">💬</div>
+                <div className="chat-preview">
+                  {session.preview}
+                </div>
+                <div className="chat-time">
+                  {new Date(session.SessionStartTime).toLocaleString(undefined, {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </div>
+              </button>
+              <button
+                className="delete-session-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteSession(session.SessionID);
+                }}
+                title="Delete session"
+              >
+                <TrashIcon />
+              </button>
+            </div>
           ))}
         </div>
-
       </div>
 
       <div className="main-content">
         <div className="messages-container" ref={messagesContainerRef}>
-          {messages.length === 0 ? (
-            <div className="welcome-screen">
-              <h1 className="welcome-title">How can I help you today?</h1>
-              {suggestions.map((section, index) => (
-                <div key={index} className="suggestion-section">
-                  <h2 className="suggestion-section-title">{section.title}</h2>
-                  <div className="suggestions-grid">
-                    {section.items.map((item, idx) => (
-                      <button
-                        key={idx}
-                        className="suggestion-card"
-                        onClick={() => handleSuggestionClick(item.text)}
-                      >
-                        <span className="suggestion-icon">{item.icon}</span>
-                        <span>{item.text}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            messages.map((message) => (
-              <div key={message.id} className="message-group">
-                <div className="message">
-                  <div className={`avatar ${message.sender}-avatar`}>
-                    {message.sender === 'user' ? 'U' : 'A'}
-                  </div>
-                  <div className="message-content">
-                    {message.text}
-                  </div>
-                </div>
-                {message.sender === 'bot' && (
-                  <div className="feedback-options">
-                    <button className="feedback-button">👍 Helpful</button>
-                    <button className="feedback-button">👎 Not helpful</button>
-                  </div>
-                )}
-              </div>
-            ))
-          )}
-
-          {isTyping && (
-            <div className="message-group">
-              <div className="message">
-                <div className="avatar bot-avatar">A</div>
-                <div className="typing-indicator">
-                  <div className="typing-dot"></div>
-                  <div className="typing-dot"></div>
-                  <div className="typing-dot"></div>
-                </div>
-              </div>
-            </div>
-          )}
+          {error && <div className="error-message">{error}</div>}
+          {messages.length === 0 ? renderWelcomeScreen() : renderChatMessages()}
           <div ref={messagesEndRef} />
         </div>
-
-        <div className="input-container">
-          <div className="input-wrapper">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-              className="message-input"
-              placeholder="Message (⌘+Enter to send)"
-            />
-            <div className="input-actions">
-              <button className="action-button" title="Regenerate response">
-                <RotateCcwIcon />
-              </button>
-              <button className="action-button" onClick={handleSend}>
-                <ChevronDownIcon />
-              </button>
-              <button className="action-button" onClick={handleSend} title="Send">
-                <SendIcon />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <button
-          className={`scroll-button ${showScrollButton ? 'visible' : ''}`}
-          onClick={scrollToBottom}
-        >
-          <ChevronDownIcon />
-        </button>
+        {showScrollButton && (
+          <button className="scroll-button" onClick={scrollToBottom}>
+            ↓
+          </button>
+        )}
       </div>
     </div>
   );

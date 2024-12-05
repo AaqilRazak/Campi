@@ -1,14 +1,19 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from datetime import datetime
 import subprocess
+from datetime import datetime, timedelta
 import logging
 import aiosqlite
 from typing import Optional
+from CampusQueryMapper import CampusDemoQueryMapper
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -21,10 +26,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Database functions
+# Request/Response Models
+class PromptRequest(BaseModel):
+    prompt: str
+
+class SessionCreate(BaseModel):
+    device_type: Optional[str] = None
+    browser_agent: Optional[str] = None
+
+class MessageCreate(BaseModel):
+    message: str
+    sender: str
+    timestamp: str
+
+# Database initialization
 async def init_db():
     async with aiosqlite.connect('chat_history.db') as db:
-        # Create tables
+        # Create existing tables
         await db.execute('''
             CREATE TABLE IF NOT EXISTS UserInformation (
                 UserID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -62,13 +80,40 @@ async def init_db():
                 FOREIGN KEY (SessionID) REFERENCES SessionLogs(SessionID)
             )
         ''')
-        
-        # Insert a default user for testing
+
+        # Create Campus Information tables
         await db.execute('''
-            INSERT OR IGNORE INTO UserInformation 
-            (Username, PasswordHash, Email, UserRoleID, FirstName, LastName)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', ('testuser', 'password', 'test@test.com', 1, 'Test', 'User'))
+            CREATE TABLE IF NOT EXISTS CampusInformation (
+                BuildingID INTEGER PRIMARY KEY AUTOINCREMENT,
+                BuildingName TEXT NOT NULL,
+                BuildingAddress TEXT NOT NULL,
+                BuildingHours TEXT,
+                ContactInfo TEXT,
+                Description TEXT
+            )
+        ''')
+
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS EventInformation (
+                EventID INTEGER PRIMARY KEY AUTOINCREMENT,
+                EventName TEXT NOT NULL,
+                EventDateTime DATETIME NOT NULL,
+                EventLocationID INTEGER NOT NULL,
+                EventDescription TEXT,
+                OrganizerContact TEXT,
+                FOREIGN KEY (EventLocationID) REFERENCES CampusInformation(BuildingID)
+            )
+        ''')
+        
+        # Insert sample data for testing if needed
+        await db.execute('''
+            INSERT OR IGNORE INTO CampusInformation 
+            (BuildingName, BuildingAddress, BuildingHours, ContactInfo, Description)
+            VALUES 
+            ('Library', '123 Campus Drive', '7:00 AM - 2:00 AM', '555-0123', 'Main campus library with quiet study spaces'),
+            ('Student Center', '456 Campus Drive', '6:00 AM - 12:00 AM', '555-0124', 'Student hub with dining options and study areas'),
+            ('Coffee Shop', '789 Campus Drive', '7:00 AM - 10:00 PM', '555-0125', 'Campus coffee shop with study tables')
+        ''')
         
         await db.commit()
 
@@ -79,25 +124,13 @@ async def get_db():
     finally:
         await db.close()
 
-# Models
-class PromptRequest(BaseModel):
-    prompt: str
-
-class SessionCreate(BaseModel):
-    device_type: Optional[str] = None
-    browser_agent: Optional[str] = None
-
-class MessageCreate(BaseModel):
-    message: str
-    sender: str
-    timestamp: str
-
-TEST_USER_ID = 1  # Using a default test user
+# Default test user ID for development
+TEST_USER_ID = 1
 
 @app.on_event("startup")
 async def startup_event():
     await init_db()
-    logging.info("Database initialized successfully")
+    logger.info("Database initialized successfully")
 
 @app.get("/sessions")
 async def get_sessions(db: aiosqlite.Connection = Depends(get_db)):
@@ -121,7 +154,7 @@ async def get_sessions(db: aiosqlite.Connection = Depends(get_db)):
                 ]
             }
     except Exception as e:
-        logging.error(f"Error fetching sessions: {str(e)}")
+        logger.error(f"Error fetching sessions: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch sessions")
 
 @app.post("/sessions")
@@ -138,7 +171,7 @@ async def create_session(session: SessionCreate, db: aiosqlite.Connection = Depe
             await db.commit()
             return {"sessionId": session_id[0]}
     except Exception as e:
-        logging.error(f"Error creating session: {str(e)}")
+        logger.error(f"Error creating session: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to create session")
 
 @app.get("/sessions/{session_id}/messages")
@@ -162,7 +195,7 @@ async def get_session_messages(session_id: int, db: aiosqlite.Connection = Depen
                 ]
             }
     except Exception as e:
-        logging.error(f"Error fetching messages: {str(e)}")
+        logger.error(f"Error fetching messages: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch messages")
 
 @app.post("/sessions/{session_id}/messages")
@@ -176,29 +209,90 @@ async def save_message(session_id: int, message: MessageCreate, db: aiosqlite.Co
         await db.commit()
         return {"status": "success"}
     except Exception as e:
-        logging.error(f"Error saving message: {str(e)}")
+        logger.error(f"Error saving message: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to save message")
+    
+@app.delete("/sessions/{session_id}")
+async def delete_session(session_id: int, db: aiosqlite.Connection = Depends(get_db)):
+    try:
+        # First delete associated messages
+        await db.execute('''
+            DELETE FROM MessageHistory 
+            WHERE SessionID = ?
+        ''', (session_id,))
+        
+        # Then delete the session
+        await db.execute('''
+            DELETE FROM SessionLogs 
+            WHERE SessionID = ?
+        ''', (session_id,))
+        
+        await db.commit()
+        return {"status": "success", "message": f"Session {session_id} deleted successfully"}
+    except Exception as e:
+        logging.error(f"Error deleting session: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to delete session")    
 
 @app.post("/generate")
-async def generate_text(prompt_request: PromptRequest):
-    prompt = prompt_request.prompt
+async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection = Depends(get_db)):
     try:
-        logging.info(f"Received prompt: {prompt}")
+        prompt = prompt_request.prompt.strip()
+        logger.info(f"Received prompt: {prompt}")
         
-        process = subprocess.run(
-            ["ollama", "run", "llama3.2:3b", prompt],
-            capture_output=True,
-            text=True,
-            check=True
-        )
+        # Use the query mapper to handle the templated question
+        query_mapper = CampusDemoQueryMapper(db)
+        db_response = await query_mapper.match_and_execute(prompt)
         
-        response = process.stdout
-        logging.info(f"Ollama Response: {response}")
+        if not db_response:
+            return {
+                "response": "I'm not sure how to answer that question. Please select one of the provided options."
+            }
         
-        return {"response": response.strip()}
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e.stderr}")
-        raise HTTPException(status_code=500, detail="Model generation failed")
+        # Only proceed with LLM if we have database response
+        try:
+            llm_prompt = f"Act as a helpful campus assistant. Using only this accurate information: {db_response}, generate a natural, conversational response to: {prompt}"
+            logger.info(f"Sending prompt to LLM: {llm_prompt}")
+            
+            # Check if ollama is available
+            check_ollama = subprocess.run(
+                ["ollama", "list"],
+                capture_output=True,
+                text=True
+            )
+            logger.info(f"Available models: {check_ollama.stdout}")
+            
+            process = subprocess.run(
+                ["ollama", "run", "llama3.2:3b"], # Changed model name
+                input=llm_prompt,
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=30  # Increased timeout
+            )
+            
+            llm_response = process.stdout.strip()
+            logger.info(f"LLM response received: {llm_response}")
+            
+            if llm_response and len(llm_response) > 20:  # Basic validation
+                logger.info("Using LLM response")
+                return {"response": llm_response}
+            else:
+                logger.info(f"LLM response failed validation, length: {len(llm_response) if llm_response else 0}")
+            
+        except subprocess.TimeoutExpired as te:
+            logger.error(f"LLM timeout error: {str(te)}")
+        except subprocess.CalledProcessError as ce:
+            logger.error(f"LLM process error: {str(ce)}, stderr: {ce.stderr}")
+        except Exception as llm_error:
+            logger.error(f"LLM error: {str(llm_error)}")
+        
+        logger.info("Falling back to DB response")
+        return {"response": db_response}
+            
     except Exception as e:
-        logging.error(f"Unexpected error: {e}")
-        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+        logger.error(f"Error generating response: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to generate response")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
