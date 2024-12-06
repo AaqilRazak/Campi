@@ -10,10 +10,8 @@ class CampusDemoQueryMapper:
         self.patterns = {
             # Quick Info Queries
             r"what's happening(?: right)? now\??": self._get_current_happenings,
-            r"what's the best place to (.+?)\??": self._get_recommended_spots,
-            r"where should I (.+?)\??": self._get_recommended_spots,
-            r"I'm hungry|where (?:can|should) I eat\??": self._get_food_options,
-            r"I need coffee|where(?:'s| is)(?: the (?:nearest|closest))? coffee\??": self._get_coffee_spots,
+            r"what's going on this week\??": self.get_events_this_week,
+            r"what buildings are open(?: right now)?(?: that I can study in)?\??": self.get_open_buildings_to_study,
             
             # Social/Fun Queries
             r"where (?:can|do) (?:students|people) hang out\??": self._get_social_spots,
@@ -46,7 +44,6 @@ class CampusDemoQueryMapper:
             
             # Specific Time Queries
             r"what's good for (breakfast|lunch|dinner)\??": self._get_meal_recommendations,
-            r"where can I get coffee at (\d{1,2})(am|pm)\??": self._get_coffee_by_time,
             r"what's happening (?:at|around) (\d{1,2})(am|pm)\??": self._get_events_by_time,
             
             # Group Activity Queries
@@ -71,92 +68,200 @@ class CampusDemoQueryMapper:
     # Current Happenings Handler - Great Demo Opener
     async def _get_current_happenings(self) -> str:
         try:
-            current_time = datetime.now()
+            # Get the current datetime
+            current_datetime = datetime.now()
+            current_date = current_datetime.strftime('%Y-%m-%d')
+            current_time = current_datetime.strftime('%H:%M:%S')
 
-            # Get current events
-            async with self.db.execute('''
+            # Query to get all events for today
+            query = f"""
                 SELECT e.EventName, e.EventDateTime, c.BuildingName, e.EventDescription
                 FROM EventInformation e
                 JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
-                WHERE DATE(e.EventDateTime) = DATE('now')
-                AND TIME(e.EventDateTime) BETWEEN TIME('now', '-1 hour') AND TIME('now', '+2 hours')
+                WHERE strftime('%Y-%m-%d', e.EventDateTime) = '{current_date}'
                 ORDER BY e.EventDateTime
-                LIMIT 3
-            ''') as cursor:
+            """
+            
+            # Log the constructed query
+            logging.info(f"Executing query:\n{query}")
+
+            async with self.db.execute(query) as cursor:
                 events = await cursor.fetchall()
 
-            # Get open spots
-            async with self.db.execute('''
-                SELECT BuildingName, Description 
-                FROM CampusInformation 
-                WHERE BuildingHours LIKE ?
-                LIMIT 3
-            ''', (f'%{current_time.strftime("%H:%M")}%',)) as cursor:
-                locations = await cursor.fetchall()
+            # If no events found, try a broader query to debug
+            if not events:
+                debug_query = f"""
+                    SELECT e.EventName, e.EventDateTime, c.BuildingName
+                    FROM EventInformation e
+                    JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
+                    WHERE strftime('%Y-%m-%d', e.EventDateTime) = '{current_date}'
+                    ORDER BY e.EventDateTime
+                """
+                async with self.db.execute(debug_query) as cursor:
+                    debug_events = await cursor.fetchall()
+                    logging.info(f"Debug - All events today: {debug_events}")
+
+            logging.info(f"Number of events fetched: {len(events)}")
 
             response_parts = []
-            
+
             if events:
-                response_parts.append("🎯 **Happening Now:**")
+                response_parts.append(f"🎯 **All Events Today (Current Time: {current_time}):**")
                 for event in events:
-                    event_time = datetime.strptime(event[1], '%Y-%m-%d %H:%M:%S').strftime('%I:%M %p')
-                    response_parts.append(f"• **{event[0]}** at **{event[2]}**\n  🕒 {event_time}\n  {event[3]}")
+                    event_name, event_datetime, building_name, event_description = event
+                    try:
+                        event_time = datetime.strptime(event_datetime, '%Y-%m-%d %H:%M:%S').strftime('%I:%M %p')
+                    except ValueError:
+                        event_time = event_datetime
 
-            if locations:
-                response_parts.append("\n🏢 **Popular Spots Open Now:**")
-                for loc in locations:
-                    response_parts.append(f"• **{loc[0]}**\n  {loc[1]}")
-
-            if not response_parts:
-                return "It's quiet right now, but you can ask me about specific places or upcoming events!"
+                    response_parts.append(
+                        f"• **{event_name}** at **{building_name}**\n  🕒 {event_time}\n  {event_description}"
+                    )
+            else:
+                response_parts.append("🎉 **No events scheduled for today.**\nYou can ask me about upcoming events or specific places on campus!")
 
             return "\n".join(response_parts)
+
         except Exception as e:
             logging.error(f"Error in _get_current_happenings: {str(e)}")
-            return "I couldn't fetch the current happenings. Try asking about specific places or times!"
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "😕 I couldn't fetch the current happenings. Please try again later or ask about specific events!"
+        
 
-    # Food and Coffee Handlers - Essential for Demo
-    async def _get_food_options(self) -> str:
+    async def get_events_this_week(self) -> str:
         try:
-            current_time = datetime.now()
-            hour = current_time.hour
+            # Get current datetime and end of week
+            current_datetime = datetime.now()
+            end_of_week = current_datetime + timedelta(days=7)
             
-            # Determine meal period
-            meal_period = (
-                "breakfast" if 6 <= hour < 11
-                else "lunch" if 11 <= hour < 15
-                else "dinner" if 15 <= hour < 21
-                else "late night"
-            )
+            # Format dates for query
+            current_date = current_datetime.strftime('%Y-%m-%d')
+            end_date = end_of_week.strftime('%Y-%m-%d')
 
-            async with self.db.execute('''
+            # Query for weekly events
+            query = f"""
+                SELECT e.EventName, e.EventDateTime, c.BuildingName, e.EventDescription
+                FROM EventInformation e
+                JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
+                WHERE date(e.EventDateTime) BETWEEN '{current_date}' AND '{end_date}'
+                ORDER BY e.EventDateTime
+            """
+            
+            logging.info(f"Weekly Events Query: {query}")
+
+            async with self.db.execute(query) as cursor:
+                events = await cursor.fetchall()
+
+            logging.info(f"Weekly events found: {len(events)}")
+
+            response_parts = []
+
+            if events:
+                response_parts.append(f"🗓️ **Upcoming Events ({current_date} to {end_date}):**")
+                for event in events:
+                    event_name, event_datetime, building_name, event_description = event
+                    try:
+                        # Format date to include day of week and time
+                        event_time = datetime.strptime(event_datetime, '%Y-%m-%d %H:%M:%S').strftime('%A, %B %d at %I:%M %p')
+                        response_parts.append(
+                            f"• **{event_name}** at **{building_name}**\n  🕒 {event_time}\n  {event_description}"
+                        )
+                    except ValueError as e:
+                        logging.error(f"DateTime parsing error: {e} for datetime: {event_datetime}")
+                        continue
+
+            else:
+                response_parts.append("🎉 **No events scheduled for this week.**\nYou can ask me about upcoming events or specific places on campus!")
+
+            return "\n".join(response_parts)
+
+        except Exception as e:
+            logging.error(f"Error in get_events_this_week: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "😕 I couldn't fetch the events for this week. Please try again later!"
+
+    # New Handler for Open Buildings to Study
+    async def get_open_buildings_to_study(self) -> str:
+        try:
+            # Get current time
+            current_time = datetime.now().strftime("%H:%M")
+            
+            # Debug log the current time
+            logging.info(f"Current time: {current_time}")
+            
+            # First get all study locations to debug
+            debug_query = f"""
                 SELECT BuildingName, Description, BuildingHours
                 FROM CampusInformation 
-                WHERE (LOWER(Description) LIKE '%food%'
-                OR LOWER(Description) LIKE '%dining%'
-                OR LOWER(Description) LIKE '%restaurant%')
-                AND BuildingHours LIKE ?
-                ORDER BY 
-                    CASE 
-                        WHEN LOWER(Description) LIKE '%' || ? || '%' THEN 1
-                        ELSE 2
-                    END,
-                    BuildingName
-                LIMIT 5
-            ''', (f'%{current_time.strftime("%H:%M")}%', meal_period)) as cursor:
-                locations = await cursor.fetchall()
-
-            if not locations:
-                return "I couldn't find any food places open right now. Try asking about specific times!"
-
-            response = f"🍽️ **Here are some {meal_period} options open now:**\n\n"
-            for loc in locations:
-                response += f"• **{loc[0]}**\n  {loc[1]}\n  🕒 Hours: {loc[2]}\n"
+                WHERE (
+                    LOWER(Description) LIKE '%study%'
+                    OR LOWER(Description) LIKE '%library%'
+                    OR LOWER(Description) LIKE '%study area%'
+                    OR LOWER(Description) LIKE '%quiet area%'
+                )
+            """
             
-            return response
+            async with self.db.execute(debug_query) as cursor:
+                all_study_places = await cursor.fetchall()
+            logging.info(f"Total study places found (before time filter): {len(all_study_places)}")
+            
+            # Modified query to handle time ranges better
+            query = f"""
+                SELECT BuildingName, Description, BuildingHours
+                FROM CampusInformation 
+                WHERE (
+                    LOWER(Description) LIKE '%study%'
+                    OR LOWER(Description) LIKE '%library%'
+                    OR LOWER(Description) LIKE '%study area%'
+                    OR LOWER(Description) LIKE '%quiet area%'
+                )
+                AND (
+                    BuildingHours = '24/7'
+                    OR BuildingHours = '00:00-23:59'
+                    OR (
+                        SUBSTR(BuildingHours, 1, INSTR(BuildingHours, '-') - 1) <= '{current_time}'
+                        AND SUBSTR(BuildingHours, INSTR(BuildingHours, '-') + 1) >= '{current_time}'
+                    )
+                )
+                ORDER BY BuildingName
+            """
+            
+            logging.info(f"Executing query:\n{query}")
+
+            async with self.db.execute(query) as cursor:
+                buildings = await cursor.fetchall()
+
+            logging.info(f"Number of open buildings fetched: {len(buildings)}")
+            
+            # Debug log all returned buildings
+            for building in buildings:
+                logging.info(f"Found open building: {building}")
+
+            response_parts = []
+
+            if buildings:
+                response_parts.append(f"📚 **Places to Study Now (Current Time: {current_time}):**")
+                for building in buildings:
+                    building_name, description, building_hours = building
+                    response_parts.append(
+                        f"• **{building_name}**\n  📍 {description}\n  🕒 Hours: {building_hours}"
+                    )
+            else:
+                response_parts.append("😴 **No study spaces are currently open.**\nTry asking about locations that open later!")
+
+            return "\n".join(response_parts)
+
         except Exception as e:
-            logging.error(f"Error in _get_food_options: {str(e)}")
-            return "I couldn't retrieve food options at the moment. Please try again later."
+            logging.error(f"Error in get_open_buildings_to_study: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "😕 I couldn't find study space information right now. Please try again later!"
+    
 
     async def _get_recommended_spots(self, activity: str) -> str:
         try:
@@ -180,35 +285,6 @@ class CampusDemoQueryMapper:
         except Exception as e:
             logging.error(f"Error in _get_recommended_spots: {str(e)}")
             return "I couldn't find recommended spots for that activity. Please try again later."
-
-    async def _get_coffee_spots(self, proximity: Optional[str] = None) -> str:
-        try:
-            query = '''
-                SELECT BuildingName, Description, BuildingHours
-                FROM CampusInformation 
-                WHERE LOWER(Description) LIKE '%coffee%'
-                '''
-            if proximity:
-                query += " AND LOWER(Description) LIKE ?"
-                params = (f'%{proximity.strip().lower()}%',)
-            else:
-                params = ()
-            query += " ORDER BY BuildingName LIMIT 5"
-
-            async with self.db.execute(query, params) as cursor:
-                coffees = await cursor.fetchall()
-
-            if not coffees:
-                return "I couldn't find any coffee spots nearby. Try asking about a different location or time!"
-
-            response = "☕ **Here are some coffee spots:**\n\n"
-            for coffee in coffees:
-                response += f"• **{coffee[0]}**\n  {coffee[1]}\n  🕒 Hours: {coffee[2]}\n"
-
-            return response
-        except Exception as e:
-            logging.error(f"Error in _get_coffee_spots: {str(e)}")
-            return "I couldn't retrieve coffee spots at the moment. Please try again later."
 
     # Social/Fun Handlers
     async def _get_social_spots(self, _, group_type: str) -> str:
