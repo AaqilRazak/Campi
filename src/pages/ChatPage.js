@@ -30,8 +30,8 @@ const TrashIcon = () => (
 const TEMPLATE_QUESTIONS = {
   "Quick Info": [
     { icon: "🔍", text: "What's happening right now?" },
-    { icon: "🍽️", text: "What's going on this week?" },
-    { icon: "☕", text: "What buildings are open right now that I can study in?" },
+    { icon: "🍽️", text: "Wha'ts going on this week?" },
+    { icon: "☕", text: "What buildings" },
   ],
   "Study & Workspace": [
     { icon: "📚", text: "Where's the best place to study?" },
@@ -180,6 +180,11 @@ const ChatPage = () => {
   };
 
   const saveMessage = async (sessionId, message) => {
+    if (!sessionId) {
+      console.error('Attempted to save message without valid session ID');
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:8000/sessions/${sessionId}/messages`, {
         method: "POST",
@@ -190,7 +195,10 @@ const ChatPage = () => {
           timestamp: message.timestamp
         })
       });
-      if (!response.ok) throw new Error('Failed to save message');
+
+      if (!response.ok) {
+        throw new Error('Failed to save message');
+      }
     } catch (error) {
       console.error('Error saving message:', error);
       throw error;
@@ -198,9 +206,28 @@ const ChatPage = () => {
   };
 
   const handleQuestionClick = async (question) => {
+    let sessionId = currentSessionId;  // Move sessionId declaration outside try block
+
     try {
-      if (!currentSessionId) {
-        await createNewSession();
+      // Make sure we have a valid session
+      if (!sessionId) {
+        // Create new session and get the ID
+        const response = await fetch("http://localhost:8000/sessions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            device_type: navigator.platform,
+            browser_agent: navigator.userAgent
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create session');
+        }
+
+        const data = await response.json();
+        sessionId = data.sessionId;
+        setCurrentSessionId(sessionId);
       }
 
       const userMessage = {
@@ -214,7 +241,8 @@ const ChatPage = () => {
       setIsTyping(true);
       setSelectedCategory(null);
 
-      await saveMessage(currentSessionId, userMessage);
+      // Now we know we have a valid sessionId
+      await saveMessage(sessionId, userMessage);
 
       const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
@@ -236,13 +264,13 @@ const ChatPage = () => {
       };
 
       setMessages(prev => [...prev, botResponse]);
-      await saveMessage(currentSessionId, botResponse);
+      await saveMessage(sessionId, botResponse);
       await fetchSessions();
 
     } catch (error) {
       console.error('Error:', error);
+      setIsTyping(false);
 
-      // Only add error message to chat if we've started the conversation
       if (error.message.includes('Failed to generate response')) {
         const errorMessage = {
           id: Date.now(),
@@ -252,9 +280,8 @@ const ChatPage = () => {
         };
         setMessages(prev => [...prev, errorMessage]);
 
-        // Only save error message if we have a current session
-        if (currentSessionId) {
-          await saveMessage(currentSessionId, errorMessage);
+        if (sessionId) {  // Now sessionId is in scope
+          await saveMessage(sessionId, errorMessage);
         }
       }
     } finally {

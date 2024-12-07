@@ -245,7 +245,7 @@ async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection 
         
         # Only proceed with LLM if we have database response
         try:
-            llm_prompt = f"You are a campus assistant called Campi for Texas State. You are given the user prompt, and the data you should answer with. Only use the databse response and relay the information in a friendly way while making sure to explain times, dates, or buildings. Never prompt the user for a response or question - you only answer questions never ask them. {prompt}, database response: {db_response}. Only use the database response to respond."
+            llm_prompt = f"You are Campi, you humanize database reponses for the input prompt. Here is the prompt: {prompt}, database response: {db_response}."
             logger.info(f"Sending prompt to LLM: {llm_prompt}")
             
             # Check if ollama is available
@@ -257,7 +257,7 @@ async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection 
             logger.info(f"Available models: {check_ollama.stdout}")
             
             process = subprocess.run(
-                ["ollama", "run", "llama3.1:8b"], # Changed model name
+                ["ollama", "run", "llama3.2:3b"], # Changed model name
                 input=llm_prompt,
                 capture_output=True,
                 text=True,
