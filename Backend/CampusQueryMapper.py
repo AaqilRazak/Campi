@@ -15,6 +15,7 @@ class CampusDemoQueryMapper:
             
             # Social/Fun Queries
             r"what fun events are happening today\??": self._get_fun_events,
+            r"what student organizations are active this semester\??": self._get_student_organizations,
             r"where (?:can|do) (?:students|people) hang out\??": self._get_social_spots,
             r"what's fun (?:to do |happening )?(today|tonight|this weekend)\??": self._get_entertainment,
             r"any free food (today|now|happening)\??": self._get_free_food_events,
@@ -1151,3 +1152,75 @@ class CampusDemoQueryMapper:
             import traceback
             logging.error(f"Traceback: {traceback.format_exc()}")
             return "Sorry, I had trouble finding the events. Please try asking again!"
+        
+    async def _get_student_organizations(self) -> str:
+        try:
+            logging.info("Executing _get_student_organizations")
+            
+            # Debug query to check what's in the database
+            debug_query = """
+                SELECT DISTINCT
+                    o.OrgName,
+                    o.OrgDescription,
+                    o.MeetingSchedule,
+                    c.BuildingName
+                FROM StudentOrganizations o
+                JOIN CampusInformation c ON o.MeetingLocationID = c.BuildingID
+                WHERE o.IsActive = 1
+                ORDER BY o.OrgName
+            """
+            
+            async with self.db.execute(debug_query) as cursor:
+                all_orgs = await cursor.fetchall()
+            logging.info(f"Total organizations in database: {len(all_orgs)}")
+            if all_orgs:
+                logging.info(f"Sample organization: {all_orgs[0]}")
+            
+            # Main query
+            query = """
+                SELECT DISTINCT
+                    o.OrgName,
+                    o.OrgDescription,
+                    o.MeetingSchedule,
+                    c.BuildingName
+                FROM StudentOrganizations o
+                JOIN CampusInformation c ON o.MeetingLocationID = c.BuildingID
+                WHERE o.IsActive = 1
+                ORDER BY o.OrgName
+            """
+            
+            async with self.db.execute(query) as cursor:
+                organizations = await cursor.fetchall()
+            
+            if not organizations:
+                return "There are no active student organizations in the database. Please check back later!"
+            
+            response = "** ACTIVE STUDENT ORGANIZATIONS **  \n\n"
+            
+            seen_orgs = set()
+            
+            for org in organizations:
+                org_name, description, schedule, location = org
+                org_key = f"{org_name}_{location}"
+                
+                if org_key in seen_orgs:
+                    continue
+                        
+                seen_orgs.add(org_key)
+                
+                response += f"* **{org_name}**  \n"
+                response += f"  Meeting Location: **{location}**  \n"
+                if schedule:
+                    response += f"  Schedule: {schedule}  \n"
+                if description:
+                    response += f"  About: {description}  \n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting student organizations: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the student organizations. Please try asking again!"

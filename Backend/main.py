@@ -105,6 +105,18 @@ async def init_db():
             )
         ''')
         
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS StudentOrganizations (
+                OrgID INTEGER PRIMARY KEY AUTOINCREMENT,
+                OrgName TEXT NOT NULL,
+                OrgDescription TEXT,
+                MeetingSchedule TEXT,
+                MeetingLocationID INTEGER,
+                IsActive INTEGER DEFAULT 1,
+                FOREIGN KEY (MeetingLocationID) REFERENCES CampusInformation(BuildingID)
+            )
+        ''')
+        
         current_date = datetime.now().strftime('%Y-%m-%d')
         await db.execute(f'''
             INSERT OR IGNORE INTO EventInformation 
@@ -112,6 +124,15 @@ async def init_db():
             VALUES 
             ('Game Night', '{current_date} 19:00:00', 1, 'Join us for board games and snacks!', 'events@txstate.edu'),
             ('Live Music', '{current_date} 20:00:00', 1, 'Local student bands performing live', 'music@txstate.edu')
+        ''')
+        
+        await db.execute('''
+            INSERT OR IGNORE INTO StudentOrganizations 
+            (OrgName, OrgDescription, MeetingSchedule, MeetingLocationID, IsActive)
+            VALUES 
+            ('Computer Science Club', 'Programming workshops and tech talks', 'Thursdays at 5:00 PM', 1, 1),
+            ('Student Government', 'Campus leadership and advocacy', 'Mondays at 4:00 PM', 1, 1),
+            ('Chess Club', 'Weekly tournaments and casual play', 'Wednesdays at 6:00 PM', 2, 1)
         ''')
 
         

@@ -42,9 +42,9 @@ const TEMPLATE_QUESTIONS = {
   ],
   "Social & Entertainment": [
     { icon: "🎉", text: "What fun events are happening today?" },
-    { icon: "👋", text: "Where do students hang out?" },
+    { icon: "👋", text: "What sporting events are happening this weekend?" },
     { icon: "🤝", text: "Good places to meet friends?" },
-    { icon: "📅", text: "What clubs are meeting today?" }
+    { icon: "📅", text: "What student organizations are active this semester?" }
   ],
   "Food & Drinks": [
     { icon: "🍳", text: "What's good for breakfast?" },
