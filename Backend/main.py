@@ -41,8 +41,11 @@ class MessageCreate(BaseModel):
 
 # Database initialization
 async def init_db():
+    logging.info("Starting database initialization...")
+    
     async with aiosqlite.connect('chat_history.db') as db:
-        # Create existing tables
+        # Create user-related tables
+        logging.info("Creating user tables...")
         await db.execute('''
             CREATE TABLE IF NOT EXISTS UserInformation (
                 UserID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,6 +85,7 @@ async def init_db():
         ''')
 
         # Create Campus Information tables
+        logging.info("Creating campus tables...")
         await db.execute('''
             CREATE TABLE IF NOT EXISTS CampusInformation (
                 BuildingID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -93,6 +97,29 @@ async def init_db():
             )
         ''')
 
+        # First ensure Recreation Center exists
+        logging.info("Setting up Recreation Center...")
+        await db.execute('''
+            INSERT OR IGNORE INTO CampusInformation 
+            (BuildingID, BuildingName, BuildingAddress, BuildingHours, Description)
+            VALUES 
+            (3, 'Recreation Center', '601 University Drive', '6:00-23:00', 
+             'Main campus recreation facility with multiple sports and fitness amenities')
+        ''')
+
+        # Get Recreation Center ID
+        async with db.execute(
+            'SELECT BuildingID FROM CampusInformation WHERE BuildingName = ?', 
+            ('Recreation Center',)
+        ) as cursor:
+            rec_center = await cursor.fetchone()
+            if not rec_center:
+                logging.error("Failed to find Recreation Center after insertion")
+                return
+            rec_center_id = rec_center[0]
+            logging.info(f"Recreation Center ID: {rec_center_id}")
+
+        # Create other tables that depend on CampusInformation
         await db.execute('''
             CREATE TABLE IF NOT EXISTS EventInformation (
                 EventID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -104,28 +131,39 @@ async def init_db():
                 FOREIGN KEY (EventLocationID) REFERENCES CampusInformation(BuildingID)
             )
         ''')
-        
-        await db.execute('''
-            CREATE TABLE IF NOT EXISTS StudentOrganizations (
-                OrgID INTEGER PRIMARY KEY AUTOINCREMENT,
-                OrgName TEXT NOT NULL,
-                OrgDescription TEXT,
-                MeetingSchedule TEXT,
-                MeetingLocationID INTEGER,
-                IsActive INTEGER DEFAULT 1,
-                FOREIGN KEY (MeetingLocationID) REFERENCES CampusInformation(BuildingID)
-            )
-        ''')
-        
+
+        # Clear existing events for today
         current_date = datetime.now().strftime('%Y-%m-%d')
+        await db.execute('''
+            DELETE FROM EventInformation 
+            WHERE date(EventDateTime) = date(?)
+        ''', (current_date,))
+
+        # Insert today's events
         await db.execute(f'''
-            INSERT OR IGNORE INTO EventInformation 
+            INSERT INTO EventInformation 
             (EventName, EventDateTime, EventLocationID, EventDescription, OrganizerContact)
             VALUES 
-            ('Game Night', '{current_date} 19:00:00', 1, 'Join us for board games and snacks!', 'events@txstate.edu'),
-            ('Live Music', '{current_date} 20:00:00', 1, 'Local student bands performing live', 'music@txstate.edu')
-        ''')
-        
+            ('Game Night', '{current_date} 19:00:00', ?, 'Join us for board games and snacks!', 'events@txstate.edu'),
+            ('Live Music', '{current_date} 20:00:00', ?, 'Local student bands performing live', 'music@txstate.edu')
+        ''', (rec_center_id, rec_center_id))
+
+        # Insert weekend sporting events
+        saturday = datetime.now() + timedelta(days=(5 - datetime.now().weekday()))
+        sunday = saturday + timedelta(days=1)
+
+        await db.execute(f'''
+            INSERT INTO EventInformation 
+            (EventName, EventDateTime, EventLocationID, EventDescription, OrganizerContact)
+            VALUES 
+            ('Basketball Game', '{saturday.strftime("%Y-%m-%d")} 19:00:00', ?, 
+             'Home Conference Game - Bobcats vs. Rivals (Students Free with ID)', 'sports@txstate.edu'),
+            ('Swimming Meet', '{sunday.strftime("%Y-%m-%d")} 14:00:00', ?, 
+             'Conference Championships - Multiple Schools Competing (Free Admission)', 'sports@txstate.edu'),
+            ('Volleyball Match', '{saturday.strftime("%Y-%m-%d")} 15:00:00', ?, 
+             'Conference Match - Bobcats vs. State (Students Free with ID)', 'sports@txstate.edu')
+        ''', (rec_center_id, rec_center_id, rec_center_id))
+
         await db.execute('''
             INSERT OR IGNORE INTO StudentOrganizations 
             (OrgName, OrgDescription, MeetingSchedule, MeetingLocationID, IsActive)
@@ -135,8 +173,85 @@ async def init_db():
             ('Chess Club', 'Weekly tournaments and casual play', 'Wednesdays at 6:00 PM', 2, 1)
         ''')
 
-        
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS SportingEvents (
+                EventID INTEGER PRIMARY KEY AUTOINCREMENT,
+                EventName TEXT NOT NULL,
+                EventDateTime DATETIME NOT NULL,
+                VenueID INTEGER NOT NULL,
+                EventDescription TEXT,
+                TeamInfo TEXT,
+                TicketInfo TEXT,
+                FOREIGN KEY (VenueID) REFERENCES CampusInformation(BuildingID)
+            )
+        ''')
+
+        # Second event insertion
+        current_date = datetime.now()
+        saturday = current_date + timedelta(days=(5 - current_date.weekday()))
+        sunday = saturday + timedelta(days=1)
+
+        await db.execute(f'''
+            INSERT OR IGNORE INTO SportingEvents 
+            (EventName, EventDateTime, VenueID, EventDescription, TeamInfo, TicketInfo)
+            VALUES 
+            ('Basketball Game', '{saturday.strftime("%Y-%m-%d")} 19:00:00', 3, 
+             'Home Conference Game', 'Bobcats vs. Rivals', 'Students Free with ID'),
+            ('Swimming Meet', '{sunday.strftime("%Y-%m-%d")} 14:00:00', 3, 
+             'Conference Championships', 'Multiple Schools Competing', 'Free Admission'),
+            ('Volleyball Match', '{saturday.strftime("%Y-%m-%d")} 15:00:00', 3, 
+             'Conference Match', 'Bobcats vs. State', 'Students Free with ID')
+        ''')
+
+        # Create and populate BuildingAmenities
+        logging.info("Setting up Building Amenities...")
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS BuildingAmenities (
+                AmenityID INTEGER PRIMARY KEY AUTOINCREMENT,
+                BuildingID INTEGER NOT NULL,
+                AmenityName TEXT NOT NULL,
+                Description TEXT,
+                Location TEXT,
+                AvailabilityHours TEXT,
+                FOREIGN KEY (BuildingID) REFERENCES CampusInformation(BuildingID)
+            )
+        ''')
+
+        # Clear existing amenities for Recreation Center
+        await db.execute('DELETE FROM BuildingAmenities WHERE BuildingID = ?', (rec_center_id,))
+
+        # Insert amenities
+        amenities = [
+            ('Badminton Courts', 'Four professional courts available', '2nd Floor', 'Open during facility hours'),
+            ('Basketball Courts', 'Six full-size courts with maple flooring', '1st Floor', 'Open during facility hours'),
+            ('Boxing Area', 'Heavy bags, speed bags, and boxing ring', 'Lower Level', '6:00 AM - 10:00 PM'),
+            ('Cardio Zone', 'Treadmills, ellipticals, bikes, and rowing machines', '2nd Floor', '24/7 access'),
+            ('Changing Rooms', 'Lockers, showers, and changing facilities', 'All Floors', 'Open during facility hours'),
+            ('Computer Lab', 'Workstations and printing services available', 'Main Entrance', '8:00 AM - 8:00 PM'),
+            ('Cycle Studio', 'Indoor cycling room with 30 bikes', '3rd Floor', 'Class schedule varies'),
+            ('Dance Studios', 'Three mirrored studios with sprung floors', '3rd Floor', 'Class schedule varies'),
+            ('Equipment Checkout', 'Free equipment rental with student ID', 'Main Desk', '7:00 AM - 9:00 PM'),
+            ('Game Room', 'Foosball, ping pong, and pool tables', 'Lower Level', '10:00 AM - 10:00 PM')
+        ]
+
+        # Use parameterized query for safer insertion
+        for amenity in amenities:
+            await db.execute('''
+                INSERT INTO BuildingAmenities 
+                (BuildingID, AmenityName, Description, Location, AvailabilityHours)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (rec_center_id, *amenity))
+
+        # Verify amenities were inserted
+        async with db.execute(
+            'SELECT COUNT(*) FROM BuildingAmenities WHERE BuildingID = ?', 
+            (rec_center_id,)
+        ) as cursor:
+            count = await cursor.fetchone()
+            logging.info(f"Inserted {count[0]} amenities for Recreation Center")
+
         await db.commit()
+        logging.info("Database initialization complete")
 
 async def get_db():
     db = await aiosqlite.connect('chat_history.db')
@@ -150,8 +265,8 @@ TEST_USER_ID = 1
 
 @app.on_event("startup")
 async def startup_event():
+    logging.info("Application starting up...")
     await init_db()
-    logger.info("Database initialized successfully")
 
 @app.get("/sessions")
 async def get_sessions(db: aiosqlite.Connection = Depends(get_db)):

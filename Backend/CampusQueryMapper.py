@@ -51,7 +51,9 @@ class CampusDemoQueryMapper:
             # Group Activity Queries
             r"where can I study with a group\??": self._get_group_study_spots,
             r"where can I have (a meeting|team practice)\??": self._get_meeting_spaces,
-            r"good places to meet friends\??": self._get_meetup_spots
+            r"good places to meet friends\??": self._get_meetup_spots,
+            r"what sporting events are happening this weekend\??": self._get_sporting_events,
+            r"what amenities does the recreation center offer\??": self._get_rec_center_amenities,
         }
 
     async def match_and_execute(self, user_input: str) -> str:
@@ -1051,7 +1053,7 @@ class CampusDemoQueryMapper:
 
             response = f"📋 **Meeting spaces for {purpose}:**\n\n"
             for space in spaces:
-                response += f"• **{space[0]}**\n  {space[1]}\n  🕒 Hours: {space[2]}\n"
+                response += f" **{space[0]}**\n  {space[1]}\n  🕒 Hours: {space[2]}\n"
 
             return response
         except Exception as e:
@@ -1224,3 +1226,149 @@ class CampusDemoQueryMapper:
             import traceback
             logging.error(f"Traceback: {traceback.format_exc()}")
             return "Sorry, I had trouble finding the student organizations. Please try asking again!"
+
+    async def _get_sporting_events(self) -> str:
+        try:
+            logging.info("Executing _get_sporting_events")
+            
+            # Calculate weekend dates
+            today = datetime.now()
+            saturday = today + timedelta(days=(5 - today.weekday()))  # Next Saturday
+            sunday = saturday + timedelta(days=1)  # Next Sunday
+            
+            # Debug query
+            debug_query = """
+                SELECT DISTINCT
+                    s.EventName,
+                    s.EventDateTime,
+                    c.BuildingName,
+                    s.EventDescription,
+                    s.TeamInfo,
+                    s.TicketInfo
+                FROM SportingEvents s
+                JOIN CampusInformation c ON s.VenueID = c.BuildingID
+                WHERE date(s.EventDateTime) BETWEEN ? AND ?
+                ORDER BY s.EventDateTime
+            """
+            
+            async with self.db.execute(debug_query, (saturday.strftime('%Y-%m-%d'), 
+                                                   sunday.strftime('%Y-%m-%d'))) as cursor:
+                all_events = await cursor.fetchall()
+            logging.info(f"Total sporting events found: {len(all_events)}")
+            if all_events:
+                logging.info(f"Sample event: {all_events[0]}")
+            
+            # Main query
+            query = """
+                SELECT DISTINCT
+                    s.EventName,
+                    s.EventDateTime,
+                    c.BuildingName,
+                    s.EventDescription,
+                    s.TeamInfo,
+                    s.TicketInfo
+                FROM SportingEvents s
+                JOIN CampusInformation c ON s.VenueID = c.BuildingID
+                WHERE date(s.EventDateTime) BETWEEN ? AND ?
+                ORDER BY s.EventDateTime
+            """
+            
+            async with self.db.execute(query, (saturday.strftime('%Y-%m-%d'), 
+                                             sunday.strftime('%Y-%m-%d'))) as cursor:
+                events = await cursor.fetchall()
+            
+            if not events:
+                return "No sporting events scheduled for this weekend. Check back later for updates!"
+            
+            response = "** WEEKEND SPORTING EVENTS **  \n\n"
+            
+            seen_events = set()
+            
+            for event in events:
+                event_name, event_time, venue, description, team_info, ticket_info = event
+                event_key = f"{event_name}_{event_time}_{venue}"
+                
+                if event_key in seen_events:
+                    continue
+                    
+                seen_events.add(event_key)
+                
+                # Format date to show day and time
+                formatted_time = datetime.strptime(event_time, '%Y-%m-%d %H:%M:%S').strftime('%A at %I:%M %p')
+                
+                response += f"* **{event_name}**  \n"
+                response += f"  When: {formatted_time}  \n"
+                response += f"  Venue: **{venue}**  \n"
+                if team_info:
+                    response += f"  Teams: {team_info}  \n"
+                if description:
+                    response += f"  Details: {description}  \n"
+                if ticket_info:
+                    response += f"  Tickets: {ticket_info}  \n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting sporting events: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the sporting events. Please try asking again!"
+
+    async def _get_rec_center_amenities(self) -> str:
+        try:
+            logging.info("Executing _get_rec_center_amenities")
+            
+            # Debug query to check building
+            async with self.db.execute('''
+                SELECT BuildingID, BuildingName 
+                FROM CampusInformation 
+                WHERE BuildingName = 'Recreation Center'
+            ''') as cursor:
+                building = await cursor.fetchone()
+                logging.info(f"Recreation Center info: {building}")
+            
+            if not building:
+                return "Recreation Center not found in database."
+            
+            # Get amenities for the specific building
+            query = """
+                SELECT 
+                    a.AmenityName,
+                    a.Description,
+                    a.Location,
+                    a.AvailabilityHours
+                FROM BuildingAmenities a
+                WHERE a.BuildingID = ?
+                ORDER BY a.AmenityName
+            """
+            
+            async with self.db.execute(query, (building[0],)) as cursor:
+                amenities = await cursor.fetchall()
+                logging.info(f"Found {len(amenities)} amenities")
+            
+            if not amenities:
+                return "No amenities found for the Recreation Center."
+            
+            response = "** RECREATION CENTER AMENITIES **  \n\n"
+            
+            for amenity in amenities:
+                name, description, location, hours = amenity
+                response += f"* **{name}**  \n"
+                if location:
+                    response += f"  Location: {location}  \n"
+                if description:
+                    response += f"  Details: {description}  \n"
+                if hours:
+                    response += f"  Hours: {hours}  \n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting rec center amenities: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the Recreation Center amenities. Please try asking again!"
