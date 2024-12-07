@@ -41,7 +41,7 @@ const TEMPLATE_QUESTIONS = {
     { icon: "🖨️", text: "Help with printing" }
   ],
   "Social & Entertainment": [
-    { icon: "🎉", text: "What's fun happening today?" },
+    { icon: "🎉", text: "What fun events are happening today?" },
     { icon: "👋", text: "Where do students hang out?" },
     { icon: "🤝", text: "Good places to meet friends?" },
     { icon: "📅", text: "What clubs are meeting today?" }

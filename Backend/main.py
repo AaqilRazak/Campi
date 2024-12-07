@@ -105,10 +105,15 @@ async def init_db():
             )
         ''')
         
-        # Insert sample data for testing if needed
-        await db.execute('''
-
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        await db.execute(f'''
+            INSERT OR IGNORE INTO EventInformation 
+            (EventName, EventDateTime, EventLocationID, EventDescription, OrganizerContact)
+            VALUES 
+            ('Game Night', '{current_date} 19:00:00', 1, 'Join us for board games and snacks!', 'events@txstate.edu'),
+            ('Live Music', '{current_date} 20:00:00', 1, 'Local student bands performing live', 'music@txstate.edu')
         ''')
+
         
         await db.commit()
 
@@ -245,7 +250,7 @@ async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection 
         
         # Only proceed with LLM if we have database response
         try:
-            llm_prompt = f"You are a campus assistant called Campi for Texas State. You are given the user prompt, and the data you should answer with. Only use the databse response and relay the information in a friendly way while making sure to explain times, dates, or buildings. Never prompt the user for a response or question - you only answer questions never ask them. {prompt}, database response: {db_response}. Only use the database response to respond."
+            llm_prompt = f"Act as a helpful campus assistant. Using only this accurate information: {db_response}, generate a natural, conversational response to: {prompt}"
             logger.info(f"Sending prompt to LLM: {llm_prompt}")
             
             # Check if ollama is available
@@ -257,7 +262,7 @@ async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection 
             logger.info(f"Available models: {check_ollama.stdout}")
             
             process = subprocess.run(
-                ["ollama", "run", "llama3.1:8b"], # Changed model name
+                ["ollama", "run", "llama3.2:3b"], # Changed model name
                 input=llm_prompt,
                 capture_output=True,
                 text=True,

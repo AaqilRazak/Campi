@@ -14,6 +14,7 @@ class CampusDemoQueryMapper:
             r"what buildings are open(?: right now)?(?: that I can study in)?\??": self.get_open_buildings_to_study,
             
             # Social/Fun Queries
+            r"what fun events are happening today\??": self._get_fun_events,
             r"where (?:can|do) (?:students|people) hang out\??": self._get_social_spots,
             r"what's fun (?:to do |happening )?(today|tonight|this weekend)\??": self._get_entertainment,
             r"any free food (today|now|happening)\??": self._get_free_food_events,
@@ -52,18 +53,27 @@ class CampusDemoQueryMapper:
             r"good places to meet friends\??": self._get_meetup_spots
         }
 
-    async def match_and_execute(self, user_input: str) -> Optional[str]:
+    async def match_and_execute(self, user_input: str) -> str:
+        """Match user input against patterns and execute corresponding handler"""
         try:
+            logging.info(f"Attempting to match input: {user_input}")
+                
+            # Convert input to lowercase for matching
+            user_input = user_input.lower().strip()
+                
+            # Try each pattern
             for pattern, handler in self.patterns.items():
-                match = re.match(pattern, user_input.lower().strip())
-                if match:
-                    # Filter out None values from optional groups
-                    args = [g for g in match.groups() if g is not None]
-                    return await handler(*args)
-            return "I'm sorry, I couldn't understand your request. Could you please rephrase?"
+                    if re.match(pattern, user_input):
+                        logging.info(f"Matched pattern: {pattern}")
+                        return await handler()
+                
+                # If no pattern matches
+            logging.info("No pattern matched")
+            return "I'm not sure how to help with that question. Could you try rephrasing it?"
+                
         except Exception as e:
-            logging.error(f"Error in query mapping: {str(e)}")
-            return "I encountered an error processing your request."
+                logging.error(f"Error in match_and_execute: {str(e)}")
+                return "Sorry, I encountered an error processing your request."
 
     # Current Happenings Handler - Great Demo Opener
     async def _get_current_happenings(self) -> str:
@@ -1070,3 +1080,74 @@ class CampusDemoQueryMapper:
         except Exception as e:
             logging.error(f"Error in _get_meetup_spots: {str(e)}")
             return "I couldn't find meetup spots at the moment. Please try again later."
+
+    async def _get_fun_events(self) -> str:
+        try:
+            logging.info("Executing _get_fun_events")
+            
+            # First, let's check what events exist in the database
+            debug_query = """
+                SELECT DISTINCT
+                    e.EventName,
+                    e.EventDateTime,
+                    c.BuildingName,
+                    e.EventDescription
+                FROM EventInformation e
+                JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
+                ORDER BY e.EventDateTime
+            """
+            
+            async with self.db.execute(debug_query) as cursor:
+                all_events = await cursor.fetchall()
+            logging.info(f"Total events in database: {len(all_events)}")
+            if all_events:
+                logging.info(f"Sample event: {all_events[0]}")
+            
+            # Now try the actual query without the date filter
+            query = """
+                SELECT DISTINCT
+                    e.EventName,
+                    e.EventDateTime,
+                    c.BuildingName,
+                    e.EventDescription
+                FROM EventInformation e
+                JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
+                ORDER BY e.EventDateTime
+            """
+            
+            async with self.db.execute(query) as cursor:
+                events = await cursor.fetchall()
+            
+            if not events:
+                return "There are no events in the database. Check back later for new events!"
+            
+            response = "Here are the upcoming events:\n\n"
+            
+            seen_events = set()
+            
+            for event in events:
+                event_name, event_time, location, description = event
+                event_key = f"{event_name}_{event_time}_{location}"
+                
+                if event_key in seen_events:
+                    continue
+                    
+                seen_events.add(event_key)
+                
+                formatted_time = datetime.strptime(event_time, '%Y-%m-%d %H:%M:%S').strftime('%B %d at %I:%M %p')
+                
+                response += f"Event: {event_name}\n"
+                response += f"When: {formatted_time}\n"
+                response += f"Where: {location}\n"
+                if description:
+                    response += f"Details: {description}\n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting events: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the events. Please try asking again!"
