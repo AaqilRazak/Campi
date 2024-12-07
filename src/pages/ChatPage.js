@@ -30,15 +30,13 @@ const TrashIcon = () => (
 const TEMPLATE_QUESTIONS = {
   "Quick Info": [
     { icon: "🔍", text: "What's happening right now?" },
-    { icon: "🍽️", text: "Wha'ts going on this week?" },
-    { icon: "☕", text: "What buildings" },
+    { icon: "🍽️", text: "What's going on this week?" },
   ],
   "Study & Workspace": [
-    { icon: "📚", text: "Where's the best place to study?" },
-    { icon: "🤫", text: "I need a quiet place to study" },
+    { icon: "📚", text: "What buildings are open right now that I can study in?" },
     { icon: "👥", text: "Where can I study with a group?" },
-    { icon: "🔌", text: "Where can I charge my laptop?" },
-    { icon: "🖨️", text: "Help with printing" }
+    { icon: "🔌", text: "Where is a quiet place to attend online class?" },
+    { icon: "🖨️", text: "Where can I use a printer?" }
   ],
   "Social & Entertainment": [
     { icon: "🎉", text: "What's fun happening today?" },

@@ -11,8 +11,13 @@ class CampusDemoQueryMapper:
             # Quick Info Queries
             r"what's happening(?: right)? now\??": self._get_current_happenings,
             r"what's going on this week\??": self.get_events_this_week,
-            r"what buildings are open(?: right now)?(?: that I can study in)?\??": self.get_open_buildings_to_study,
             
+            # Study and Workspace Queries
+            r"what buildings are open(?: right now)?(?: that I can study in)?\??": self.get_open_buildings_to_study,
+            r"where can i study with a group\??": self.get_group_study_buildings,
+            r"where is a quiet place to attend online class\??": self.get_quiet_places_for_online_class,
+            r"where can i use a printer\??": self.get_printer_facilities_buildings,
+    
             # Social/Fun Queries
             r"where (?:can|do) (?:students|people) hang out\??": self._get_social_spots,
             r"what's fun (?:to do |happening )?(today|tonight|this weekend)\??": self._get_entertainment,
@@ -262,6 +267,149 @@ class CampusDemoQueryMapper:
             logging.error(f"Traceback: {traceback.format_exc()}")
             return "😕 I couldn't find study space information right now. Please try again later!"
     
+    async def get_group_study_buildings(self) -> str:
+        try:
+            # Debug log the initiation of the function
+            logging.info("Executing get_group_study_buildings handler.")
+
+            # SQL query to find buildings suitable for group study
+            query = """
+                SELECT BuildingName, Description, BuildingHours
+                FROM CampusInformation 
+                WHERE (
+                    LOWER(Description) LIKE '%group study%'
+                    OR LOWER(Description) LIKE '%collaborative workspace%'
+                    OR LOWER(Description) LIKE '%group rooms%'
+                    OR LOWER(Description) LIKE '%team study%'
+                    OR LOWER(Description) LIKE '%study lounges%'
+                    OR LOWER(Description) LIKE '%group%'
+                )
+                ORDER BY BuildingName
+            """
+
+            logging.info(f"Executing query:\n{query}")
+
+            async with self.db.execute(query) as cursor:
+                buildings = await cursor.fetchall()
+
+            logging.info(f"Number of group study buildings fetched: {len(buildings)}")
+
+            response_parts = []
+
+            if buildings:
+                response_parts.append(f"👥 **Group Study Locations:**")
+                for building in buildings:
+                    building_name, description, building_hours = building
+                    response_parts.append(
+                        f"• **{building_name}**\n  📍 {description}\n  🕒 Hours: {building_hours}"
+                    )
+            else:
+                response_parts.append("😕 **No group study spaces found at the moment.**\nPlease try again later or check other study options!")
+
+            return "\n".join(response_parts)
+
+        except Exception as e:
+            logging.error(f"Error in get_group_study_buildings: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "😕 I couldn't retrieve group study locations right now. Please try again later!"
+
+    async def get_quiet_places_for_online_class(self) -> str:
+        try:
+            # Debug log the initiation of the function
+            logging.info("Executing get_quiet_places_for_online_class handler.")
+
+            # SQL query to find quiet places suitable for attending online classes
+            query = """
+                SELECT BuildingName, Description, BuildingHours
+                FROM CampusInformation 
+                WHERE (
+                    LOWER(Description) LIKE '%quiet area%'
+                    OR LOWER(Description) LIKE '%quiet study%'
+                    OR LOWER(Description) LIKE '%online class%'
+                    OR LOWER(Description) LIKE '%individual study%'
+                    OR LOWER(Description) LIKE '%silent zone%'
+                    OR LOWER(Description) LIKE '%private study%'
+                )
+                ORDER BY BuildingName
+            """
+
+            logging.info(f"Executing query:\n{query}")
+
+            async with self.db.execute(query) as cursor:
+                buildings = await cursor.fetchall()
+
+            logging.info(f"Number of quiet places fetched: {len(buildings)}")
+
+            response_parts = []
+
+            if buildings:
+                response_parts.append(f"🔌 **Quiet Places for Online Classes:**")
+                for building in buildings:
+                    building_name, description, building_hours = building
+                    response_parts.append(
+                        f"• **{building_name}**\n  📍 {description}\n  🕒 Hours: {building_hours}"
+                    )
+            else:
+                response_parts.append("😕 **No quiet places available for online classes at the moment.**\nPlease try again later or check other study options!")
+
+            return "\n".join(response_parts)
+
+        except Exception as e:
+            logging.error(f"Error in get_quiet_places_for_online_class: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "😕 I couldn't retrieve quiet places for online classes right now. Please try again later!"
+
+    async def get_printer_facilities_buildings(self) -> str:
+        try:
+            # Debug log the initiation of the function
+            logging.info("Executing get_printer_facilities_buildings handler.")
+
+            # SQL query to find buildings with printer facilities
+            query = """
+                SELECT BuildingName, Description, BuildingHours
+                FROM CampusInformation 
+                WHERE (
+                    LOWER(Description) LIKE '%printer%'
+                    OR LOWER(Description) LIKE '%printing facilities%'
+                    OR LOWER(Description) LIKE '%copy center%'
+                    OR LOWER(Description) LIKE '%print lab%'
+                    OR LOWER(Description) LIKE '%document services%'
+                    OR LOWER(Description) LIKE '%print station%'
+                )
+                ORDER BY BuildingName
+            """
+
+            logging.info(f"Executing query:\n{query}")
+
+            async with self.db.execute(query) as cursor:
+                buildings = await cursor.fetchall()
+
+            logging.info(f"Number of buildings with printer facilities fetched: {len(buildings)}")
+
+            response_parts = []
+
+            if buildings:
+                response_parts.append(f"🖨️ **Printer Facilities Locations:**")
+                for building in buildings:
+                    building_name, description, building_hours = building
+                    response_parts.append(
+                        f"• **{building_name}**\n  📍 {description}\n  🕒 Hours: {building_hours}"
+                    )
+            else:
+                response_parts.append("😕 **No printer facilities found at the moment.**\nPlease try again later or check other facilities!")
+
+            return "\n".join(response_parts)
+
+        except Exception as e:
+            logging.error(f"Error in get_printer_facilities_buildings: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "😕 I couldn't retrieve printer facilities information right now. Please try again later!"
 
     async def _get_recommended_spots(self, activity: str) -> str:
         try:
