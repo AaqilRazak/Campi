@@ -19,6 +19,8 @@ class CampusDemoQueryMapper:
             r"where can i use a printer\??": self.get_printer_facilities_buildings,
     
             # Social/Fun Queries
+            r"what fun events are happening today\??": self._get_fun_events,
+            r"what student organizations are active this semester\??": self._get_student_organizations,
             r"where (?:can|do) (?:students|people) hang out\??": self._get_social_spots,
             r"what's fun (?:to do |happening )?(today|tonight|this weekend)\??": self._get_entertainment,
             r"any free food (today|now|happening)\??": self._get_free_food_events,
@@ -60,6 +62,9 @@ class CampusDemoQueryMapper:
             r"where can i get food late\??": self.get_food_late_options,
             r"where can i get free drinks\??": self.get_drinks_for_free,
 
+            r"good places to meet friends\??": self._get_meetup_spots,
+            r"what sporting events are happening this weekend\??": self._get_sporting_events,
+            r"what amenities does the recreation center offer\??": self._get_rec_center_amenities,
         }
 			r"any (?:good |interesting )?events (today|tonight|this week)\??": self._get_highlighted_events,
 			r"what should I do (today|tonight|this weekend)\??": self._get_personalized_suggestions,
@@ -1205,6 +1210,10 @@ class CampusDemoQueryMapper:
                             f"  🕒 Hours: {option[2]}\n")
             
             response += "\n🍴 Pro tip: Want more specific options? Try asking for 'cafes' or 'dining halls open late!'"
+            response = f"📋 **Meeting spaces for {purpose}:**\n\n"
+            for space in spaces:
+                response += f" **{space[0]}**\n  {space[1]}\n  🕒 Hours: {space[2]}\n"
+
             return response
         except Exception as e:
             logging.error(f"Error in get_food_late_options: {str(e)}")
@@ -1248,3 +1257,295 @@ class CampusDemoQueryMapper:
         except Exception as e:
             logging.error(f"Error in get_drinks_for_free: {str(e)}")
             return "😕 I couldn't retrieve information about free drinks options at the moment. Please try again later."
+
+            logging.error(f"Error in _get_meetup_spots: {str(e)}")
+            return "I couldn't find meetup spots at the moment. Please try again later."
+
+    async def _get_fun_events(self) -> str:
+        try:
+            logging.info("Executing _get_fun_events")
+            
+            # First, let's check what events exist in the database
+            debug_query = """
+                SELECT DISTINCT
+                    e.EventName,
+                    e.EventDateTime,
+                    c.BuildingName,
+                    e.EventDescription
+                FROM EventInformation e
+                JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
+                ORDER BY e.EventDateTime
+            """
+            
+            async with self.db.execute(debug_query) as cursor:
+                all_events = await cursor.fetchall()
+            logging.info(f"Total events in database: {len(all_events)}")
+            if all_events:
+                logging.info(f"Sample event: {all_events[0]}")
+            
+            # Now try the actual query without the date filter
+            query = """
+                SELECT DISTINCT
+                    e.EventName,
+                    e.EventDateTime,
+                    c.BuildingName,
+                    e.EventDescription
+                FROM EventInformation e
+                JOIN CampusInformation c ON e.EventLocationID = c.BuildingID
+                ORDER BY e.EventDateTime
+            """
+            
+            async with self.db.execute(query) as cursor:
+                events = await cursor.fetchall()
+            
+            if not events:
+                return "There are no events in the database. Check back later for new events!"
+            
+            response = "Here are the upcoming events:\n\n"
+            
+            seen_events = set()
+            
+            for event in events:
+                event_name, event_time, location, description = event
+                event_key = f"{event_name}_{event_time}_{location}"
+                
+                if event_key in seen_events:
+                    continue
+                    
+                seen_events.add(event_key)
+                
+                formatted_time = datetime.strptime(event_time, '%Y-%m-%d %H:%M:%S').strftime('%B %d at %I:%M %p')
+                
+                response += f"Event: {event_name}\n"
+                response += f"When: {formatted_time}\n"
+                response += f"Where: {location}\n"
+                if description:
+                    response += f"Details: {description}\n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting events: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the events. Please try asking again!"
+        
+    async def _get_student_organizations(self) -> str:
+        try:
+            logging.info("Executing _get_student_organizations")
+            
+            # Debug query to check what's in the database
+            debug_query = """
+                SELECT DISTINCT
+                    o.OrgName,
+                    o.OrgDescription,
+                    o.MeetingSchedule,
+                    c.BuildingName
+                FROM StudentOrganizations o
+                JOIN CampusInformation c ON o.MeetingLocationID = c.BuildingID
+                WHERE o.IsActive = 1
+                ORDER BY o.OrgName
+            """
+            
+            async with self.db.execute(debug_query) as cursor:
+                all_orgs = await cursor.fetchall()
+            logging.info(f"Total organizations in database: {len(all_orgs)}")
+            if all_orgs:
+                logging.info(f"Sample organization: {all_orgs[0]}")
+            
+            # Main query
+            query = """
+                SELECT DISTINCT
+                    o.OrgName,
+                    o.OrgDescription,
+                    o.MeetingSchedule,
+                    c.BuildingName
+                FROM StudentOrganizations o
+                JOIN CampusInformation c ON o.MeetingLocationID = c.BuildingID
+                WHERE o.IsActive = 1
+                ORDER BY o.OrgName
+            """
+            
+            async with self.db.execute(query) as cursor:
+                organizations = await cursor.fetchall()
+            
+            if not organizations:
+                return "There are no active student organizations in the database. Please check back later!"
+            
+            response = "** ACTIVE STUDENT ORGANIZATIONS **  \n\n"
+            
+            seen_orgs = set()
+            
+            for org in organizations:
+                org_name, description, schedule, location = org
+                org_key = f"{org_name}_{location}"
+                
+                if org_key in seen_orgs:
+                    continue
+                        
+                seen_orgs.add(org_key)
+                
+                response += f"* **{org_name}**  \n"
+                response += f"  Meeting Location: **{location}**  \n"
+                if schedule:
+                    response += f"  Schedule: {schedule}  \n"
+                if description:
+                    response += f"  About: {description}  \n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting student organizations: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the student organizations. Please try asking again!"
+
+    async def _get_sporting_events(self) -> str:
+        try:
+            logging.info("Executing _get_sporting_events")
+            
+            # Calculate weekend dates
+            today = datetime.now()
+            saturday = today + timedelta(days=(5 - today.weekday()))  # Next Saturday
+            sunday = saturday + timedelta(days=1)  # Next Sunday
+            
+            # Debug query
+            debug_query = """
+                SELECT DISTINCT
+                    s.EventName,
+                    s.EventDateTime,
+                    c.BuildingName,
+                    s.EventDescription,
+                    s.TeamInfo,
+                    s.TicketInfo
+                FROM SportingEvents s
+                JOIN CampusInformation c ON s.VenueID = c.BuildingID
+                WHERE date(s.EventDateTime) BETWEEN ? AND ?
+                ORDER BY s.EventDateTime
+            """
+            
+            async with self.db.execute(debug_query, (saturday.strftime('%Y-%m-%d'), 
+                                                   sunday.strftime('%Y-%m-%d'))) as cursor:
+                all_events = await cursor.fetchall()
+            logging.info(f"Total sporting events found: {len(all_events)}")
+            if all_events:
+                logging.info(f"Sample event: {all_events[0]}")
+            
+            # Main query
+            query = """
+                SELECT DISTINCT
+                    s.EventName,
+                    s.EventDateTime,
+                    c.BuildingName,
+                    s.EventDescription,
+                    s.TeamInfo,
+                    s.TicketInfo
+                FROM SportingEvents s
+                JOIN CampusInformation c ON s.VenueID = c.BuildingID
+                WHERE date(s.EventDateTime) BETWEEN ? AND ?
+                ORDER BY s.EventDateTime
+            """
+            
+            async with self.db.execute(query, (saturday.strftime('%Y-%m-%d'), 
+                                             sunday.strftime('%Y-%m-%d'))) as cursor:
+                events = await cursor.fetchall()
+            
+            if not events:
+                return "No sporting events scheduled for this weekend. Check back later for updates!"
+            
+            response = "** WEEKEND SPORTING EVENTS **  \n\n"
+            
+            seen_events = set()
+            
+            for event in events:
+                event_name, event_time, venue, description, team_info, ticket_info = event
+                event_key = f"{event_name}_{event_time}_{venue}"
+                
+                if event_key in seen_events:
+                    continue
+                    
+                seen_events.add(event_key)
+                
+                # Format date to show day and time
+                formatted_time = datetime.strptime(event_time, '%Y-%m-%d %H:%M:%S').strftime('%A at %I:%M %p')
+                
+                response += f"* **{event_name}**  \n"
+                response += f"  When: {formatted_time}  \n"
+                response += f"  Venue: **{venue}**  \n"
+                if team_info:
+                    response += f"  Teams: {team_info}  \n"
+                if description:
+                    response += f"  Details: {description}  \n"
+                if ticket_info:
+                    response += f"  Tickets: {ticket_info}  \n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting sporting events: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the sporting events. Please try asking again!"
+
+    async def _get_rec_center_amenities(self) -> str:
+        try:
+            logging.info("Executing _get_rec_center_amenities")
+            
+            # Debug query to check building
+            async with self.db.execute('''
+                SELECT BuildingID, BuildingName 
+                FROM CampusInformation 
+                WHERE BuildingName = 'Recreation Center'
+            ''') as cursor:
+                building = await cursor.fetchone()
+                logging.info(f"Recreation Center info: {building}")
+            
+            if not building:
+                return "Recreation Center not found in database."
+            
+            # Get amenities for the specific building
+            query = """
+                SELECT 
+                    a.AmenityName,
+                    a.Description,
+                    a.Location,
+                    a.AvailabilityHours
+                FROM BuildingAmenities a
+                WHERE a.BuildingID = ?
+                ORDER BY a.AmenityName
+            """
+            
+            async with self.db.execute(query, (building[0],)) as cursor:
+                amenities = await cursor.fetchall()
+                logging.info(f"Found {len(amenities)} amenities")
+            
+            if not amenities:
+                return "No amenities found for the Recreation Center."
+            
+            response = "** RECREATION CENTER AMENITIES **  \n\n"
+            
+            for amenity in amenities:
+                name, description, location, hours = amenity
+                response += f"* **{name}**  \n"
+                if location:
+                    response += f"  Location: {location}  \n"
+                if description:
+                    response += f"  Details: {description}  \n"
+                if hours:
+                    response += f"  Hours: {hours}  \n"
+                response += "\n"
+            
+            return response.strip()
+            
+        except Exception as e:
+            logging.error(f"Error getting rec center amenities: {str(e)}")
+            logging.error(f"Exception type: {type(e)}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return "Sorry, I had trouble finding the Recreation Center amenities. Please try asking again!"
