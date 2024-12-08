@@ -49,7 +49,7 @@ const TEMPLATE_QUESTIONS = {
     { icon: "🥪", text: "What's good for lunch?" },
     { icon: "🍕", text: "What's good for dinner?" },
     { icon: "🌙", text: "Where can I get food late?" },
-    { icon: "🆓", text: "Any free food today?" }
+    { icon: "🆓", text: "Where can i get free drinks?" }
   ],
   "Campus Facilities": [
     { icon: "🚽", text: "Where's the nearest bathroom?" },

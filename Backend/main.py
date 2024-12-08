@@ -257,7 +257,7 @@ async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection 
             logger.info(f"Available models: {check_ollama.stdout}")
             
             process = subprocess.run(
-                ["ollama", "run", "llama3.1:8b"], # Changed model name
+                ["ollama", "run", "llama3.2:3b"], # Changed model name
                 input=llm_prompt,
                 capture_output=True,
                 text=True,
