@@ -54,7 +54,12 @@ class CampusDemoQueryMapper:
             # Group Activity Queries
             r"where can I study with a group\??": self._get_group_study_spots,
             r"where can I have (a meeting|team practice)\??": self._get_meeting_spaces,
-            r"good places to meet friends\??": self._get_meetup_spots
+            r"good places to meet friends\??": self._get_meetup_spots,
+
+            # Food and Drinks
+            r"where can i get food late\??": self.get_food_late_options,
+            r"where can i get free drinks\??": self.get_drinks_for_free,
+
         }
 
     async def match_and_execute(self, user_input: str) -> Optional[str]:
@@ -1218,3 +1223,83 @@ class CampusDemoQueryMapper:
         except Exception as e:
             logging.error(f"Error in _get_meetup_spots: {str(e)}")
             return "I couldn't find meetup spots at the moment. Please try again later."
+
+    async def get_food_late_options(self) -> str:
+        try:
+            # Assume "late night" is defined as after 9 PM
+            late_night_start_time = "21:00"
+
+            async with self.db.execute('''
+                SELECT BuildingName, Description, BuildingHours
+                FROM CampusInformation
+                WHERE (
+                    LOWER(Description) LIKE '%food%'
+                    OR LOWER(Description) LIKE '%drink%'
+                    OR LOWER(Description) LIKE '%cafe%'
+                    OR LOWER(Description) LIKE '%dining%'
+                )
+                AND BuildingHours LIKE ?
+                ORDER BY
+                    CASE
+                        WHEN LOWER(Description) LIKE '%cafe%' THEN 1
+                        WHEN LOWER(Description) LIKE '%dining%' THEN 2
+                        ELSE 3
+                    END,
+                    BuildingName
+                LIMIT 4
+            ''', (f'%{late_night_start_time}%',)) as cursor:
+                options = await cursor.fetchall()
+
+            if not options:
+                return "I couldn't find any late-night food or drink options open right now. Try asking about specific times or other locations!"
+
+            response = "🌙 **Top late-night food and drink options:**\n\n"
+            for option in options:
+                response += (f"• **{option[0]}**\n"
+                            f"  {option[1]}\n"
+                            f"  🕒 Hours: {option[2]}\n")
+            
+            response += "\n🍴 Pro tip: Want more specific options? Try asking for 'cafes' or 'dining halls open late!'"
+            return response
+        except Exception as e:
+            logging.error(f"Error in get_food_late_options: {str(e)}")
+            return "I couldn't retrieve late-night food or drink options at the moment. Please try again later."
+
+    async def get_drinks_for_free(self) -> str:
+        try:
+            # Define the time criteria if applicable, otherwise adjust as needed
+            # For this example, we'll assume there's no specific time filter
+            async with self.db.execute('''
+                SELECT BuildingName, Description, BuildingHours
+                FROM CampusInformation
+                WHERE (
+                    LOWER(Description) LIKE '%free drinks%'
+                    OR LOWER(Description) LIKE '%complimentary beverages%'
+                    OR LOWER(Description) LIKE '%drink giveaway%'
+                    OR LOWER(Description) LIKE '%free beverages%'
+                )
+                ORDER BY
+                    CASE
+                        WHEN LOWER(Description) LIKE '%cafe%' THEN 1
+                        WHEN LOWER(Description) LIKE '%dining%' THEN 2
+                        ELSE 3
+                    END,
+                    BuildingName
+                LIMIT 4
+            ''') as cursor:
+                options = await cursor.fetchall()
+
+            if not options:
+                return "🍹 **No locations offering free drinks at the moment.**\nTry asking about specific times or other types of venues!"
+
+            response = "🍹 **Top locations offering free drinks:**\n\n"
+            for option in options:
+                response += (f"• **{option[0]}**\n"
+                            f"  {option[1]}\n"
+                            f"  🕒 Hours: {option[2]}\n")
+            
+            response += "\n🍸 **Pro tip:** Want more specific options? Try asking for 'cafes' or 'dining halls offering free drinks!'"
+            return response
+        except Exception as e:
+            logging.error(f"Error in get_drinks_for_free: {str(e)}")
+            return "😕 I couldn't retrieve information about free drinks options at the moment. Please try again later."
