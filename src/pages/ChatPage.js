@@ -31,14 +31,12 @@ const TEMPLATE_QUESTIONS = {
   "Quick Info": [
     { icon: "🔍", text: "What's happening right now?" },
     { icon: "🍽️", text: "What's going on this week?" },
-    { icon: "☕", text: "What buildings are open right now that I can study in?" },
   ],
   "Study & Workspace": [
-    { icon: "📚", text: "Where's the best place to study?" },
-    { icon: "🤫", text: "I need a quiet place to study" },
+    { icon: "📚", text: "What buildings are open right now that I can study in?" },
     { icon: "👥", text: "Where can I study with a group?" },
-    { icon: "🔌", text: "Where can I charge my laptop?" },
-    { icon: "🖨️", text: "Help with printing" }
+    { icon: "🔌", text: "Where is a quiet place to attend online class?" },
+    { icon: "🖨️", text: "Where can I use a printer?" }
   ],
   "Social & Entertainment": [
     { icon: "🎉", text: "What's fun happening today?" },
@@ -54,20 +52,17 @@ const TEMPLATE_QUESTIONS = {
     { icon: "🆓", text: "Any free food today?" }
   ],
   "Campus Facilities": [
-    { icon: "🚽", text: "Where's the nearest bathroom?" },
-    { icon: "🖨️", text: "Where's the nearest printer?" },
-    { icon: "💧", text: "Where's the nearest water fountain?" },
-    { icon: "🏢", text: "Where can I have a meeting?" }
+    { icon: "📖", text: "List all libraries and their locations" },
+    { icon: "🏢", text: "List all buildings and their locations" }
   ],
   "Events & Activities": [
-    { icon: "🎯", text: "Any events today?" },
-    { icon: "💰", text: "Anything free this week?" },
-    { icon: "🎪", text: "What should I do this weekend?" },
-    { icon: "📚", text: "What clubs are meeting this week?" }
+    { icon: "🎯", text: "What events are scheduled for this week" },
+    { icon: "🎪", text: "What entertainment events are happening this weekend" }
   ]
 };
 
 const ChatPage = () => {
+  const [messageCounter, setMessageCounter] = useState(0);
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -180,6 +175,11 @@ const ChatPage = () => {
   };
 
   const saveMessage = async (sessionId, message) => {
+    if (!sessionId) {
+      console.error('Attempted to save message without valid session ID');
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:8000/sessions/${sessionId}/messages`, {
         method: "POST",
@@ -190,7 +190,10 @@ const ChatPage = () => {
           timestamp: message.timestamp
         })
       });
-      if (!response.ok) throw new Error('Failed to save message');
+
+      if (!response.ok) {
+        throw new Error('Failed to save message');
+      }
     } catch (error) {
       console.error('Error saving message:', error);
       throw error;
@@ -198,23 +201,42 @@ const ChatPage = () => {
   };
 
   const handleQuestionClick = async (question) => {
+    let sessionId = currentSessionId;
+
     try {
-      if (!currentSessionId) {
-        await createNewSession();
+      // Make sure we have a valid session
+      if (!sessionId) {
+        const response = await fetch("http://localhost:8000/sessions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            device_type: navigator.platform,
+            browser_agent: navigator.userAgent
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to create session');
+        }
+
+        const data = await response.json();
+        sessionId = data.sessionId;
+        setCurrentSessionId(sessionId);
       }
 
       const userMessage = {
-        id: Date.now(),
+        id: `${Date.now()}-${messageCounter}`,
         text: question,
         sender: 'user',
         timestamp: new Date().toISOString()
       };
 
       setMessages(prev => [...prev, userMessage]);
+      setMessageCounter(prev => prev + 1);  // Increment counter after using it
       setIsTyping(true);
       setSelectedCategory(null);
 
-      await saveMessage(currentSessionId, userMessage);
+      await saveMessage(sessionId, userMessage);
 
       const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
@@ -229,32 +251,33 @@ const ChatPage = () => {
       const data = await response.json();
 
       const botResponse = {
-        id: Date.now(),
+        id: `${Date.now()}-${messageCounter}`,
         text: data.response,
         sender: 'bot',
         timestamp: new Date().toISOString()
       };
 
       setMessages(prev => [...prev, botResponse]);
-      await saveMessage(currentSessionId, botResponse);
+      setMessageCounter(prev => prev + 1);  // Increment counter after using it
+      await saveMessage(sessionId, botResponse);
       await fetchSessions();
 
     } catch (error) {
       console.error('Error:', error);
+      setIsTyping(false);
 
-      // Only add error message to chat if we've started the conversation
       if (error.message.includes('Failed to generate response')) {
         const errorMessage = {
-          id: Date.now(),
+          id: `${Date.now()}-${messageCounter}`,
           text: "Sorry, I encountered an error. Please try again.",
           sender: 'bot',
           timestamp: new Date().toISOString()
         };
         setMessages(prev => [...prev, errorMessage]);
+        setMessageCounter(prev => prev + 1);  // Increment counter after using it
 
-        // Only save error message if we have a current session
-        if (currentSessionId) {
-          await saveMessage(currentSessionId, errorMessage);
+        if (sessionId) {
+          await saveMessage(sessionId, errorMessage);
         }
       }
     } finally {
