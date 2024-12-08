@@ -66,6 +66,7 @@ const TEMPLATE_QUESTIONS = {
 };
 
 const ChatPage = () => {
+  const [messageCounter, setMessageCounter] = useState(0);
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -204,12 +205,11 @@ const ChatPage = () => {
   };
 
   const handleQuestionClick = async (question) => {
-    let sessionId = currentSessionId;  // Move sessionId declaration outside try block
+    let sessionId = currentSessionId;
 
     try {
       // Make sure we have a valid session
       if (!sessionId) {
-        // Create new session and get the ID
         const response = await fetch("http://localhost:8000/sessions", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -229,17 +229,17 @@ const ChatPage = () => {
       }
 
       const userMessage = {
-        id: Date.now(),
+        id: `${Date.now()}-${messageCounter}`,
         text: question,
         sender: 'user',
         timestamp: new Date().toISOString()
       };
 
       setMessages(prev => [...prev, userMessage]);
+      setMessageCounter(prev => prev + 1);  // Increment counter after using it
       setIsTyping(true);
       setSelectedCategory(null);
 
-      // Now we know we have a valid sessionId
       await saveMessage(sessionId, userMessage);
 
       const response = await fetch("http://localhost:8000/generate", {
@@ -255,13 +255,14 @@ const ChatPage = () => {
       const data = await response.json();
 
       const botResponse = {
-        id: Date.now(),
+        id: `${Date.now()}-${messageCounter}`,
         text: data.response,
         sender: 'bot',
         timestamp: new Date().toISOString()
       };
 
       setMessages(prev => [...prev, botResponse]);
+      setMessageCounter(prev => prev + 1);  // Increment counter after using it
       await saveMessage(sessionId, botResponse);
       await fetchSessions();
 
@@ -271,14 +272,15 @@ const ChatPage = () => {
 
       if (error.message.includes('Failed to generate response')) {
         const errorMessage = {
-          id: Date.now(),
+          id: `${Date.now()}-${messageCounter}`,
           text: "Sorry, I encountered an error. Please try again.",
           sender: 'bot',
           timestamp: new Date().toISOString()
         };
         setMessages(prev => [...prev, errorMessage]);
+        setMessageCounter(prev => prev + 1);  // Increment counter after using it
 
-        if (sessionId) {  // Now sessionId is in scope
+        if (sessionId) {
           await saveMessage(sessionId, errorMessage);
         }
       }
