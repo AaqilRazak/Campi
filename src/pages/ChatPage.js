@@ -52,16 +52,12 @@ const TEMPLATE_QUESTIONS = {
     { icon: "🆓", text: "Where can i get free drinks?" }
   ],
   "Campus Facilities": [
-    { icon: "🚽", text: "Where's the nearest bathroom?" },
-    { icon: "🖨️", text: "Where's the nearest printer?" },
-    { icon: "💧", text: "Where's the nearest water fountain?" },
-    { icon: "🏢", text: "Where can I have a meeting?" }
+    { icon: "📖", text: "List all libraries and their locations" },
+    { icon: "🏢", text: "List all buildings and their locations" }
   ],
   "Events & Activities": [
-    { icon: "🎯", text: "Any events today?" },
-    { icon: "💰", text: "Anything free this week?" },
-    { icon: "🎪", text: "What should I do this weekend?" },
-    { icon: "📚", text: "What clubs are meeting this week?" }
+    { icon: "🎯", text: "What events are scheduled for this week" },
+    { icon: "🎪", text: "What entertainment events are happening this weekend" }
   ]
 };
 
