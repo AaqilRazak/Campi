@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import AuthService from '../services/auth.service';
 import '../styles/LoginPage.css';
 
 const LoginPage = () => {
@@ -11,6 +10,7 @@ const LoginPage = () => {
         rememberMe: false
     });
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { login: authLogin } = useAuth();
 
@@ -22,56 +22,81 @@ const LoginPage = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        let userData;
+        setError('');
+        setIsLoading(true);
 
-        switch (credentials.password) {
-            case 'studentpass':
-                userData = {
-                    id: 1,
-                    username: credentials.username || 'student',
-                    role: 'student',
-                    firstName: 'Student',
-                    lastName: 'User'
-                };
-                break;
-            case 'adminpass':
-                userData = {
-                    id: 2,
-                    username: credentials.username || 'admin',
-                    role: 'admin',
-                    firstName: 'Admin',
-                    lastName: 'User'
-                };
-                break;
-            case 'pass':
-                userData = {
-                    id: 3,
-                    username: 'guest',
-                    role: 'guest',
-                    firstName: 'Guest',
-                    lastName: 'User'
-                };
-                break;
-            default:
-                setError('Invalid password');
-                return;
+        try {
+            console.log('Login attempt with:', {
+                username: credentials.username,
+                password: credentials.password
+            });
+
+            const response = await fetch('http://localhost:8000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: credentials.username,
+                    password: credentials.password
+                })
+            });
+
+            console.log('Response status:', response.status);
+            
+            // Get the response body as text first
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+
+            let userData;
+            try {
+                userData = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Error parsing response:', parseError);
+                throw new Error('Invalid server response');
+            }
+
+            if (!response.ok) {
+                console.error('Login failed:', userData);
+                throw new Error(userData.detail || 'Login failed');
+            }
+
+            console.log('Login successful:', userData);
+            authLogin(userData);
+            navigate(userData.role === 'admin' ? '/admin' : '/chat');
+        } catch (err) {
+            console.error('Login error:', err);
+            setError(err.message || 'Invalid username or password');
+        } finally {
+            setIsLoading(false);
         }
-
-        authLogin(userData);
-        navigate(userData.role === 'admin' ? '/admin' : '/chat');
     };
 
-    const handleGuestLogin = () => {
-        authLogin({ 
-            id: 3,
-            username: 'guest',
-            role: 'guest',
-            firstName: 'Guest',
-            lastName: 'User'
-        });
-        navigate('/chat');
+    const handleGuestLogin = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: 'guest',
+                    password: 'pass'
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Guest login failed');
+            }
+
+            const userData = await response.json();
+            authLogin(userData);
+            navigate('/chat');
+        } catch (err) {
+            setError('Guest login failed');
+        }
     };
 
     return (
@@ -85,6 +110,7 @@ const LoginPage = () => {
                         value={credentials.username}
                         onChange={handleChange}
                         placeholder="Username"
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -95,6 +121,7 @@ const LoginPage = () => {
                         value={credentials.password}
                         onChange={handleChange}
                         placeholder="Password"
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -106,12 +133,17 @@ const LoginPage = () => {
                         name="rememberMe"
                         checked={credentials.rememberMe}
                         onChange={handleChange}
+                        disabled={isLoading}
                     />
                     <label>Remember me</label>
                 </div>
 
-                <button type="submit" className="login-button">
-                    Login
+                <button 
+                    type="submit" 
+                    className="login-button"
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Logging in...' : 'Login'}
                 </button>
 
                 <div className="divider">
@@ -122,6 +154,7 @@ const LoginPage = () => {
                     type="button"
                     onClick={handleGuestLogin}
                     className="guest-button"
+                    disabled={isLoading}
                 >
                     Continue as Guest
                 </button>
