@@ -39,6 +39,7 @@ const TEMPLATE_QUESTIONS = {
     { icon: "🖨️", text: "Where can I use a printer?" }
   ],
   "Social & Entertainment": [
+    { icon: "🎉", text: "What fun events are happening today?" },
     { icon: "👋", text: "What sporting events are happening this weekend?" },
     { icon: "🤝", text: "What amenities does the Recreation Center offer?" },
   ],
