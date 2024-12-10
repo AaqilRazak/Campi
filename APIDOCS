@@ -1,330 +1,158 @@
 Module main
-===========
 
 Functions
----------
 
-`change_password(request: main.PasswordChangeRequest, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+change_password(request: main.PasswordChangeRequest, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Allows a user to change their password.
+	•	Request Body:
+	•	username (str): The user’s username.
+	•	old_password (str): The user’s current password.
+	•	new_password (str): The new password the user wants to set.
+	•	Response:
+	•	200 OK: Password updated successfully.
+	•	401 Unauthorized: Invalid credentials.
+	•	500 Internal Server Error: Failure during password change.
 
-`create_session(session: main.SessionCreate, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+create_session(session: main.SessionCreate, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Creates a new session for a user.
+	•	Request Body:
+	•	device_type (str, optional): Type of device used.
+	•	browser_agent (str, optional): Browser agent string.
+	•	Response:
+	•	200 OK: Created session ID.
+	•	Schema: { "sessionId": <int> }
 
-`delete_session(session_id: int, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+delete_session(session_id: int, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Deletes a session and its associated messages.
+	•	Parameters:
+	•	session_id (int): The ID of the session to delete.
+	•	Response:
+	•	200 OK: Confirmation of deletion.
+	•	Schema: { "status": "success", "message": "Session <session_id> deleted successfully" }
 
-`generate_text(prompt_request: main.PromptRequest, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+generate_text(prompt_request: main.PromptRequest, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Generates a response using the LLM based on a user prompt.
+	•	Request Body:
+	•	prompt (str): The user’s prompt.
+	•	Response:
+	•	200 OK: LLM or fallback database response.
+	•	Schema: { "response": <str> }
 
-`get_db()`
-:   
+get_db()
+	•	Description: Provides a connection to the SQLite database.
+	•	Usage: Inject this function as a dependency for database access.
 
-`get_session_messages(session_id: int, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+get_session_messages(session_id: int, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Retrieves all messages from a specified session.
+	•	Parameters:
+	•	session_id (int): The ID of the session.
+	•	Response:
+	•	200 OK: List of messages.
+	•	Schema:
 
-`get_sessions(db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+{
+    "messages": [
+        {
+            "MessageID": 1,
+            "Timestamp": "2024-12-10T10:00:00",
+            "Sender": "User",
+            "MessageText": "Hello!"
+        }
+    ]
+}
 
-`get_users(db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+get_sessions(db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Retrieves all sessions for the test user.
+	•	Response:
+	•	200 OK: List of sessions.
+	•	Schema:
 
-`init_db()`
-:   
+{
+    "sessions": [
+        {
+            "SessionID": 1,
+            "SessionStartTime": "2024-12-10T10:00:00",
+            "FirstMessage": "Hello, world!"
+        }
+    ]
+}
 
-`init_default_users()`
-:   
+get_users(db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Fetches all users for debugging purposes.
+	•	Response:
+	•	200 OK: List of users.
+	•	Schema:
 
-`login(login_request: main.LoginRequest, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "student",
+            "role": 1,
+            "firstName": "Student",
+            "lastName": "User"
+        }
+    ]
+}
 
-`save_message(session_id: int, message: main.MessageCreate, db: aiosqlite.core.Connection = Depends(get_db))`
-:   
+init_db()
+	•	Description: Initializes the SQLite database and its tables.
+	•	Usage: Automatically called during the application startup event.
 
-`startup_event()`
-:   
+init_default_users()
+	•	Description: Creates default users in the database if they do not already exist.
+	•	Usage: Automatically called during the application startup event.
+
+login(login_request: main.LoginRequest, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Authenticates a user by their username and password.
+	•	Request Body:
+	•	username (str): The user’s username.
+	•	password (str): The user’s password.
+	•	Response:
+	•	200 OK: User information.
+	•	Schema: { "id": <int>, "username": <str>, "role": <str>, "firstName": <str>, "lastName": <str> }
+	•	401 Unauthorized: Invalid credentials.
+	•	500 Internal Server Error: Login failure.
+
+save_message(session_id: int, message: main.MessageCreate, db: aiosqlite.core.Connection = Depends(get_db))
+	•	Description: Saves a new message in a session.
+	•	Parameters:
+	•	session_id (int): The ID of the session.
+	•	Request Body:
+	•	message (str): The message text.
+	•	sender (str): Who sent the message (User or Bot).
+	•	timestamp (str): The time of the message.
+	•	Response:
+	•	200 OK: Success confirmation.
+	•	Schema: { "status": "success" }
+
+startup_event()
+	•	Description: Handles application startup tasks, such as initializing the database and default users.
 
 Classes
--------
 
-`LoginRequest(**data: Any)`
-:   Usage docs: https://docs.pydantic.dev/2.9/concepts/models/
-    
-    A base class for creating Pydantic models.
-    
-    Attributes:
-        __class_vars__: The names of the class variables defined on the model.
-        __private_attributes__: Metadata about the private attributes of the model.
-        __signature__: The synthesized `__init__` [`Signature`][inspect.Signature] of the model.
-    
-        __pydantic_complete__: Whether model building is completed, or if there are still undefined fields.
-        __pydantic_core_schema__: The core schema of the model.
-        __pydantic_custom_init__: Whether the model has a custom `__init__` function.
-        __pydantic_decorators__: Metadata containing the decorators defined on the model.
-            This replaces `Model.__validators__` and `Model.__root_validators__` from Pydantic V1.
-        __pydantic_generic_metadata__: Metadata for generic models; contains data used for a similar purpose to
-            __args__, __origin__, __parameters__ in typing-module generics. May eventually be replaced by these.
-        __pydantic_parent_namespace__: Parent namespace of the model, used for automatic rebuilding of models.
-        __pydantic_post_init__: The name of the post-init method for the model, if defined.
-        __pydantic_root_model__: Whether the model is a [`RootModel`][pydantic.root_model.RootModel].
-        __pydantic_serializer__: The `pydantic-core` `SchemaSerializer` used to dump instances of the model.
-        __pydantic_validator__: The `pydantic-core` `SchemaValidator` used to validate instances of the model.
-    
-        __pydantic_extra__: A dictionary containing extra values, if [`extra`][pydantic.config.ConfigDict.extra]
-            is set to `'allow'`.
-        __pydantic_fields_set__: The names of fields explicitly set during instantiation.
-        __pydantic_private__: Values of private attributes set on the model instance.
-    
-    Create a new model by parsing and validating input data from keyword arguments.
-    
-    Raises [`ValidationError`][pydantic_core.ValidationError] if the input data cannot be
-    validated to form a valid model.
-    
-    `self` is explicitly positional-only to allow `self` as a field name.
+LoginRequest
+	•	Attributes:
+	•	username (str): The user’s username.
+	•	password (str): The user’s password.
 
-    ### Ancestors (in MRO)
+MessageCreate
+	•	Attributes:
+	•	message (str): The text of the message.
+	•	sender (str): Indicates who sent the message (User or Bot).
+	•	timestamp (str): The time of the message.
 
-    * pydantic.main.BaseModel
+PasswordChangeRequest
+	•	Attributes:
+	•	username (str): The user’s username.
+	•	old_password (str): The user’s current password.
+	•	new_password (str): The new password.
 
-    ### Class variables
+PromptRequest
+	•	Attributes:
+	•	prompt (str): The user’s prompt.
 
-    `model_computed_fields`
-    :
-
-    `model_config`
-    :
-
-    `model_fields`
-    :
-
-    `password: str`
-    :
-
-    `username: str`
-    :
-
-`MessageCreate(**data: Any)`
-:   Usage docs: https://docs.pydantic.dev/2.9/concepts/models/
-    
-    A base class for creating Pydantic models.
-    
-    Attributes:
-        __class_vars__: The names of the class variables defined on the model.
-        __private_attributes__: Metadata about the private attributes of the model.
-        __signature__: The synthesized `__init__` [`Signature`][inspect.Signature] of the model.
-    
-        __pydantic_complete__: Whether model building is completed, or if there are still undefined fields.
-        __pydantic_core_schema__: The core schema of the model.
-        __pydantic_custom_init__: Whether the model has a custom `__init__` function.
-        __pydantic_decorators__: Metadata containing the decorators defined on the model.
-            This replaces `Model.__validators__` and `Model.__root_validators__` from Pydantic V1.
-        __pydantic_generic_metadata__: Metadata for generic models; contains data used for a similar purpose to
-            __args__, __origin__, __parameters__ in typing-module generics. May eventually be replaced by these.
-        __pydantic_parent_namespace__: Parent namespace of the model, used for automatic rebuilding of models.
-        __pydantic_post_init__: The name of the post-init method for the model, if defined.
-        __pydantic_root_model__: Whether the model is a [`RootModel`][pydantic.root_model.RootModel].
-        __pydantic_serializer__: The `pydantic-core` `SchemaSerializer` used to dump instances of the model.
-        __pydantic_validator__: The `pydantic-core` `SchemaValidator` used to validate instances of the model.
-    
-        __pydantic_extra__: A dictionary containing extra values, if [`extra`][pydantic.config.ConfigDict.extra]
-            is set to `'allow'`.
-        __pydantic_fields_set__: The names of fields explicitly set during instantiation.
-        __pydantic_private__: Values of private attributes set on the model instance.
-    
-    Create a new model by parsing and validating input data from keyword arguments.
-    
-    Raises [`ValidationError`][pydantic_core.ValidationError] if the input data cannot be
-    validated to form a valid model.
-    
-    `self` is explicitly positional-only to allow `self` as a field name.
-
-    ### Ancestors (in MRO)
-
-    * pydantic.main.BaseModel
-
-    ### Class variables
-
-    `message: str`
-    :
-
-    `model_computed_fields`
-    :
-
-    `model_config`
-    :
-
-    `model_fields`
-    :
-
-    `sender: str`
-    :
-
-    `timestamp: str`
-    :
-
-`PasswordChangeRequest(**data: Any)`
-:   Usage docs: https://docs.pydantic.dev/2.9/concepts/models/
-    
-    A base class for creating Pydantic models.
-    
-    Attributes:
-        __class_vars__: The names of the class variables defined on the model.
-        __private_attributes__: Metadata about the private attributes of the model.
-        __signature__: The synthesized `__init__` [`Signature`][inspect.Signature] of the model.
-    
-        __pydantic_complete__: Whether model building is completed, or if there are still undefined fields.
-        __pydantic_core_schema__: The core schema of the model.
-        __pydantic_custom_init__: Whether the model has a custom `__init__` function.
-        __pydantic_decorators__: Metadata containing the decorators defined on the model.
-            This replaces `Model.__validators__` and `Model.__root_validators__` from Pydantic V1.
-        __pydantic_generic_metadata__: Metadata for generic models; contains data used for a similar purpose to
-            __args__, __origin__, __parameters__ in typing-module generics. May eventually be replaced by these.
-        __pydantic_parent_namespace__: Parent namespace of the model, used for automatic rebuilding of models.
-        __pydantic_post_init__: The name of the post-init method for the model, if defined.
-        __pydantic_root_model__: Whether the model is a [`RootModel`][pydantic.root_model.RootModel].
-        __pydantic_serializer__: The `pydantic-core` `SchemaSerializer` used to dump instances of the model.
-        __pydantic_validator__: The `pydantic-core` `SchemaValidator` used to validate instances of the model.
-    
-        __pydantic_extra__: A dictionary containing extra values, if [`extra`][pydantic.config.ConfigDict.extra]
-            is set to `'allow'`.
-        __pydantic_fields_set__: The names of fields explicitly set during instantiation.
-        __pydantic_private__: Values of private attributes set on the model instance.
-    
-    Create a new model by parsing and validating input data from keyword arguments.
-    
-    Raises [`ValidationError`][pydantic_core.ValidationError] if the input data cannot be
-    validated to form a valid model.
-    
-    `self` is explicitly positional-only to allow `self` as a field name.
-
-    ### Ancestors (in MRO)
-
-    * pydantic.main.BaseModel
-
-    ### Class variables
-
-    `model_computed_fields`
-    :
-
-    `model_config`
-    :
-
-    `model_fields`
-    :
-
-    `new_password: str`
-    :
-
-    `old_password: str`
-    :
-
-    `username: str`
-    :
-
-`PromptRequest(**data: Any)`
-:   Usage docs: https://docs.pydantic.dev/2.9/concepts/models/
-    
-    A base class for creating Pydantic models.
-    
-    Attributes:
-        __class_vars__: The names of the class variables defined on the model.
-        __private_attributes__: Metadata about the private attributes of the model.
-        __signature__: The synthesized `__init__` [`Signature`][inspect.Signature] of the model.
-    
-        __pydantic_complete__: Whether model building is completed, or if there are still undefined fields.
-        __pydantic_core_schema__: The core schema of the model.
-        __pydantic_custom_init__: Whether the model has a custom `__init__` function.
-        __pydantic_decorators__: Metadata containing the decorators defined on the model.
-            This replaces `Model.__validators__` and `Model.__root_validators__` from Pydantic V1.
-        __pydantic_generic_metadata__: Metadata for generic models; contains data used for a similar purpose to
-            __args__, __origin__, __parameters__ in typing-module generics. May eventually be replaced by these.
-        __pydantic_parent_namespace__: Parent namespace of the model, used for automatic rebuilding of models.
-        __pydantic_post_init__: The name of the post-init method for the model, if defined.
-        __pydantic_root_model__: Whether the model is a [`RootModel`][pydantic.root_model.RootModel].
-        __pydantic_serializer__: The `pydantic-core` `SchemaSerializer` used to dump instances of the model.
-        __pydantic_validator__: The `pydantic-core` `SchemaValidator` used to validate instances of the model.
-    
-        __pydantic_extra__: A dictionary containing extra values, if [`extra`][pydantic.config.ConfigDict.extra]
-            is set to `'allow'`.
-        __pydantic_fields_set__: The names of fields explicitly set during instantiation.
-        __pydantic_private__: Values of private attributes set on the model instance.
-    
-    Create a new model by parsing and validating input data from keyword arguments.
-    
-    Raises [`ValidationError`][pydantic_core.ValidationError] if the input data cannot be
-    validated to form a valid model.
-    
-    `self` is explicitly positional-only to allow `self` as a field name.
-
-    ### Ancestors (in MRO)
-
-    * pydantic.main.BaseModel
-
-    ### Class variables
-
-    `model_computed_fields`
-    :
-
-    `model_config`
-    :
-
-    `model_fields`
-    :
-
-    `prompt: str`
-    :
-
-`SessionCreate(**data: Any)`
-:   Usage docs: https://docs.pydantic.dev/2.9/concepts/models/
-    
-    A base class for creating Pydantic models.
-    
-    Attributes:
-        __class_vars__: The names of the class variables defined on the model.
-        __private_attributes__: Metadata about the private attributes of the model.
-        __signature__: The synthesized `__init__` [`Signature`][inspect.Signature] of the model.
-    
-        __pydantic_complete__: Whether model building is completed, or if there are still undefined fields.
-        __pydantic_core_schema__: The core schema of the model.
-        __pydantic_custom_init__: Whether the model has a custom `__init__` function.
-        __pydantic_decorators__: Metadata containing the decorators defined on the model.
-            This replaces `Model.__validators__` and `Model.__root_validators__` from Pydantic V1.
-        __pydantic_generic_metadata__: Metadata for generic models; contains data used for a similar purpose to
-            __args__, __origin__, __parameters__ in typing-module generics. May eventually be replaced by these.
-        __pydantic_parent_namespace__: Parent namespace of the model, used for automatic rebuilding of models.
-        __pydantic_post_init__: The name of the post-init method for the model, if defined.
-        __pydantic_root_model__: Whether the model is a [`RootModel`][pydantic.root_model.RootModel].
-        __pydantic_serializer__: The `pydantic-core` `SchemaSerializer` used to dump instances of the model.
-        __pydantic_validator__: The `pydantic-core` `SchemaValidator` used to validate instances of the model.
-    
-        __pydantic_extra__: A dictionary containing extra values, if [`extra`][pydantic.config.ConfigDict.extra]
-            is set to `'allow'`.
-        __pydantic_fields_set__: The names of fields explicitly set during instantiation.
-        __pydantic_private__: Values of private attributes set on the model instance.
-    
-    Create a new model by parsing and validating input data from keyword arguments.
-    
-    Raises [`ValidationError`][pydantic_core.ValidationError] if the input data cannot be
-    validated to form a valid model.
-    
-    `self` is explicitly positional-only to allow `self` as a field name.
-
-    ### Ancestors (in MRO)
-
-    * pydantic.main.BaseModel
-
-    ### Class variables
-
-    `browser_agent: str | None`
-    :
-
-    `device_type: str | None`
-    :
-
-    `model_computed_fields`
-    :
-
-    `model_config`
-    :
-
-    `model_fields`
-    :
+SessionCreate
+	•	Attributes:
+	•	device_type (Optional[str]): Type of device used.
+	•	browser_agent (Optional[str]): Browser agent string.
