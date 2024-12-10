@@ -96,6 +96,18 @@ async def init_db():
                 Description TEXT
             )
         ''')
+        
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS StudentOrganizations (
+                OrgID INTEGER PRIMARY KEY AUTOINCREMENT,
+                OrgName TEXT NOT NULL UNIQUE,
+                OrgDescription TEXT,
+                MeetingSchedule TEXT,
+                MeetingLocationID INTEGER,
+                IsActive BOOLEAN DEFAULT 1,
+                FOREIGN KEY (MeetingLocationID) REFERENCES CampusInformation(BuildingID)
+            )
+        ''')
 
         # First ensure Recreation Center exists
         logging.info("Setting up Recreation Center...")
