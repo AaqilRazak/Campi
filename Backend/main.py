@@ -7,6 +7,7 @@ import logging
 import aiosqlite
 from typing import Optional
 from CampusQueryMapper import CampusDemoQueryMapper
+from passlib.hash import bcrypt
 
 # Configure logging
 logging.basicConfig(
@@ -39,6 +40,15 @@ class MessageCreate(BaseModel):
     sender: str
     timestamp: str
 
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class PasswordChangeRequest(BaseModel):
+    username: str
+    old_password: str
+    new_password: str
+
 # Database initialization
 async def init_db():
     logging.info("Starting database initialization...")
@@ -55,6 +65,18 @@ async def init_db():
                 UserRoleID INTEGER NOT NULL,
                 FirstName TEXT NOT NULL,
                 LastName TEXT NOT NULL
+            )
+        ''')
+        
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS StudentOrganizations (
+                OrgID INTEGER PRIMARY KEY AUTOINCREMENT,
+                OrgName TEXT NOT NULL UNIQUE,
+                OrgDescription TEXT,
+                MeetingSchedule TEXT,
+                MeetingLocationID INTEGER,
+                IsActive BOOLEAN DEFAULT 1,
+                FOREIGN KEY (MeetingLocationID) REFERENCES CampusInformation(BuildingID)
             )
         ''')
         
@@ -267,6 +289,7 @@ TEST_USER_ID = 1
 async def startup_event():
     logging.info("Application starting up...")
     await init_db()
+    await init_default_users()
 
 @app.get("/sessions")
 async def get_sessions(db: aiosqlite.Connection = Depends(get_db)):
@@ -428,6 +451,168 @@ async def generate_text(prompt_request: PromptRequest, db: aiosqlite.Connection 
     except Exception as e:
         logger.error(f"Error generating response: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to generate response")
+
+@app.post("/login")
+async def login(login_request: LoginRequest, db: aiosqlite.Connection = Depends(get_db)):
+    try:
+        logging.info("=== Login Attempt ===")
+        logging.info(f"Username: {login_request.username}")
+        logging.info(f"Password length: {len(login_request.password)}")
+        
+        # First check if users exist in database
+        async with db.execute('SELECT COUNT(*) FROM UserInformation') as cursor:
+            count = await cursor.fetchone()
+            logging.info(f"Total users in database: {count[0]}")
+        
+        # Try to find the user
+        async with db.execute('''
+            SELECT UserID, Username, PasswordHash, UserRoleID, FirstName, LastName 
+            FROM UserInformation 
+            WHERE Username = ?
+        ''', (login_request.username,)) as cursor:
+            user = await cursor.fetchone()
+            
+        if not user:
+            logging.warning(f"User not found: {login_request.username}")
+            # List all usernames in database for debugging
+            async with db.execute('SELECT Username FROM UserInformation') as cursor:
+                users = await cursor.fetchall()
+                logging.info(f"Available users: {[u[0] for u in users]}")
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+        
+        logging.info(f"Found user: {user[1]} with role {user[3]}")
+        logging.info(f"Stored password hash: {user[2]}")
+        
+        try:
+            # Verify password
+            is_valid = bcrypt.verify(login_request.password, user[2])
+            logging.info(f"Password verification result: {is_valid}")
+            
+            if not is_valid:
+                logging.warning(f"Invalid password for user: {login_request.username}")
+                raise HTTPException(status_code=401, detail="Invalid credentials")
+        except Exception as e:
+            logging.error(f"Password verification error: {str(e)}")
+            logging.error(f"Password type: {type(login_request.password)}")
+            logging.error(f"Hash type: {type(user[2])}")
+            raise HTTPException(status_code=500, detail=f"Error verifying credentials: {str(e)}")
+            
+        role_map = {1: 'student', 2: 'admin', 3: 'guest'}
+        
+        response_data = {
+            "id": user[0],
+            "username": user[1],
+            "role": role_map.get(user[3], 'guest'),
+            "firstName": user[4],
+            "lastName": user[5]
+        }
+        logging.info(f"Login successful for user: {login_request.username}")
+        logging.info(f"Returning data: {response_data}")
+        return response_data
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Unexpected login error: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Login failed: {str(e)}")
+
+@app.post("/change-password")
+async def change_password(request: PasswordChangeRequest, db: aiosqlite.Connection = Depends(get_db)):
+    try:
+        # First verify the current password
+        async with db.execute('''
+            SELECT UserID, PasswordHash 
+            FROM UserInformation 
+            WHERE Username = ?
+        ''', (request.username,)) as cursor:
+            user = await cursor.fetchone()
+            
+        if not user or not bcrypt.verify(request.old_password, user[1]):
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+        
+        # Update to new password
+        hashed_new_password = bcrypt.hash(request.new_password)
+        await db.execute('''
+            UPDATE UserInformation 
+            SET PasswordHash = ?
+            WHERE UserID = ?
+        ''', (hashed_new_password, user[0]))
+        
+        await db.commit()
+        return {"message": "Password updated successfully"}
+            
+    except Exception as e:
+        logger.error(f"Password change error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to change password")
+
+# Add this function after init_db()
+async def init_default_users():
+    logging.info("Initializing default users...")
+    try:
+        async with aiosqlite.connect('chat_history.db') as db:
+            # Default test accounts
+            default_users = [
+                ('student', 'studentpass', 'student@example.com', 1, 'Student', 'User'),
+                ('admin', 'adminpass', 'admin@example.com', 2, 'Admin', 'User'),
+                ('guest', 'pass', 'guest@example.com', 3, 'Guest', 'User')
+            ]
+            
+            # First check existing users
+            async with db.execute('SELECT Username FROM UserInformation') as cursor:
+                existing = await cursor.fetchall()
+                logging.info(f"Existing users: {[user[0] for user in existing]}")
+            
+            for username, password, email, role_id, first_name, last_name in default_users:
+                try:
+                    # Check if user exists
+                    async with db.execute('SELECT Username FROM UserInformation WHERE Username = ?', (username,)) as cursor:
+                        existing_user = await cursor.fetchone()
+                        
+                        if not existing_user:
+                            hashed_password = bcrypt.hash(password)
+                            await db.execute('''
+                                INSERT INTO UserInformation 
+                                (Username, PasswordHash, Email, UserRoleID, FirstName, LastName)
+                                VALUES (?, ?, ?, ?, ?, ?)
+                            ''', (username, hashed_password, email, role_id, first_name, last_name))
+                            logging.info(f"Created default user: {username}")
+                        else:
+                            logging.info(f"User already exists: {username}")
+                except Exception as e:
+                    logging.error(f"Error creating user {username}: {str(e)}")
+            
+            await db.commit()
+            
+            # Verify users after creation
+            async with db.execute('SELECT Username, UserRoleID FROM UserInformation') as cursor:
+                users = await cursor.fetchall()
+                logging.info(f"All users after initialization: {users}")
+                
+    except Exception as e:
+        logging.error(f"Error in init_default_users: {str(e)}")
+
+@app.get("/debug/users")
+async def get_users(db: aiosqlite.Connection = Depends(get_db)):
+    try:
+        async with db.execute('''
+            SELECT UserID, Username, UserRoleID, FirstName, LastName 
+            FROM UserInformation
+        ''') as cursor:
+            users = await cursor.fetchall()
+            return {
+                "users": [
+                    {
+                        "id": user[0],
+                        "username": user[1],
+                        "role": user[2],
+                        "firstName": user[3],
+                        "lastName": user[4]
+                    } for user in users
+                ]
+            }
+    except Exception as e:
+        logging.error(f"Error fetching users: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch users")
 
 if __name__ == "__main__":
     import uvicorn
