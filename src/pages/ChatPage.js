@@ -42,22 +42,10 @@ const TEMPLATE_QUESTIONS = {
     { icon: "🎉", text: "What fun events are happening today?" },
     { icon: "👋", text: "What sporting events are happening this weekend?" },
     { icon: "🤝", text: "What amenities does the Recreation Center offer?" },
-    { icon: "📅", text: "What student organizations are active this semester?" }
   ],
   "Food & Drinks": [
-    { icon: "🍳", text: "What's good for breakfast?" },
-    { icon: "🥪", text: "What's good for lunch?" },
-    { icon: "🍕", text: "What's good for dinner?" },
     { icon: "🌙", text: "Where can I get food late?" },
     { icon: "🆓", text: "Where can i get free drinks?" }
-  ],
-  "Campus Facilities": [
-    { icon: "📖", text: "List all libraries and their locations" },
-    { icon: "🏢", text: "List all buildings and their locations" }
-  ],
-  "Events & Activities": [
-    { icon: "🎯", text: "What events are scheduled for this week" },
-    { icon: "🎪", text: "What entertainment events are happening this weekend" }
   ]
 };
 
