@@ -21,8 +21,7 @@ class CampusDemoQueryMapper:
             # Social/Fun Queries
             r"what sporting events are happening this weekend\??": self._get_sporting_events,
             r"what amenities does the recreation center offer\??": self._get_rec_center_amenities,
-            r"where (?:can|do) (?:students|people) hang out\??": self._get_social_spots,
-            r"what's fun (?:to do |happening )?(today|tonight|this weekend)\??": self._get_entertainment,
+            r"What fun events are happening today\??": self._get_entertainment,
             r"any free food (today|now|happening)\??": self._get_free_food_events,
             r"where(?:'s| is) the best (?:place to |spot for )?study\??": self._get_top_study_spots,
             
